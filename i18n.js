@@ -83,13 +83,14 @@ const i18n = {
                     "- Monitor blood glucose and kidney function\n" +
                     "- Check HbA1c every 3-6 months",
                 lipids: "Lipid management:\n" +
-                    "- Primary prevention: Target LDL-C reduction ≥50%\n" +
-                    "- Consider statin therapy based on risk level\n" +
+                    "- Very high risk (ASCVD risk >20%): LDL-C <55 mg/dL (1.4 mmol/L)\n" +
+                    "- High risk (risk 7.5-19.9%): LDL-C <70 mg/dL (1.8 mmol/L)\n" +
+                    "- Moderate risk (risk 5-7.4%): LDL-C <100 mg/dL (2.6 mmol/L)\n" +
+                    "- Low risk (risk <5%): Consider LDL-C <116 mg/dL (3.0 mmol/L)\n" +
                     "- High-intensity statin if 10-year risk ≥20%\n" +
                     "- Moderate-intensity statin if risk 7.5-19.9%\n" +
-                    "- Lifestyle modification essential for all\n" +
                     "- Monitor lipids every 3-12 months\n" +
-                    "- Consider non-statin therapy if needed"
+                    "- Consider non-statin therapy if targets not met"
             }
         },
         error: {
@@ -188,13 +189,14 @@ const i18n = {
                     "- 定期监测血糖和肾功能\n" +
                     "- 每3-6个月进行HbA1c检查",
                 lipids: "血脂管理：\n" +
-                    "- 一级预防：目标LDL-C降低≥50%\n" +
-                    "- 根据风险水平考虑他汀类药物治疗\n" +
+                    "- 极高风险（ASCVD风险>20%）：LDL-C <55 mg/dL (1.4 mmol/L)\n" +
+                    "- 高风险（风险7.5-19.9%）：LDL-C <70 mg/dL (1.8 mmol/L)\n" +
+                    "- 中等风险（风险5-7.4%）：LDL-C <100 mg/dL (2.6 mmol/L)\n" +
+                    "- 低风险（风险<5%）：考虑LDL-C <116 mg/dL (3.0 mmol/L)\n" +
                     "- 10年风险≥20%使用高强度他汀\n" +
                     "- 风险在7.5-19.9%使用中等强度他汀\n" +
-                    "- 所有患者都需要生活方式干预\n" +
                     "- 每3-12个月监测血脂\n" +
-                    "- 必要时考虑非他汀类药物治疗"
+                    "- 未达标时考虑非他汀类药物治疗"
             }
         },
         error: {
@@ -278,29 +280,30 @@ const i18n = {
                     "- 150-300 minutos de actividad aeróbica moderada o 75-150 minutos de actividad vigorosa por semana\n" +
                     "- Seguir el patrón de dieta mediterránea\n" +
                     "- Mantener un peso saludable (IMC <25 kg/m²)",
-                bp_treated: "Blood pressure management (on medication):\n" +
-                    "- Target BP <130/80 mmHg\n" +
-                    "- Continue medication and monitor weekly\n" +
-                    "- Regular follow-up\n" +
-                    "- Monitor for side effects",
-                bp_untreated: "Blood pressure management (no medication):\n" +
-                    "- Consult healthcare provider\n" +
-                    "- Target BP <130/80 mmHg\n" +
-                    "- Consider starting medication\n" +
-                    "- Regular monitoring",
-                diabetes: "Diabetes management:\n" +
-                    "- Target HbA1c <7%\n" +
-                    "- Consider SGLT2 inhibitors\n" +
-                    "- Monitor blood glucose and kidney function\n" +
-                    "- Check HbA1c every 3-6 months",
+                bp_treated: "Manejo de la presión arterial (con medicación):\n" +
+                    "- Objetivo PA <130/80 mmHg\n" +
+                    "- Continuar medicación y monitorear semanalmente\n" +
+                    "- Seguimiento regular\n" +
+                    "- Monitorear efectos secundarios",
+                bp_untreated: "Manejo de la presión arterial (sin medicación):\n" +
+                    "- Consultar al profesional de salud\n" +
+                    "- Objetivo PA <130/80 mmHg\n" +
+                    "- Considerar iniciar medicación\n" +
+                    "- Monitoreo regular",
+                diabetes: "Manejo de la diabetes:\n" +
+                    "- Objetivo HbA1c <7%\n" +
+                    "- Considerar inhibidores SGLT2\n" +
+                    "- Monitorear glucosa en sangre y función renal\n" +
+                    "- Verificar HbA1c cada 3-6 meses",
                 lipids: "Manejo de lípidos:\n" +
-                    "- Prevención primaria: Reducción objetivo de LDL-C ≥50%\n" +
-                    "- Considerar terapia con estatinas según nivel de riesgo\n" +
+                    "- Riesgo muy alto (riesgo ASCVD >20%): LDL-C <55 mg/dL (1.4 mmol/L)\n" +
+                    "- Riesgo alto (riesgo 7.5-19.9%): LDL-C <70 mg/dL (1.8 mmol/L)\n" +
+                    "- Riesgo moderado (riesgo 5-7.4%): LDL-C <100 mg/dL (2.6 mmol/L)\n" +
+                    "- Riesgo bajo (riesgo <5%): Considerar LDL-C <116 mg/dL (3.0 mmol/L)\n" +
                     "- Estatinas de alta intensidad si riesgo a 10 años ≥20%\n" +
                     "- Estatinas de intensidad moderada si riesgo 7.5-19.9%\n" +
-                    "- Modificación del estilo de vida esencial para todos\n" +
                     "- Monitorear lípidos cada 3-12 meses\n" +
-                    "- Considerar terapia sin estatinas si es necesario"
+                    "- Considerar terapia sin estatinas si no se alcanzan los objetivos"
             }
         },
         error: {
@@ -384,29 +387,30 @@ const i18n = {
                     "- 150-300 minutes d'activité aérobique modérée ou 75-150 minutes d'activité vigoureuse par semaine\n" +
                     "- Suivre le régime méditerranéen\n" +
                     "- Maintenir un poids santé (IMC <25 kg/m²)",
-                bp_treated: "Blood pressure management (on medication):\n" +
-                    "- Target BP <130/80 mmHg\n" +
-                    "- Continue medication and monitor weekly\n" +
-                    "- Regular follow-up\n" +
-                    "- Monitor for side effects",
-                bp_untreated: "Blood pressure management (no medication):\n" +
-                    "- Consult healthcare provider\n" +
-                    "- Target BP <130/80 mmHg\n" +
-                    "- Consider starting medication\n" +
-                    "- Regular monitoring",
-                diabetes: "Diabetes management:\n" +
-                    "- Target HbA1c <7%\n" +
-                    "- Consider SGLT2 inhibitors\n" +
-                    "- Monitor blood glucose and kidney function\n" +
-                    "- Check HbA1c every 3-6 months",
+                bp_treated: "Gestion de la pression artérielle (sous traitement):\n" +
+                    "- Objectif PA <130/80 mmHg\n" +
+                    "- Poursuivre le traitement et surveiller hebdomadairement\n" +
+                    "- Suivi régulier\n" +
+                    "- Surveiller les effets secondaires",
+                bp_untreated: "Gestion de la pression artérielle (sans traitement):\n" +
+                    "- Consulter un professionnel de santé\n" +
+                    "- Objectif PA <130/80 mmHg\n" +
+                    "- Envisager un traitement médicamenteux\n" +
+                    "- Surveillance régulière",
+                diabetes: "Gestion du diabète:\n" +
+                    "- Objectif HbA1c <7%\n" +
+                    "- Envisager les inhibiteurs SGLT2\n" +
+                    "- Surveiller la glycémie et la fonction rénale\n" +
+                    "- Vérifier l'HbA1c tous les 3-6 mois",
                 lipids: "Gestion des lipides:\n" +
-                    "- Prévention primaire : Réduction cible du LDL-C ≥50%\n" +
-                    "- Envisager un traitement par statines selon le niveau de risque\n" +
+                    "- Risque très élevé (risque ASCVD >20%) : LDL-C <55 mg/dL (1,4 mmol/L)\n" +
+                    "- Risque élevé (risque 7,5-19,9%) : LDL-C <70 mg/dL (1,8 mmol/L)\n" +
+                    "- Risque modéré (risque 5-7,4%) : LDL-C <100 mg/dL (2,6 mmol/L)\n" +
+                    "- Risque faible (risque <5%) : Envisager LDL-C <116 mg/dL (3,0 mmol/L)\n" +
                     "- Statines haute intensité si risque à 10 ans ≥20%\n" +
-                    "- Statines intensité modérée si risque 7.5-19.9%\n" +
-                    "- Modification du mode de vie essentielle pour tous\n" +
+                    "- Statines intensité modérée si risque 7,5-19,9%\n" +
                     "- Surveiller les lipides tous les 3-12 mois\n" +
-                    "- Envisager une thérapie sans statines si nécessaire"
+                    "- Envisager une thérapie sans statines si objectifs non atteints"
             }
         },
         error: {
@@ -490,29 +494,30 @@ const i18n = {
                     "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
                     "- Follow Mediterranean diet pattern\n" +
                     "- Maintain healthy weight (BMI <25 kg/m²)",
-                bp_treated: "Blood pressure management (on medication):\n" +
-                    "- Target BP <130/80 mmHg\n" +
-                    "- Continue medication and monitor weekly\n" +
-                    "- Regular follow-up\n" +
-                    "- Monitor for side effects",
-                bp_untreated: "Blood pressure management (no medication):\n" +
-                    "- Consult healthcare provider\n" +
-                    "- Target BP <130/80 mmHg\n" +
-                    "- Consider starting medication\n" +
-                    "- Regular monitoring",
-                diabetes: "Diabetes management:\n" +
-                    "- Target HbA1c <7%\n" +
-                    "- Consider SGLT2 inhibitors\n" +
-                    "- Monitor blood glucose and kidney function\n" +
-                    "- Check HbA1c every 3-6 months",
+                bp_treated: "Blutdruckmanagement (mit Medikation):\n" +
+                    "- Zielwert RR <130/80 mmHg\n" +
+                    "- Medikation fortsetzen und wöchentlich überwachen\n" +
+                    "- Regelmäßige Nachsorge\n" +
+                    "- Nebenwirkungen überwachen",
+                bp_untreated: "Blutdruckmanagement (ohne Medikation):\n" +
+                    "- Arzt konsultieren\n" +
+                    "- Zielwert RR <130/80 mmHg\n" +
+                    "- Medikation erwägen\n" +
+                    "- Regelmäßige Überwachung",
+                diabetes: "Diabetesmanagement:\n" +
+                    "- Zielwert HbA1c <7%\n" +
+                    "- SGLT2-Hemmer erwägen\n" +
+                    "- Blutzucker und Nierenfunktion überwachen\n" +
+                    "- HbA1c alle 3-6 Monate kontrollieren",
                 lipids: "Lipidmanagement:\n" +
-                    "- Primärprävention: Zielreduktion LDL-C ≥50%\n" +
-                    "- Statintherapie basierend auf Risikoniveau erwägen\n" +
+                    "- Sehr hohes Risiko (ASCVD-Risiko >20%): LDL-C <55 mg/dL (1,4 mmol/L)\n" +
+                    "- Hohes Risiko (Risiko 7,5-19,9%): LDL-C <70 mg/dL (1,8 mmol/L)\n" +
+                    "- Mittleres Risiko (Risiko 5-7,4%): LDL-C <100 mg/dL (2,6 mmol/L)\n" +
+                    "- Niedriges Risiko (Risiko <5%): Erwägen LDL-C <116 mg/dL (3,0 mmol/L)\n" +
                     "- Hochintensive Statine bei 10-Jahres-Risiko ≥20%\n" +
-                    "- Moderat intensive Statine bei Risiko 7.5-19.9%\n" +
-                    "- Lebensstiländerung essentiell für alle\n" +
+                    "- Moderat intensive Statine bei Risiko 7,5-19,9%\n" +
                     "- Lipide alle 3-12 Monate überwachen\n" +
-                    "- Bei Bedarf Nicht-Statin-Therapie erwägen"
+                    "- Bei Nichterreichen der Zielwerte Nicht-Statin-Therapie erwägen"
             }
         },
         error: {
@@ -596,29 +601,30 @@ const i18n = {
                     "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
                     "- Follow Mediterranean diet pattern\n" +
                     "- Maintain healthy weight (BMI <25 kg/m²)",
-                bp_treated: "Blood pressure management (on medication):\n" +
-                    "- Target BP <130/80 mmHg\n" +
-                    "- Continue medication and monitor weekly\n" +
-                    "- Regular follow-up\n" +
-                    "- Monitor for side effects",
-                bp_untreated: "Blood pressure management (no medication):\n" +
-                    "- Consult healthcare provider\n" +
-                    "- Target BP <130/80 mmHg\n" +
-                    "- Consider starting medication\n" +
-                    "- Regular monitoring",
-                diabetes: "Diabetes management:\n" +
-                    "- Target HbA1c <7%\n" +
-                    "- Consider SGLT2 inhibitors\n" +
-                    "- Monitor blood glucose and kidney function\n" +
-                    "- Check HbA1c every 3-6 months",
+                bp_treated: "血圧管理（服薬中）：\n" +
+                    "- 目標血圧 <130/80 mmHg\n" +
+                    "- 服薬を継続し、週1回モニタリング\n" +
+                    "- 定期的なフォローアップ\n" +
+                    "- 副作用のモニタリング",
+                bp_untreated: "血圧管理（未服薬）：\n" +
+                    "- 医療機関を受診\n" +
+                    "- 目標血圧 <130/80 mmHg\n" +
+                    "- 投薬開始を検討\n" +
+                    "- 定期的なモニタリング",
+                diabetes: "糖尿病管理：\n" +
+                    "- HbA1c目標値 <7%\n" +
+                    "- SGLT2阻害薬の検討\n" +
+                    "- 血糖値と腎機能のモニタリング\n" +
+                    "- 3-6ヶ月ごとにHbA1cをチェック",
                 lipids: "脂質管理：\n" +
-                    "- 一次予防：LDL-C ≥50%低下を目標\n" +
-                    "- リスクレベルに基づくスタチン療法の検討\n" +
+                    "- 超高リスク（ASCVD リスク>20%）：LDL-C <55 mg/dL (1.4 mmol/L)\n" +
+                    "- 高リスク（リスク7.5-19.9%）：LDL-C <70 mg/dL (1.8 mmol/L)\n" +
+                    "- 中等度リスク（リスク5-7.4%）：LDL-C <100 mg/dL (2.6 mmol/L)\n" +
+                    "- 低リスク（リスク<5%）：LDL-C <116 mg/dL (3.0 mmol/L)を考慮\n" +
                     "- 10年リスク≥20%の場合は高強度スタチン\n" +
                     "- リスク7.5-19.9%の場合は中等度スタチン\n" +
-                    "- 全患者に生活習慣の改善が不可欠\n" +
                     "- 3-12ヶ月ごとに脂質をモニタリング\n" +
-                    "- 必要に応じて非スタチン療法を検討"
+                    "- 目標未達成の場合は非スタチン療法を検討"
             }
         },
         error: {
