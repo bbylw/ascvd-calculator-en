@@ -89,34 +89,65 @@ const i18n = {
                     "BP Targets:\n" +
                     "• General target: <130/80 mmHg\n" +
                     "• Age >65: <130-139/70-79 mmHg\n" +
-                    "• With diabetes: <130/80 mmHg\n\n" +
+                    "• With diabetes: <130/80 mmHg\n" +
+                    "• With CKD: <130/80 mmHg\n\n" +
                     "Medications:\n" +
-                    "• First-line: ACEi/ARB, CCB, thiazide diuretics\n" +
-                    "• Consider combination therapy if >20/10 mmHg above target\n" +
-                    "• Fixed-dose combinations preferred\n\n" +
+                    "• First-line options:\n" +
+                    "  - ACEi/ARB (e.g., Lisinopril, Valsartan)\n" +
+                    "  - CCB (e.g., Amlodipine)\n" +
+                    "  - Thiazide diuretics (e.g., HCTZ)\n" +
+                    "• Combination therapy if >20/10 mmHg above target:\n" +
+                    "  - ACEi/ARB + CCB preferred\n" +
+                    "  - ACEi/ARB + Thiazide alternative\n" +
+                    "  - Avoid ACEi + ARB combination\n\n" +
                     "Monitoring:\n" +
                     "• Home BP monitoring 2x daily\n" +
-                    "• Regular kidney function and electrolytes\n" +
-                    "• Monitor for side effects\n" +
-                    "• Follow-up every 3-6 months if stable",
+                    "• Check kidney function and electrolytes:\n" +
+                    "  - 2-4 weeks after starting/changing ACEi/ARB\n" +
+                    "  - Then every 6-12 months\n" +
+                    "• Monitor for side effects:\n" +
+                    "  - ACEi/ARB: cough, hyperkalemia\n" +
+                    "  - CCB: edema\n" +
+                    "  - Thiazides: hypokalemia\n\n" +
+                    "Lifestyle Modifications:\n" +
+                    "• Reduce sodium (<2.3g/day)\n" +
+                    "• DASH diet\n" +
+                    "• Regular physical activity\n" +
+                    "• Weight management\n" +
+                    "• Limit alcohol\n" +
+                    "• Stress management",
 
                 bp_untreated: "Blood pressure management (no medication):\n" +
                     "BP Targets:\n" +
-                    "• General target: <130/80 mmHg\n" +
-                    "• Consider medication if:\n" +
-                    "  - BP consistently >130/80 mmHg\n" +
-                    "  - With high CV risk\n" +
-                    "  - With diabetes or kidney disease\n\n" +
-                    "Lifestyle Modifications:\n" +
-                    "• DASH diet\n" +
-                    "• Sodium restriction (<2.3g/day)\n" +
-                    "• Regular physical activity\n" +
-                    "• Weight management\n" +
-                    "• Stress reduction\n\n" +
+                    "• Optimal: <120/80 mmHg\n" +
+                    "• Normal: 120-129/<80 mmHg\n" +
+                    "• Elevated: 130-139/80-89 mmHg\n\n" +
+                    "Consider starting medication if:\n" +
+                    "• BP consistently ≥130/80 mmHg with high CV risk\n" +
+                    "• BP consistently ≥140/90 mmHg for others\n" +
+                    "• With diabetes or kidney disease\n" +
+                    "• With target organ damage\n\n" +
+                    "Lifestyle Modifications (Essential):\n" +
+                    "• DASH diet plan:\n" +
+                    "  - Rich in fruits, vegetables, whole grains\n" +
+                    "  - Low-fat dairy products\n" +
+                    "  - Reduce saturated fat\n" +
+                    "• Sodium restriction:\n" +
+                    "  - Ideal: <1.5g/day\n" +
+                    "  - Maximum: <2.3g/day\n" +
+                    "• Physical activity:\n" +
+                    "  - 150 min/week moderate activity\n" +
+                    "  - Or 75 min/week vigorous activity\n" +
+                    "• Weight management:\n" +
+                    "  - Target BMI <25 kg/m²\n" +
+                    "  - Weight loss if overweight\n" +
+                    "• Alcohol limitation:\n" +
+                    "  - Men: ≤2 drinks/day\n" +
+                    "  - Women: ≤1 drink/day\n\n" +
                     "Monitoring:\n" +
                     "• Regular BP checks\n" +
                     "• Keep BP diary\n" +
-                    "• Follow-up as advised",
+                    "• Follow-up as advised by healthcare provider",
 
                 diabetes: "Diabetes management:\n" +
                     "Glycemic Targets:\n" +
@@ -240,22 +271,67 @@ const i18n = {
                     "- 遵循地中海饮食模式\n" +
                     "- 维持健康体重（BMI <25 kg/m²）",
                 bp_treated: "高血压管理（服用降压药）：\n" +
-                    "- 血压控制目标 <130/80 mmHg\n" +
-                    "- 一线用药：ACEi/ARB、CCB或噻嗪类利尿剂\n" +
-                    "- 如血压超过目标值20/10 mmHg以上考虑联合用药\n" +
-                    "- 控制前每周监测血压，之后每月监测\n" +
-                    "- 定期监测肾功能和电解质\n" +
-                    "- 必要的生活方式干预：\n" +
-                    "  • 限制钠摄入（<2.3g/天）\n" +
-                    "  • DASH饮食\n" +
-                    "  • 规律运动\n" +
-                    "  • 限制饮酒\n" +
-                    "  • 压力管理",
+                    "血压目标：\n" +
+                    "• 一般目标：<130/80 mmHg\n" +
+                    "• 65岁以上：<130-139/70-79 mmHg\n" +
+                    "• 合并糖尿病：<130/80 mmHg\n" +
+                    "• 合并慢性肾病：<130/80 mmHg\n\n" +
+                    "药物治疗：\n" +
+                    "• 一线用药选择：\n" +
+                    "  - ACEi/ARB（如：赖诺普利、缬沙坦）\n" +
+                    "  - CCB（如：氨氯地平）\n" +
+                    "  - 噻嗪类利尿剂（如：氢氯噻嗪）\n" +
+                    "• 血压超过目标值20/10 mmHg以上考虑联合用药：\n" +
+                    "  - 首选ACEi/ARB + CCB\n" +
+                    "  - 替代方案ACEi/ARB + 噻嗪类\n" +
+                    "  - 避免ACEi + ARB联用\n\n" +
+                    "监测要求：\n" +
+                    "• 每天2次家庭血压监测\n" +
+                    "• 肾功能和电解质检查：\n" +
+                    "  - ACEi/ARB开始/调整后2-4周\n" +
+                    "  - 之后每6-12个月\n" +
+                    "• 药物不良反应监测：\n" +
+                    "  - ACEi/ARB：咳嗽、高钾血症\n" +
+                    "  - CCB：水肿\n" +
+                    "  - 噻嗪类：低钾血症\n\n" +
+                    "生活方式干预：\n" +
+                    "• 限制钠摄入（<2.3g/天）\n" +
+                    "• DASH饮食\n" +
+                    "• 规律运动\n" +
+                    "• 体重管理\n" +
+                    "• 限制饮酒\n" +
+                    "• 压力管理",
                 bp_untreated: "高血压管理（未服用降压药）：\n" +
-                    "- 建议就医评估降压治疗\n" +
-                    "- 血压控制目标 <130/80 mmHg\n" +
-                    "- 考虑开始药物治疗\n" +
-                    "- 定期监测血压",
+                    "血压目标：\n" +
+                    "• 理想：<120/80 mmHg\n" +
+                    "• 正常：120-129/<80 mmHg\n" +
+                    "• 偏高：130-139/80-89 mmHg\n\n" +
+                    "考虑开始药物治疗的情况：\n" +
+                    "• 高CV风险者血压持续≥130/80 mmHg\n" +
+                    "• 其他人群血压持续≥140/90 mmHg\n" +
+                    "• 合并糖尿病或肾病\n" +
+                    "• 存在靶器官损害\n\n" +
+                    "生活方式干预（必要）：\n" +
+                    "• DASH饮食计划：\n" +
+                    "  - 富含水果、蔬菜、全谷物\n" +
+                    "  - 低脂乳制品\n" +
+                    "  - 减少饱和脂肪\n" +
+                    "• 钠摄入限制：\n" +
+                    "  - 理想：<1.5g/天\n" +
+                    "  - 最大：<2.3g/天\n" +
+                    "• 体育活动：\n" +
+                    "  - 每周150分钟中等强度活动\n" +
+                    "  - 或每周75分钟剧烈活动\n" +
+                    "• 体重管理：\n" +
+                    "  - 目标BMI <25 kg/m²\n" +
+                    "  - 超重者减重\n" +
+                    "• 限制饮酒：\n" +
+                    "  - 男性：≤2杯/天\n" +
+                    "  - 女性：≤1杯/天\n\n" +
+                    "监测要求：\n" +
+                    "• 定期测量血压\n" +
+                    "• 记录血压日志\n" +
+                    "• 遵医嘱随访",
                 diabetes: "糖尿病管理：\n" +
                     "- HbA1c控制目标 <7%\n" +
                     "- 优先考虑SGLT2抑制剂\n" +
@@ -570,38 +646,54 @@ const i18n = {
             moderate: "Ihr 10-Jahres-Risiko ist mittel.",
             high: "Ihr 10-Jahres-Risiko ist hoch.",
             lowRisk: {
-                guidelines_notice: "Based on latest international guidelines:\n" +
-                    "• ADA (American Diabetes Association) Annual Standards\n" +
-                    "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
-                    "• ESC (European Society of Cardiology) CVD Prevention Guidelines",
+                guidelines_notice: "Basierend auf den neuesten internationalen Richtlinien:\n" +
+                    "• ADA (American Diabetes Association) Jahresstandards\n" +
+                    "• ACC/AHA Herz-Kreislauf-Präventionsrichtlinien\n" +
+                    "• ESC (Europäische Gesellschaft für Kardiologie) CVD-Präventionsrichtlinien",
                 lifestyle: "Lifestyle recommendations:\n" +
                     "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
                     "- Follow Mediterranean diet pattern\n" +
                     "- Maintain healthy weight (BMI <25 kg/m²)",
                 bp_treated: "Blutdruckmanagement (mit Medikation):\n" +
-                    "- Zielwert RR <130/80 mmHg\n" +
-                    "- Medikation fortsetzen und wöchentlich überwachen\n" +
-                    "- Regelmäßige Nachsorge\n" +
-                    "- Nebenwirkungen überwachen",
+                    "Blutdruckziele:\n" +
+                    "• Allgemeines Ziel: <130/80 mmHg\n" +
+                    "• Alter >65: <130-139/70-79 mmHg\n" +
+                    "• Mit Diabetes: <130/80 mmHg\n" +
+                    "• Mit chronischer Nierenerkrankung: <130/80 mmHg\n\n" +
+                    "Medikamente:\n" +
+                    "• Erstlinienoptionen:\n" +
+                    "  - ACE-Hemmer/ARB (z.B. Lisinopril, Valsartan)\n" +
+                    "  - Kalziumkanalblocker (z.B. Amlodipine)\n" +
+                    "  - Thiazid-Diuretika (z.B. HCT)\n" +
+                    "• Kombinationstherapie wenn >20/10 mmHg über Zielwert:\n" +
+                    "  - ACE-Hemmer/ARB + Kalziumkanalblocker bevorzugt\n" +
+                    "  - ACE-Hemmer/ARB + Thiazid alternativ\n" +
+                    "  - ACE-Hemmer + ARB Kombination vermeiden\n\n" +
+                    "Überwachung:\n" +
+                    "• Häusliche Blutdruckmessung 2x täglich\n" +
+                    "• Nierenfunktion und Elektrolyte kontrollieren:\n" +
+                    "  - 2-4 Wochen nach Start/Änderung von ACE-Hemmer/ARB\n" +
+                    "  - Dann alle 6-12 Monate\n" +
+                    "• Nebenwirkungsüberwachung:\n" +
+                    "  - ACE-Hemmer/ARB: Husten, Hyperkaliämie\n" +
+                    "  - Kalziumkanalblocker: Ödeme\n" +
+                    "  - Thiazide: Hypokaliämie",
                 bp_untreated: "Blutdruckmanagement (ohne Medikation):\n" +
-                    "- Arzt konsultieren\n" +
-                    "- Zielwert RR <130/80 mmHg\n" +
-                    "- Medikation erwägen\n" +
-                    "- Regelmäßige Überwachung",
-                diabetes: "Diabetesmanagement:\n" +
-                    "- Zielwert HbA1c <7%\n" +
-                    "- SGLT2-Hemmer erwägen\n" +
-                    "- Blutzucker und Nierenfunktion überwachen\n" +
-                    "- HbA1c alle 3-6 Monate kontrollieren",
-                lipids: "Lipidmanagement:\n" +
-                    "- Sehr hohes Risiko (ASCVD-Risiko >20%): LDL-C <55 mg/dL (1,4 mmol/L)\n" +
-                    "- Hohes Risiko (Risiko 7,5-19,9%): LDL-C <70 mg/dL (1,8 mmol/L)\n" +
-                    "- Mittleres Risiko (Risiko 5-7,4%): LDL-C <100 mg/dL (2,6 mmol/L)\n" +
-                    "- Niedriges Risiko (Risiko <5%): Erwägen LDL-C <116 mg/dL (3,0 mmol/L)\n" +
-                    "- Hochintensive Statine bei 10-Jahres-Risiko ≥20%\n" +
-                    "- Moderat intensive Statine bei Risiko 7,5-19,9%\n" +
-                    "- Lipide alle 3-12 Monate überwachen\n" +
-                    "- Bei Nichterreichen der Zielwerte Nicht-Statin-Therapie erwägen"
+                    "Blutdruckziele:\n" +
+                    "• Optimal: <120/80 mmHg\n" +
+                    "• Normal: 120-129/<80 mmHg\n" +
+                    "• Erhöht: 130-139/80-89 mmHg\n\n" +
+                    "Medikation erwägen wenn:\n" +
+                    "• Blutdruck konstant ≥130/80 mmHg mit hohem CV-Risiko\n" +
+                    "• Blutdruck konstant ≥140/90 mmHg für andere\n" +
+                    "• Mit Diabetes oder Nierenerkrankung\n" +
+                    "• Mit Endorganschäden\n\n" +
+                    "Lebensstiländerungen (essentiell):\n" +
+                    "• DASH-Ernährungsplan\n" +
+                    "• Natriumrestriktion (<2,3g/Tag)\n" +
+                    "• Regelmäßige körperliche Aktivität\n" +
+                    "• Gewichtsmanagement\n" +
+                    "• Alkoholeinschränkung"
             }
         },
         error: {
@@ -674,41 +766,57 @@ const i18n = {
         },
         advice: {
             low: "あなたの10年リスクは低リスクです。",
-            moderate: "あなたの10年リ��クは中程度リスクです。",
+            moderate: "あなたの10年リスクは中程度リスクです。",
             high: "あなたの10年リスクは高リスクです。",
             lowRisk: {
-                guidelines_notice: "Based on latest international guidelines:\n" +
-                    "• ADA (American Diabetes Association) Annual Standards\n" +
-                    "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
-                    "• ESC (European Society of Cardiology) CVD Prevention Guidelines",
+                guidelines_notice: "最新の国際ガイドラインに基づく：\n" +
+                    "• ADA（米国糖尿病学会）年次基準\n" +
+                    "• ACC/AHA心血管疾患予防ガイドライン\n" +
+                    "• ESC（欧州心臓病学会）CVD予防ガイドライン",
                 lifestyle: "Lifestyle recommendations:\n" +
                     "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
                     "- Follow Mediterranean diet pattern\n" +
                     "- Maintain healthy weight (BMI <25 kg/m²)",
                 bp_treated: "血圧管理（服薬中）：\n" +
-                    "- 目標血圧 <130/80 mmHg\n" +
-                    "- 服薬を継続し、週1回モニタリング\n" +
-                    "- 定期的なフォローアップ\n" +
-                    "- 副作用のモニタ���ング",
+                    "血圧目標：\n" +
+                    "• 一般目標：<130/80 mmHg\n" +
+                    "• 65歳以上：<130-139/70-79 mmHg\n" +
+                    "• 糖尿病合併：<130/80 mmHg\n" +
+                    "• 慢性腎臓病合併：<130/80 mmHg\n\n" +
+                    "薬物治療：\n" +
+                    "• 第一選択薬：\n" +
+                    "  - ACE阻害薬/ARB（例：リシノプリル、バルサルタン）\n" +
+                    "  - Ca拮抗薬（例：アムロジピン）\n" +
+                    "  - サイアザイド系利尿薬（例：HCTZ）\n" +
+                    "• 目標値より20/10 mmHg以上高い場合の併用療法：\n" +
+                    "  - ACE阻害薬/ARB + Ca拮抗薬が推奨\n" +
+                    "  - ACE阻害薬/ARB + サイアザイド系が代替\n" +
+                    "  - ACE阻害薬 + ARBの併用は避ける\n\n" +
+                    "モニタリング：\n" +
+                    "• 家庭血圧を1日2回測定\n" +
+                    "• 腎機能と電解質の確認：\n" +
+                    "  - ACE阻害薬/ARB開始/変更後2-4週間\n" +
+                    "  - その後6-12ヶ月ごと\n" +
+                    "• 副作用モニタリング：\n" +
+                    "  - ACE阻害薬/ARB：咳嗽、高カリウム血症\n" +
+                    "  - Ca拮抗薬：浮腫\n" +
+                    "  - サイアザイド系：低カリウム血症",
                 bp_untreated: "血圧管理（未服薬）：\n" +
-                    "- 医療機関を受診\n" +
-                    "- 目標血圧 <130/80 mmHg\n" +
-                    "- 投薬開始を検討\n" +
-                    "- 定期的なモニタリング",
-                diabetes: "糖尿病管理：\n" +
-                    "- HbA1c目標値 <7%\n" +
-                    "- SGLT2阻害薬の検討\n" +
-                    "- 血糖値と腎機能のモニタリング\n" +
-                    "- 3-6ヶ月ごとにHbA1cをチェック",
-                lipids: "脂質管理：\n" +
-                    "- 超高リスク（ASCVD リスク>20%）：LDL-C <55 mg/dL (1.4 mmol/L)\n" +
-                    "- 高リスク（リスク7.5-19.9%）：LDL-C <70 mg/dL (1.8 mmol/L)\n" +
-                    "- 中等度リスク（リスク5-7.4%）：LDL-C <100 mg/dL (2.6 mmol/L)\n" +
-                    "- 低リスク（リスク<5%）：LDL-C <116 mg/dL (3.0 mmol/L)を考慮\n" +
-                    "- 10年リスク≥20%の場合は高強度スタチン\n" +
-                    "- リスク7.5-19.9%の場合は中等度スタチン\n" +
-                    "- 3-12ヶ月ごとに脂質をモニタリング\n" +
-                    "- 目標未達成の場合は非スタチン療法を検討"
+                    "血圧目標：\n" +
+                    "• 最適：<120/80 mmHg\n" +
+                    "• 正常：120-129/<80 mmHg\n" +
+                    "• 高値：130-139/80-89 mmHg\n\n" +
+                    "薬物治療を考慮する場合：\n" +
+                    "• 心血管リスク高値で血圧が持続的に≥130/80 mmHg\n" +
+                    "• その他の場合で血圧が持続的に≥140/90 mmHg\n" +
+                    "• 糖尿病または腎臓病合併\n" +
+                    "• 標的臓器障害あり\n\n" +
+                    "生活習慣の改善（必須）：\n" +
+                    "• DASH食\n" +
+                    "• 食塩制限（<2.3g/日）\n" +
+                    "• 定期的な運動\n" +
+                    "• 体重管理\n" +
+                    "• 節酒"
             }
         },
         error: {
