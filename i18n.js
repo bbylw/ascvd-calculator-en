@@ -332,41 +332,119 @@ const i18n = {
                     "• Regular BP checks\n" +
                     "• Keep BP diary\n" +
                     "• Follow-up as advised by healthcare provider",
-                diabetes: "Diabetes management:\n" +
-                    "• Blood glucose control targets:\n" +
-                    "  - HbA1c <7% (most patients)\n" +
-                    "  - Individualized targets: 6.5-8%\n" +
-                    "• Medications:\n" +
-                    "  - First-line: Metformin\n" +
-                    "  - Prefer SGLT2 inhibitors or GLP-1 receptor agonists\n" +
-                    "  - Preferred for patients with cardiovascular disease\n" +
-                    "• Monitoring:\n" +
-                    "  - Check HbA1c every 3-6 months\n" +
-                    "  - Monitor kidney function\n" +
-                    "  - Perform annual eye and foot exams\n" +
-                    "  - Regular cardiovascular risk assessment",
-                lipids: "Lipid management:\n" +
-                    "• LDL-C target values based on risk:\n" +
-                    "  - Very high risk (>20%): LDL-C <55 mg/dL (1.4 mmol/L)\n" +
-                    "  - High risk (7.5-19.9%): LDL-C <70 mg/dL (1.8 mmol/L)\n" +
-                    "  - Moderate risk (5-7.4%): LDL-C <100 mg/dL (2.6 mmol/L)\n" +
-                    "  - Low risk (<5%): Consider LDL-C <116 mg/dL (3.0 mmol/L)\n\n" +
-                    "• Statin therapy:\n" +
-                    "  - High-intensity: Atorvastatin 40-80mg or Rosuvastatin 20-40mg\n" +
-                    "  - Moderate-intensity: Atorvastatin 10-20mg or Rosuvastatin 5-10mg\n\n" +
-                    "• Non-statin medications:\n" +
-                    "  - Ezetimibe 10mg\n" +
-                    "  - PCSK9 inhibitors\n" +
-                    "  - Bile acid sequestrants\n\n" +
-                    "• Lifestyle modifications:\n" +
-                    "  - Mediterranean or low-fat diet\n" +
-                    "  - Regular exercise\n" +
+                diabetes: "Diabetes management (high risk):\n" +
+                    "Blood glucose control targets:\n" +
+                    "• HbA1c <6.5% (when no hypoglycemic risk)\n" +
+                    "• Fasting blood glucose 4.4-6.1 mmol/L\n" +
+                    "• Postprandial 2-hour blood glucose <7.8 mmol/L\n\n" +
+                    "Drug treatment strategy:\n" +
+                    "• First-line drugs:\n" +
+                    "  - Metformin (500-2000mg/day)\n" +
+                    "  - Gradually increase the dose based on tolerance\n" +
+                    "• Early combination therapy:\n" +
+                    "  - SGLT2 inhibitors (Dapagliflozin 10mg/day or Empagliflozin 10mg/day)\n" +
+                    "  - GLP-1 receptor agonists (Semaglutide 1mg/week or Liraglutide 1.8mg/day)\n" +
+                    "• Treatment principles:\n" +
+                    "  - Prioritize drugs with cardiovascular benefits\n" +
+                    "  - Individualize based on patient characteristics\n" +
+                    "  - Focus on improving adherence\n\n" +
+                    "Complication screening and prevention:\n" +
+                    "• Cardiovascular disease:\n" +
+                    "  - Every 3 months, assess cardiovascular risk\n" +
+                    "  - Strictly control blood pressure and lipids\n" +
+                    "  - Heart ultrasound and stress test if necessary\n" +
+                    "• Kidney disease:\n" +
+                    "  - Every 3 months, assess kidney function and urinary albumin\n" +
+                    "  - Optimize renal protective therapy\n" +
+                    "  - Avoid nephrotoxic drugs\n" +
+                    "• Retinopathy:\n" +
+                    "  - Every 3-6 months, fundus examination\n" +
+                    "  - Early detection and intervention\n" +
+                    "• Neuropathy:\n" +
+                    "  - Every 3 months, foot examination\n" +
+                    "  - Prevent foot ulcers\n" +
+                    "  - Pain management\n\n" +
+                    "Monitoring requirements:\n" +
+                    "• Blood glucose monitoring:\n" +
+                    "  - Daily monitoring of 4-6 times\n" +
+                    "  - Use a continuous glucose monitoring system\n" +
+                    "  - Record blood glucose variability\n" +
+                    "• Regular checkups:\n" +
+                    "  - Every 3 months, HbA1c\n" +
+                    "  - Every 3-6 months, liver and kidney function\n" +
+                    "  - Annual comprehensive complication screening\n" +
+                    "• Lifestyle management:\n" +
+                    "  - Medical nutrition therapy\n" +
+                    "  - Regular exercise plan\n" +
                     "  - Weight management\n" +
-                    "  - Smoking cessation\n\n" +
-                    "• Monitoring:\n" +
-                    "  - Check liver function before starting\n" +
-                    "  - Check lipid and liver function every 3-12 months\n" +
-                    "  - Monitor for muscle symptoms"
+                    "  - Smoking cessation\n" +
+                    "• Education and follow-up:\n" +
+                    "  - Diabetes self-management education\n" +
+                    "  - Doctor's visit every 2 weeks\n" +
+                    "  - Psychological support\n" +
+                    "  - Family support system",
+                lipids: "Lipid management (high risk):\n" +
+                    "Treatment targets:\n" +
+                    "• LDL-C <1.4 mmol/L（55 mg/dL）\n" +
+                    "• 非HDL-C <2.2 mmol/L（85 mg/dL）\n" +
+                    "• 甘油三酯 <1.7 mmol/L（150 mg/dL）\n" +
+                    "• ApoB <65 mg/dL\n\n" +
+                    "药物治疗：\n" +
+                    "• 强化他汀治疗（必须）：\n" +
+                    "  - 阿托伐他汀80mg/天\n" +
+                    "  - 或瑞舒伐他汀40mg/天\n" +
+                    "  - 严密监测不良反应\n" +
+                    "• 联合用药（必要时）：\n" +
+                    "  - 依折麦布10mg/天（首选联合用药）\n" +
+                    "  - PCSK9抑制剂（依洛尤单抗140mg/2周或阿利西尤单抗150mg/2周）\n" +
+                    "  - 贝特类药物（高TG时）\n" +
+                    "  - 胆固醇吸收抑制剂\n" +
+                    "• 用药原则：\n" +
+                    "  - 从最大耐受剂量他汀开始\n" +
+                    "  - 2-4周评估疗效和耐受性\n" +
+                    "  - LDL-C未达标时及时加用非他汀类药物\n" +
+                    "  - 注意药物相互作用\n\n" +
+                    "监测要求：\n" +
+                    "• 治疗前评估：\n" +
+                    "  - 空腹血脂全套\n" +
+                    "  - 肝肾功能\n" +
+                    "  - 空腹血糖\n" +
+                    "  - 甲状腺功能\n" +
+                    "  - 肌酸激酶基线值\n" +
+                    "• 治疗期间监测：\n" +
+                    "  - 开始治疗2-4周复查血脂和肝功能\n" +
+                    "  - 达标后每4-8周复查\n" +
+                    "  - 定期评估心血管风险\n" +
+                    "  - 监测肌肉症状和肝功能\n" +
+                    "• 不良反应监测：\n" +
+                    "  - 肌肉症状（肌痛、无力）\n" +
+                    "  - 肝功能异常\n" +
+                    "  - 新发糖尿病风险\n" +
+                    "  - 药物相互作用\n\n" +
+                    "生活方式干预：\n" +
+                    "• 饮食控制：\n" +
+                    "  - 严格限制饱和脂肪（<5%总热量）\n" +
+                    "  - 完全避免反式脂肪\n" +
+                    "  - 增加单不饱和和多不饱和脂肪酸\n" +
+                    "  - 增加膳食纤维（25-30g/天）\n" +
+                    "  - 限制胆固醇摄入（<200mg/天）\n" +
+                    "  - 增加植物固醇/甾醇（2g/天）\n" +
+                    "• 运动计划：\n" +
+                    "  - 每周≥150分钟中等强度有氧运动\n" +
+                    "  - 每周2-3次抗阻运动\n" +
+                    "  - 避免久坐\n" +
+                    "  - 运动强度循序渐进\n" +
+                    "• 体重管理：\n" +
+                    "  - BMI目标<23 kg/m²\n" +
+                    "  - 超重者每周减重0.5-1kg\n" +
+                    "  - 记录体重变化\n" +
+                    "  - 维持稳定体重\n" +
+                    "• 其他要求：\n" +
+                    "  - 严格戒烟\n" +
+                    "  - 禁止饮酒\n" +
+                    "  - 规律作息\n" +
+                    "  - 压力管理\n" +
+                    "  - 定期参加心脏康复"
             }
         },
         error: {
@@ -430,7 +508,7 @@ const i18n = {
             title: "计算结果",
             risk: "10年ASCVD风险:",
             levels: {
-                low: "低��险",
+                low: "低风险",
                 moderate: "中等风险",
                 high: "高风险"
             }
@@ -496,7 +574,7 @@ const i18n = {
                     "  - 监测血糖和血脂\n" +
                     "• 不良反应监测：\n" +
                     "  - ACEi/ARB：咳嗽、高钾血症、肾功能\n" +
-                    "  - CCB：水肿、心率\n" +
+                    "  - CCB水肿、心率\n" +
                     "  - 利尿剂：电解质、尿酸\n\n" +
                     "生活方式干预：\n" +
                     "• 饮食控制：\n" +
@@ -528,11 +606,11 @@ const i18n = {
                     "• 单药治疗起始：\n" +
                     "  - 从小剂量开始\n" +
                     "  - 根据反应逐步调整\n" +
-                    "  - 4-6周评估疗效\n" +
+                    "  - 4-6周评估疗\n" +
                     "• 联合用药考虑：\n" +
                     "  - 血压超过目标值20/10 mmHg时\n" +
                     "  - 首选：ACEi/ARB + CCB\n" +
-                    "  - 替代：ACEi/ARB + 噻嗪样利尿剂\n" +
+                    "  - 替代：ACEi/ARB + 噻嗪样利尿\n" +
                     "  - 优先使用单片复方制剂\n\n" +
                     "生活方式干预（必要）：\n" +
                     "• DASH饮食计划：\n" +
@@ -566,7 +644,7 @@ const i18n = {
                     "• 用药后监测：\n" +
                     "  - 开始/调整药物后2-4周复查\n" +
                     "  - 定期监测肾功能和电解质\n" +
-                    "  - 关���药物不良反应\n" +
+                    "  - 关药物不良反应\n" +
                     "  - 评估用药依从性",
                 diabetes: "糖尿病管理：\n" +
                     "• 血糖控制目标：\n" +
@@ -595,7 +673,7 @@ const i18n = {
                     "  - PCSK9抑制剂\n" +
                     "  - 倍他米酸\n\n" +
                     "• 生活方式干预：\n" +
-                    "  - 地中海式或低脂饮食\n" +
+                    "  - 地中海或低脂饮食\n" +
                     "  - 规律运动\n" +
                     "  - 体重管理\n" +
                     "  - 戒烟\n\n" +
@@ -628,73 +706,37 @@ const i18n = {
                     "监测要求：\n" +
                     "• 血压监测：\n" +
                     "  - 每天早晚各测量1次\n" +
-                    "  - 详细记录血压日志\n" +
-                    "  - 监测体位性低血压\n" +
+                    "  - 每次测量间隔1分钟，连续3次\n" +
+                    "  - 记录所有测量值\n" +
+                    "  - 必要时24小时动态血压监测\n" +
                     "• 实验室检查：\n" +
-                    "  - 每2-4周检查肾功能和电解质\n" +
-                    "  - 定期评估尿蛋白\n" +
-                    "  - 监测血糖和血脂\n" +
-                    "• 靶��官评估：\n" +
-                    "  - 定期心电图检查\n" +
-                    "  - 眼底检查\n" +
-                    "  - 尿微量白蛋白\n" +
+                    "  - 基线：肾功能、电解质、血糖、血脂\n" +
+                    "  - 开始/调整药物后2周复查肾功能和电解质\n" +
+                    "  - 之后每3个月复查\n" +
+                    "• 靶器官评估：\n" +
+                    "  - 每3个月心电图\n" +
+                    "  - 每年超声心动图\n" +
+                    "  - 定期眼底检查\n" +
                     "• 不良反应监测：\n" +
-                    "  - ACEi/ARB：咳嗽、高钾血症、肾功能\n" +
-                    "  - CCB：水肿、心率\n" +
-                    "  - 利尿剂：电解质、尿酸\n\n" +
-                    "生活方式干预（加强）：\n" +
+                    "  - ACEi/ARB：肾功能、血钾、咳嗽\n" +
+                    "  - CCB：水肿、心率、牙龈增生\n" +
+                    "  - 利尿剂：电解质、尿酸、血糖\n\n" +
+                    "生活方式干预：\n" +
                     "• 饮食控制：\n" +
                     "  - 严格限制钠摄入<1.5g/天\n" +
                     "  - DASH饮食模式\n" +
-                    "  - 增加钾的摄入\n" +
+                    "  - 限制总热量\n" +
+                    "  - 增加钾摄入（无禁忌时）\n" +
                     "• 运动指导：\n" +
-                    "  - 每周>150分钟中等强度运动\n" +
-                    "  - 增加运动频率和强度\n" +
+                    "  - 每周150-300分钟中等强度有氧运动\n" +
+                    "  - 每周2-3次抗阻运动\n" +
+                    "  - 避免剧烈运动\n" +
+                    "  - 运动时监测血压反应\n" +
                     "• 其他要求：\n" +
-                    "  - 必须戒烟\n" +
-                    "  - 严格限制饮酒\n" +
-                    "  - 控制体重\n" +
-                    "  - 规律作息",
-                diabetes: "糖尿病管理（中等风险）：\n" +
-                    "血糖控制目标：\n" +
-                    "• HbA1c <7.0%（一般目标）\n" +
-                    "• 空腹血糖 4.4-7.0 mmol/L\n" +
-                    "• 餐后2小时血糖 <10.0 mmol/L\n\n" +
-                    "药物治疗策略：\n" +
-                    "• 基础治疗：\n" +
-                    "  - 二甲双胍为首选\n" +
-                    "  - 从小剂量开始，逐步调整\n" +
-                    "• 联合用药考虑：\n" +
-                    "  - SGLT2抑制剂\n" +
-                    "  - GLP-1受体激动剂\n" +
-                    "  - DPP-4抑制剂\n" +
-                    "• 特殊情况：\n" +
-                    "  - 合并心血管疾病优先SGLT2抑制剂\n" +
-                    "  - 肥胖患者考虑GLP-1受体激动剂\n\n" +
-                    "并发症筛查：\n" +
-                    "• 心血管评估：\n" +
-                    "  - 每6个月评估心血管风险\n" +
-                    "  - 定期心电图检查\n" +
-                    "• 肾功能监测：\n" +
-                    "  - 每6个月评估肾功能\n" +
-                    "  - 尿微量白蛋白检测\n" +
-                    "• 其他检查：\n" +
-                    "  - 年度眼底检查\n" +
-                    "  - 定期足部检查\n" +
-                    "  - 神经病变筛查\n\n" +
-                    "生活方式管理：\n" +
-                    "• 饮食控制：\n" +
-                    "  - 合理分配碳水化合物\n" +
-                    "  - 控制总热量\n" +
-                    "  - 规律进餐\n" +
-                    "• 运动指导：\n" +
-                    "  - 每周150分钟中等强度运动\n" +
-                    "  - 运动前后监测血糖\n" +
-                    "  - 防范低血糖\n" +
-                    "• 自我管理：\n" +
-                    "  - 规律监测血糖\n" +
-                    "  - 记录血糖日志\n" +
-                    "  - 按时随访"
+                    "  - 严格戒烟限酒\n" +
+                    "  - 减重目标：3-6个月内减重5%\n" +
+                    "  - 规律作息，保证充足睡眠\n" +
+                    "  - 积极进行压力管理"
             },
             highRisk: {
                 bp_untreated: "血压管理（未服用降压药，高风险）：\n" +
@@ -704,7 +746,7 @@ const i18n = {
                     "• 合并CKD和蛋白尿：<130/80 mmHg\n" +
                     "• 合并糖尿病：<130/80 mmHg\n\n" +
                     "用药方案优化：\n" +
-                    "• 现有方案��估：\n" +
+                    "• 现有方案评估：\n" +
                     "  - 评估现有药物的剂量是否足够\n" +
                     "  - 检查服药依从性\n" +
                     "  - 评估不良反应\n" +
@@ -753,12 +795,129 @@ const i18n = {
                     "  - 在医生指导下进行运动\n" +
                     "  - 循序渐进增加运动量\n" +
                     "  - 避免剧烈运动\n" +
-                    "  - 监测运动时血压反应\n" +
+                    "  - 监测动时血压反应\n" +
                     "• 其他要求：\n" +
                     "  - 严格戒烟限酒\n" +
                     "  - 控制体重\n" +
                     "  - 规律作息\n" +
                     "  - 避免精神压力\n" +
+                    "  - 定期参加心脏康复\n" +
+                    "• 家庭支持：\n" +
+                    "  - 家属参与血压监测\n" +
+                    "  - 协助用药管理\n" +
+                    "  - 陪同就医随访",
+                diabetes: "糖尿病管理（高风险）：\n" +
+                    "血糖控制目标：\n" +
+                    "• HbA1c <6.5%（当无低血糖风险）\n" +
+                    "• 空腹血糖 4.4-6.1 mmol/L\n" +
+                    "• 餐后2小时血糖 <7.8 mmol/L\n\n" +
+                    "药物治疗策略：\n" +
+                    "• 一线药物：\n" +
+                    "  - 二甲双胍（500-2000mg/天）\n" +
+                    "  - 根据耐受性逐渐增加剂量\n" +
+                    "• 早期联合治疗：\n" +
+                    "  - SGLT2抑制剂（Dapagliflozin 10mg/天或Empagliflozin 10mg/天）\n" +
+                    "  - GLP-1受体激动剂（利拉鲁肽1.2-1.8mg/天）\n" +
+                    "• 治疗原则：\n" +
+                    "  - 优先使用心血管获益的药物\n" +
+                    "  - 根据患者特点个体化治疗\n" +
+                    "  - 注重提高依从性\n\n" +
+                    "并发症筛查和预防：\n" +
+                    "• 心血管疾病：\n" +
+                    "  - 每3个月评估心血管风险\n" +
+                    "  - 严格控制血压和血脂\n" +
+                    "  - 必要时进行心脏超声和应激测试\n" +
+                    "• 肾病：\n" +
+                    "  - 每3个月评估肾功能和尿微量白蛋白\n" +
+                    "  - 优化肾保护治疗\n" +
+                    "  - 避免使用肾毒性药物\n" +
+                    "• 视网膜病变：\n" +
+                    "  - 每3-6个月进行眼底检查\n" +
+                    "  - 早期发现和干预\n" +
+                    "• 神经病变：\n" +
+                    "  - 每3个月进行足部检查\n" +
+                    "  - 预防足部溃疡\n" +
+                    "  - 疼痛管理\n\n" +
+                    "监测要求：\n" +
+                    "• 血糖监测：\n" +
+                    "  - 每天监测4-6次\n" +
+                    "  - 使用连续血糖监测系统\n" +
+                    "  - 记录血糖波动\n" +
+                    "• 定期检查：\n" +
+                    "  - 每3个月HbA1c\n" +
+                    "  - 每3-6个月肝肾功能\n" +
+                    "  - 每年全面并发症筛查\n" +
+                    "• 生活方式管理：\n" +
+                    "  - 医学营养治疗\n" +
+                    "  - 定期运动计划\n" +
+                    "  - 体重管理\n" +
+                    "  - 戒烟\n" +
+                    "• 教育与随访：\n" +
+                    "  - 糖尿病自我管理教育\n" +
+                    "  - 每2周一次医生访问\n" +
+                    "  - 心理支持\n" +
+                    "  - 家庭支持系统",
+                lipids: "血脂管理（高风险）：\n" +
+                    "治疗目标：\n" +
+                    "• LDL-C <1.4 mmol/L（55 mg/dL）\n" +
+                    "• 非HDL-C <2.2 mmol/L（85 mg/dL）\n" +
+                    "• 甘油三酯 <1.7 mmol/L（150 mg/dL）\n" +
+                    "• ApoB <65 mg/dL\n\n" +
+                    "药物治疗：\n" +
+                    "• 强化他汀治疗（必须）：\n" +
+                    "  - 阿托伐他汀80mg/天\n" +
+                    "  - 或瑞舒伐他汀40mg/天\n" +
+                    "  - 严密监测不良反应\n" +
+                    "• 联合用药（必要时）：\n" +
+                    "  - 依折麦布10mg/天（首选联合用药）\n" +
+                    "  - PCSK9抑制剂（依洛尤单抗140mg/2周或阿利西尤单抗150mg/2周）\n" +
+                    "  - 贝特类药物（高TG时）\n" +
+                    "  - 胆固醇吸收抑制剂\n" +
+                    "• 用药原则：\n" +
+                    "  - 从最大耐受剂量他汀开始\n" +
+                    "  - 2-4周评估疗效和耐受性\n" +
+                    "  - LDL-C未达标时及时加用非他汀类药物\n" +
+                    "  - 注意药物相互作用\n\n" +
+                    "监测要求：\n" +
+                    "• 治疗前评估：\n" +
+                    "  - 空腹血脂全套\n" +
+                    "  - 肝肾功能\n" +
+                    "  - 空腹血糖\n" +
+                    "  - 甲状腺功能\n" +
+                    "  - 肌酸激酶基线值\n" +
+                    "• 治疗期间监测：\n" +
+                    "  - 开始治疗2-4周复查血脂和肝功能\n" +
+                    "  - 达标后每4-8周复查\n" +
+                    "  - 定期评估心血管风险\n" +
+                    "  - 监测肌肉症状和肝功能\n" +
+                    "• 不良反应监测：\n" +
+                    "  - 肌肉症状（肌痛、无力）\n" +
+                    "  - 肝功能异常\n" +
+                    "  - 新发糖尿病风险\n" +
+                    "  - 药物相互作用\n\n" +
+                    "生活方式干预：\n" +
+                    "• 饮食控制：\n" +
+                    "  - 严格限制饱和脂肪（<5%总热量）\n" +
+                    "  - 完全避免反式脂肪\n" +
+                    "  - 增加单不饱和和多不饱和脂肪酸\n" +
+                    "  - 增加膳食纤维（25-30g/天）\n" +
+                    "  - 限制胆固醇摄入（<200mg/天）\n" +
+                    "  - 增加植物固醇/甾醇（2g/天）\n" +
+                    "• 运动计划：\n" +
+                    "  - 每周≥150分钟中等强度有氧运动\n" +
+                    "  - 每周2-3次抗阻运动\n" +
+                    "  - 避免久坐\n" +
+                    "  - 运动强度循序渐进\n" +
+                    "• 体重管理：\n" +
+                    "  - BMI目标<23 kg/m²\n" +
+                    "  - 超重者每周减重0.5-1kg\n" +
+                    "  - 记录体重变化\n" +
+                    "  - 维持稳定体重\n" +
+                    "• 其他要求：\n" +
+                    "  - 严格戒烟\n" +
+                    "  - 禁止饮酒\n" +
+                    "  - 规律作息\n" +
+                    "  - 压力管理\n" +
                     "  - 定期参加心脏康复\n" +
                     "• 家庭支持：\n" +
                     "  - 家属参与血压监测\n" +
