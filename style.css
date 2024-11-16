@@ -153,4 +153,67 @@ button:hover {
 [dir="rtl"] {
     direction: rtl;
     text-align: right;
+}
+
+/* 添加医学建议显示样式 */
+.guidelines-section,
+.lifestyle-section,
+.bp-section,
+.diabetes-section,
+.lipids-section {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.guidelines-section h4,
+.lifestyle-section h4,
+.bp-section h4,
+.diabetes-section h4,
+.lipids-section h4 {
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+/* 使用 pre 标签保持格式化文本的显示 */
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: inherit;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* 风险等级样式优化 */
+.low-risk,
+.moderate-risk,
+.high-risk {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+/* 确保长文本不会溢出容器 */
+#result {
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .guidelines-section,
+    .lifestyle-section,
+    .bp-section,
+    .diabetes-section,
+    .lipids-section {
+        padding: 0.75rem;
+    }
+    
+    pre {
+        font-size: 0.85rem;
+    }
 } 

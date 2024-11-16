@@ -62,7 +62,7 @@ function getNestedTranslation(obj, path) {
     }, obj);
 }
 
-// 修改显示结果函数以支持多语言
+// 修改显示结果函数
 function displayResult(risk, data) {
     const resultDiv = document.getElementById('result');
     const riskScore = document.getElementById('riskScore');
@@ -76,25 +76,41 @@ function displayResult(risk, data) {
     // 使用当前语言显示风险等级
     const translations = i18n[currentLang].result.levels;
     let adviceHtml = `<div class="${riskAdvice.level.toLowerCase().replace(/\s+/g, '-')}-risk">`;
-    adviceHtml += `<h3>${translations[riskAdvice.level.toLowerCase()]}</h3><ul>`;
+    adviceHtml += `<h3>${translations[riskAdvice.level.toLowerCase()]}</h3>`;
     
-    riskAdvice.advice.forEach(item => {
-        if (typeof item === 'string') {
-            const adviceItems = item.split('\n');
-            adviceItems.forEach(adviceItem => {
-                if (adviceItem.trim()) {
-                    // 处理指南提示的特殊格式
-                    if (adviceItem.startsWith('•')) {
-                        adviceHtml += `<li style="margin-left: 20px;">${adviceItem}</li>`;
-                    } else {
-                        adviceHtml += `<li>${adviceItem}</li>`;
-                    }
-                }
-            });
-        }
-    });
+    // 添加指南参考
+    adviceHtml += `<div class="guidelines-section">
+        <h4>Guidelines Reference</h4>
+        <pre>${riskAdvice.advice[0]}</pre>
+    </div>`;
     
-    adviceHtml += '</ul></div>';
+    // 添加生活方式建议
+    adviceHtml += `<div class="lifestyle-section">
+        <h4>Lifestyle Recommendations</h4>
+        <pre>${riskAdvice.advice[1]}</pre>
+    </div>`;
+    
+    // 添加血压管理建议
+    adviceHtml += `<div class="bp-section">
+        <h4>Blood Pressure Management</h4>
+        <pre>${data.bpTreat === 'yes' ? riskAdvice.advice[2] : riskAdvice.advice[3]}</pre>
+    </div>`;
+    
+    // 添加糖尿病管理建议（如果适用）
+    if (data.diabetes === 'yes') {
+        adviceHtml += `<div class="diabetes-section">
+            <h4>Diabetes Management</h4>
+            <pre>${riskAdvice.advice[4]}</pre>
+        </div>`;
+    }
+    
+    // 添加血脂管理建议
+    adviceHtml += `<div class="lipids-section">
+        <h4>Lipid Management</h4>
+        <pre>${riskAdvice.advice[5]}</pre>
+    </div>`;
+    
+    adviceHtml += '</div>';
     
     riskLevel.innerHTML = adviceHtml;
     resultDiv.scrollIntoView({ behavior: 'smooth' });
