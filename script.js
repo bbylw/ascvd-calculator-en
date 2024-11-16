@@ -221,15 +221,6 @@ function getRiskAdvice(risk, data) {
         advice = i18n[currentLang].advice.lowRisk;  // 暂时使用相同的建议集
     }
 
-    // 确保advice对象存在
-    if (!advice) {
-        console.error('Advice object not found for language:', currentLang);
-        return {
-            level: level,
-            adviceArray: []
-        };
-    }
-
     try {
         // 1. 添加指南参考
         if (advice.guidelines_notice) {
@@ -249,16 +240,20 @@ function getRiskAdvice(risk, data) {
 
         // 3. 添加血压管理建议
         const systolic = parseFloat(data.systolic);
-        if (data.bpTreat === 'yes' && advice.bp_treated) {
+        const bpTitle = data.bpTreat === 'yes' ? 
+            (i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)") :
+            (i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)");
+        
+        const bpContent = data.bpTreat === 'yes' ? advice.bp_treated : advice.bp_untreated;
+
+        // 确保血压建议总是被添加
+        if (bpContent) {
             adviceArray.push({
-                title: i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)",
-                content: advice.bp_treated
+                title: bpTitle,
+                content: bpContent
             });
-        } else if (advice.bp_untreated) {
-            adviceArray.push({
-                title: i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)",
-                content: advice.bp_untreated
-            });
+        } else {
+            console.error('Blood pressure advice content missing for treatment status:', data.bpTreat);
         }
 
         // 4. 添加糖尿病管理建议
@@ -285,6 +280,15 @@ function getRiskAdvice(risk, data) {
                     "Your blood pressure is severely elevated. Seek immediate medical attention."
             });
         }
+
+        // 添加调试日志
+        console.log('Generated advice:', {
+            riskLevel: level,
+            bpTreatment: data.bpTreat,
+            bpContent: bpContent,
+            adviceCount: adviceArray.length,
+            systolic: systolic
+        });
 
         return {
             level: level,
