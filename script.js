@@ -311,8 +311,8 @@ function calculateRisk(data) {
                       (-2.664 * lnAge * lnTotalChol) +
                       (-7.99 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
-                      (1.797 * lnSBP) +
-                      (onBPMeds ? 1.764 : 0) +
+                      (2.019 * lnSBP) +
+                      (onBPMeds ? 1.957 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0);
                 S0 = 0.9144;
