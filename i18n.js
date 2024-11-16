@@ -57,11 +57,44 @@ const i18n = {
         advice: {
             low: "Your 10-year risk is low.",
             moderate: "Your 10-year risk is moderate.",
-            high: "Your 10-year risk is high."
+            high: "Your 10-year risk is high.",
+            lowRisk: {
+                guidelines_notice: "Based on latest international guidelines:\n" +
+                    "• ADA (American Diabetes Association) Annual Standards\n" +
+                    "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
+                    "• ESC (European Society of Cardiology) CVD Prevention Guidelines",
+                lifestyle: "Lifestyle recommendations:\n" +
+                    "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
+                    "- Follow Mediterranean diet pattern\n" +
+                    "- Maintain healthy weight (BMI <25 kg/m²)",
+                bp_treated: "Blood pressure management (on medication):\n" +
+                    "- Target BP <130/80 mmHg\n" +
+                    "- Continue medication and monitor weekly\n" +
+                    "- Regular follow-up\n" +
+                    "- Monitor for side effects",
+                bp_untreated: "Blood pressure management (no medication):\n" +
+                    "- Consult healthcare provider\n" +
+                    "- Target BP <130/80 mmHg\n" +
+                    "- Consider starting medication\n" +
+                    "- Regular monitoring",
+                diabetes: "Diabetes management:\n" +
+                    "- Target HbA1c <7%\n" +
+                    "- Consider SGLT2 inhibitors\n" +
+                    "- Monitor blood glucose and kidney function\n" +
+                    "- Check HbA1c every 3-6 months",
+                lipids: "Lipid management:\n" +
+                    "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
+                    "- Lifestyle intervention first\n" +
+                    "- Annual lipid monitoring"
+            }
         },
         error: {
             general: "An error occurred. Please try again.",
-            validation: "Please check your input values."
+            validation: "Please check your input values.",
+            age: "Age must be between 40 and 79 years.",
+            systolic: "Systolic blood pressure must be between 90 and 200 mmHg.",
+            cholesterol: "Please enter valid cholesterol values.",
+            required: "All fields are required."
         },
         validation: {
             error: "Please enter valid values in all fields."
@@ -125,11 +158,44 @@ const i18n = {
         advice: {
             low: "您的10年风险是低风险。",
             moderate: "您的10年风险是中等风险。",
-            high: "您的10年风险是高风险。"
+            high: "您的10年风险是高风险。",
+            lowRisk: {
+                guidelines_notice: "Based on latest international guidelines:\n" +
+                    "• ADA (American Diabetes Association) Annual Standards\n" +
+                    "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
+                    "• ESC (European Society of Cardiology) CVD Prevention Guidelines",
+                lifestyle: "Lifestyle recommendations:\n" +
+                    "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
+                    "- Follow Mediterranean diet pattern\n" +
+                    "- Maintain healthy weight (BMI <25 kg/m²)",
+                bp_treated: "Blood pressure management (on medication):\n" +
+                    "- Target BP <130/80 mmHg\n" +
+                    "- Continue medication and monitor weekly\n" +
+                    "- Regular follow-up\n" +
+                    "- Monitor for side effects",
+                bp_untreated: "Blood pressure management (no medication):\n" +
+                    "- Consult healthcare provider\n" +
+                    "- Target BP <130/80 mmHg\n" +
+                    "- Consider starting medication\n" +
+                    "- Regular monitoring",
+                diabetes: "Diabetes management:\n" +
+                    "- Target HbA1c <7%\n" +
+                    "- Consider SGLT2 inhibitors\n" +
+                    "- Monitor blood glucose and kidney function\n" +
+                    "- Check HbA1c every 3-6 months",
+                lipids: "Lipid management:\n" +
+                    "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
+                    "- Lifestyle intervention first\n" +
+                    "- Annual lipid monitoring"
+            }
         },
         error: {
             general: "发生错误，请重试。",
-            validation: "请检查输入值。"
+            validation: "请检查输入值。",
+            age: "年龄必须在40至79岁之间。",
+            systolic: "收缩压必须在90至200 mmHg之间。",
+            cholesterol: "请输入有效的胆固醇值。",
+            required: "所有字段都必须填写。"
         },
         validation: {
             error: "请在所有字段中输入有效值。"
@@ -194,11 +260,44 @@ const i18n = {
         advice: {
             low: "Su riesgo de 10 años es bajo.",
             moderate: "Su riesgo de 10 años es moderado.",
-            high: "Su riesgo de 10 años es alto."
+            high: "Su riesgo de 10 años es alto.",
+            lowRisk: {
+                guidelines_notice: "Based on latest international guidelines:\n" +
+                    "• ADA (American Diabetes Association) Annual Standards\n" +
+                    "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
+                    "• ESC (European Society of Cardiology) CVD Prevention Guidelines",
+                lifestyle: "Lifestyle recommendations:\n" +
+                    "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
+                    "- Follow Mediterranean diet pattern\n" +
+                    "- Maintain healthy weight (BMI <25 kg/m²)",
+                bp_treated: "Blood pressure management (on medication):\n" +
+                    "- Target BP <130/80 mmHg\n" +
+                    "- Continue medication and monitor weekly\n" +
+                    "- Regular follow-up\n" +
+                    "- Monitor for side effects",
+                bp_untreated: "Blood pressure management (no medication):\n" +
+                    "- Consult healthcare provider\n" +
+                    "- Target BP <130/80 mmHg\n" +
+                    "- Consider starting medication\n" +
+                    "- Regular monitoring",
+                diabetes: "Diabetes management:\n" +
+                    "- Target HbA1c <7%\n" +
+                    "- Consider SGLT2 inhibitors\n" +
+                    "- Monitor blood glucose and kidney function\n" +
+                    "- Check HbA1c every 3-6 months",
+                lipids: "Lipid management:\n" +
+                    "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
+                    "- Lifestyle intervention first\n" +
+                    "- Annual lipid monitoring"
+            }
         },
         error: {
             general: "An error occurred. Please try again.",
-            validation: "Please check your input values."
+            validation: "Please check your input values.",
+            age: "Age must be between 40 and 79 years.",
+            systolic: "Systolic blood pressure must be between 90 and 200 mmHg.",
+            cholesterol: "Please enter valid cholesterol values.",
+            required: "All fields are required."
         },
         validation: {
             error: "Please enter valid values in all fields."
@@ -263,11 +362,44 @@ const i18n = {
         advice: {
             low: "Votre risque de 10 ans est faible.",
             moderate: "Votre risque de 10 ans est modéré.",
-            high: "Votre risque de 10 ans est élevé."
+            high: "Votre risque de 10 ans est élevé.",
+            lowRisk: {
+                guidelines_notice: "Based on latest international guidelines:\n" +
+                    "• ADA (American Diabetes Association) Annual Standards\n" +
+                    "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
+                    "• ESC (European Society of Cardiology) CVD Prevention Guidelines",
+                lifestyle: "Lifestyle recommendations:\n" +
+                    "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
+                    "- Follow Mediterranean diet pattern\n" +
+                    "- Maintain healthy weight (BMI <25 kg/m²)",
+                bp_treated: "Blood pressure management (on medication):\n" +
+                    "- Target BP <130/80 mmHg\n" +
+                    "- Continue medication and monitor weekly\n" +
+                    "- Regular follow-up\n" +
+                    "- Monitor for side effects",
+                bp_untreated: "Blood pressure management (no medication):\n" +
+                    "- Consult healthcare provider\n" +
+                    "- Target BP <130/80 mmHg\n" +
+                    "- Consider starting medication\n" +
+                    "- Regular monitoring",
+                diabetes: "Diabetes management:\n" +
+                    "- Target HbA1c <7%\n" +
+                    "- Consider SGLT2 inhibitors\n" +
+                    "- Monitor blood glucose and kidney function\n" +
+                    "- Check HbA1c every 3-6 months",
+                lipids: "Lipid management:\n" +
+                    "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
+                    "- Lifestyle intervention first\n" +
+                    "- Annual lipid monitoring"
+            }
         },
         error: {
             general: "An error occurred. Please try again.",
-            validation: "Please check your input values."
+            validation: "Please check your input values.",
+            age: "Age must be between 40 and 79 years.",
+            systolic: "Systolic blood pressure must be between 90 and 200 mmHg.",
+            cholesterol: "Please enter valid cholesterol values.",
+            required: "All fields are required."
         },
         validation: {
             error: "Please enter valid values in all fields."
@@ -332,11 +464,44 @@ const i18n = {
         advice: {
             low: "Ihr 10-Jahres-Risiko ist niedrig.",
             moderate: "Ihr 10-Jahres-Risiko ist mittel.",
-            high: "Ihr 10-Jahres-Risiko ist hoch."
+            high: "Ihr 10-Jahres-Risiko ist hoch.",
+            lowRisk: {
+                guidelines_notice: "Based on latest international guidelines:\n" +
+                    "• ADA (American Diabetes Association) Annual Standards\n" +
+                    "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
+                    "• ESC (European Society of Cardiology) CVD Prevention Guidelines",
+                lifestyle: "Lifestyle recommendations:\n" +
+                    "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
+                    "- Follow Mediterranean diet pattern\n" +
+                    "- Maintain healthy weight (BMI <25 kg/m²)",
+                bp_treated: "Blood pressure management (on medication):\n" +
+                    "- Target BP <130/80 mmHg\n" +
+                    "- Continue medication and monitor weekly\n" +
+                    "- Regular follow-up\n" +
+                    "- Monitor for side effects",
+                bp_untreated: "Blood pressure management (no medication):\n" +
+                    "- Consult healthcare provider\n" +
+                    "- Target BP <130/80 mmHg\n" +
+                    "- Consider starting medication\n" +
+                    "- Regular monitoring",
+                diabetes: "Diabetes management:\n" +
+                    "- Target HbA1c <7%\n" +
+                    "- Consider SGLT2 inhibitors\n" +
+                    "- Monitor blood glucose and kidney function\n" +
+                    "- Check HbA1c every 3-6 months",
+                lipids: "Lipid management:\n" +
+                    "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
+                    "- Lifestyle intervention first\n" +
+                    "- Annual lipid monitoring"
+            }
         },
         error: {
             general: "An error occurred. Please try again.",
-            validation: "Please check your input values."
+            validation: "Please check your input values.",
+            age: "Age must be between 40 and 79 years.",
+            systolic: "Systolic blood pressure must be between 90 and 200 mmHg.",
+            cholesterol: "Please enter valid cholesterol values.",
+            required: "All fields are required."
         },
         validation: {
             error: "Please enter valid values in all fields."
@@ -401,11 +566,44 @@ const i18n = {
         advice: {
             low: "あなたの10年リスクは低リスクです。",
             moderate: "あなたの10年リスクは中程度リスクです。",
-            high: "あなたの10年リスクは高リスクです。"
+            high: "あなたの10年リスクは高リスクです。",
+            lowRisk: {
+                guidelines_notice: "Based on latest international guidelines:\n" +
+                    "• ADA (American Diabetes Association) Annual Standards\n" +
+                    "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
+                    "• ESC (European Society of Cardiology) CVD Prevention Guidelines",
+                lifestyle: "Lifestyle recommendations:\n" +
+                    "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
+                    "- Follow Mediterranean diet pattern\n" +
+                    "- Maintain healthy weight (BMI <25 kg/m²)",
+                bp_treated: "Blood pressure management (on medication):\n" +
+                    "- Target BP <130/80 mmHg\n" +
+                    "- Continue medication and monitor weekly\n" +
+                    "- Regular follow-up\n" +
+                    "- Monitor for side effects",
+                bp_untreated: "Blood pressure management (no medication):\n" +
+                    "- Consult healthcare provider\n" +
+                    "- Target BP <130/80 mmHg\n" +
+                    "- Consider starting medication\n" +
+                    "- Regular monitoring",
+                diabetes: "Diabetes management:\n" +
+                    "- Target HbA1c <7%\n" +
+                    "- Consider SGLT2 inhibitors\n" +
+                    "- Monitor blood glucose and kidney function\n" +
+                    "- Check HbA1c every 3-6 months",
+                lipids: "Lipid management:\n" +
+                    "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
+                    "- Lifestyle intervention first\n" +
+                    "- Annual lipid monitoring"
+            }
         },
         error: {
             general: "An error occurred. Please try again.",
-            validation: "Please check your input values."
+            validation: "Please check your input values.",
+            age: "Age must be between 40 and 79 years.",
+            systolic: "Systolic blood pressure must be between 90 and 200 mmHg.",
+            cholesterol: "Please enter valid cholesterol values.",
+            required: "All fields are required."
         },
         validation: {
             error: "Please enter valid values in all fields."

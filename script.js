@@ -263,127 +263,86 @@ function getRiskAdvice(risk, data) {
 
 // 修改风险计算函数
 function calculateRisk(data) {
-    // 将输入值转换为数值
+    try {
+        // 数据验证
+        if (!validateData(data)) {
+            throw new Error(i18n[currentLang].error.validation);
+        }
+
+        // 将输入值转换为数值
+        const age = parseFloat(data.age);
+        const systolic = parseFloat(data.systolic);
+        const totalChol = parseFloat(data.totalChol);
+        const hdl = parseFloat(data.hdl);
+        const isSmoker = data.smoker === 'yes';
+        const hasDiabetes = data.diabetes === 'yes';
+        const onBPMeds = data.bpTreat === 'yes';
+        const race = data.race;
+        const sex = data.sex;
+
+        // 验证转换后的值
+        if (isNaN(age) || isNaN(systolic) || isNaN(totalChol) || isNaN(hdl)) {
+            throw new Error(i18n[currentLang].error.validation);
+        }
+
+        // 基于PCE方程的风险计算
+        let lnAge = Math.log(age);
+        let lnTotalChol = Math.log(totalChol);
+        let lnHDL = Math.log(hdl);
+        let lnSBP = Math.log(systolic);
+
+        // 选择正确的系数集
+        const raceCoef = (race === 'asian' || race === 'other') ? 'white' : race;
+        const coef = coefficients[raceCoef][sex];
+
+        // 计算风险得分
+        let sum = coef.baseline;
+        sum += coef.age * lnAge;
+        sum += coef.ageSquared * Math.pow(lnAge, 2);
+        sum += coef.totalChol * lnTotalChol;
+        sum += coef.ageTC * lnAge * lnTotalChol;
+        sum += coef.hdl * lnHDL;
+        sum += coef.ageHDL * lnAge * lnHDL;
+        sum += coef.systolic * lnSBP;
+        sum += coef.ageSBP * lnAge * lnSBP;
+        
+        if (onBPMeds) {
+            sum += coef.bpTreat;
+            sum += coef.ageTreat * lnAge;
+        }
+        
+        if (isSmoker) {
+            sum += coef.smoker;
+            sum += coef.ageSmoker * lnAge;
+        }
+        
+        if (hasDiabetes) {
+            sum += coef.diabetes;
+        }
+
+        // 计算10年风险
+        let risk = (1 - Math.pow(0.9533, Math.exp(sum - coef.meanSum))) * 100;
+        
+        // 确保结果在有效范围内
+        risk = Math.min(Math.max(risk, 0), 100);
+        
+        return risk;
+    } catch (err) {
+        console.error('Risk calculation error:', err);
+        throw new Error(i18n[currentLang].error.general);
+    }
+}
+
+// 添加验证函数
+function validateData(data) {
     const age = parseFloat(data.age);
     const systolic = parseFloat(data.systolic);
     const totalChol = parseFloat(data.totalChol);
     const hdl = parseFloat(data.hdl);
-    const isSmoker = data.smoker === 'yes';
-    const hasDiabetes = data.diabetes === 'yes';
-    const onBPMeds = data.bpTreat === 'yes';
-    const race = data.race;
-    const sex = data.sex;
 
-    // 基于PCE方程的风险计算
-    let risk;
+    if (age < 40 || age > 79) return false;
+    if (systolic < 90 || systolic > 200) return false;
+    if (totalChol <= 0 || hdl <= 0) return false;
     
-    // 性别和种族特定的系数
-    const coefficients = {
-        white: {
-            male: {
-                age: 12.344,
-                ageSquared: 0,
-                totalChol: 11.853,
-                ageTC: -2.664,
-                hdl: -7.990,
-                ageHDL: 1.769,
-                systolic: 1.797,
-                ageSBP: 0,
-                bpTreat: 1.764,
-                ageTreat: 0,
-                smoker: 7.837,
-                ageSmoker: -1.795,
-                diabetes: 0.658,
-                baseline: -29.799
-            },
-            female: {
-                // 白人女性系数
-                age: -29.799,
-                ageSquared: 4.884,
-                totalChol: 13.540,
-                ageTC: -3.114,
-                hdl: -13.578,
-                ageHDL: 3.149,
-                systolic: 2.019,
-                ageSBP: 0,
-                bpTreat: 2.019,
-                ageTreat: 0,
-                smoker: 7.574,
-                ageSmoker: -1.665,
-                diabetes: 0.661,
-                baseline: 86.61
-            }
-        },
-        aa: {
-            male: {
-                // 非裔美国人男性系数
-                age: 2.469,
-                ageSquared: 0,
-                totalChol: 0.302,
-                ageTC: 0,
-                hdl: -0.307,
-                ageHDL: 0,
-                systolic: 1.916,
-                ageSBP: 0,
-                bpTreat: 1.809,
-                ageTreat: 0,
-                smoker: 0.549,
-                ageSmoker: 0,
-                diabetes: 0.645,
-                baseline: -19.54
-            },
-            female: {
-                // 非裔美国人女性系数
-                age: 17.114,
-                ageSquared: 0,
-                totalChol: 0.940,
-                ageTC: 0,
-                hdl: -18.920,
-                ageHDL: 4.475,
-                systolic: 29.291,
-                ageSBP: -6.432,
-                bpTreat: 29.291,
-                ageTreat: -6.432,
-                smoker: 0.691,
-                ageSmoker: 0,
-                diabetes: 0.874,
-                baseline: 86.61
-            }
-        }
-    };
-
-    // 如果是亚裔或其他种族，使用白人的系数
-    const raceCoef = (race === 'asian' || race === 'other') ? 'white' : race;
-    const coef = coefficients[raceCoef][sex];
-
-    // 计算风险得分
-    let sum = coef.baseline;
-    sum += coef.age * Math.log(age);
-    sum += coef.ageSquared * Math.pow(Math.log(age), 2);
-    sum += coef.totalChol * Math.log(totalChol);
-    sum += coef.ageTC * Math.log(age) * Math.log(totalChol);
-    sum += coef.hdl * Math.log(hdl);
-    sum += coef.ageHDL * Math.log(age) * Math.log(hdl);
-    sum += coef.systolic * Math.log(systolic);
-    sum += coef.ageSBP * Math.log(age) * Math.log(systolic);
-    
-    if (onBPMeds) {
-        sum += coef.bpTreat;
-        sum += coef.ageTreat * Math.log(age);
-    }
-    
-    if (isSmoker) {
-        sum += coef.smoker;
-        sum += coef.ageSmoker * Math.log(age);
-    }
-    
-    if (hasDiabetes) {
-        sum += coef.diabetes;
-    }
-
-    // 计算10年风险
-    risk = 1 - Math.pow(0.9533, Math.exp(sum - 19.54));
-    risk = risk * 100; // 转换为百分比
-
-    return Math.min(Math.max(risk, 0), 100); // 确保结果在0-100之间
+    return true;
 } 
