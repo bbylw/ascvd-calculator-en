@@ -79,14 +79,16 @@ function displayResult(risk, data) {
     
     // 添加所有建议部分
     riskAdvice.adviceArray.forEach(advice => {
-        adviceHtml += `
-            <div class="advice-section">
-                <h4>${advice.title}</h4>
-                <div class="advice-content">
-                    <pre>${advice.content}</pre>
+        if (advice.content) {  // 确保只显示有内容的建议
+            adviceHtml += `
+                <div class="advice-section">
+                    <h4>${advice.title}</h4>
+                    <div class="advice-content">
+                        <pre>${advice.content}</pre>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        }
     });
     
     adviceHtml += '</div>';
@@ -234,20 +236,21 @@ function getRiskAdvice(risk, data) {
     }
 
     // 3. 添加血压管理建议
-    if (data.bpTreat === 'yes') {
+    const bpTitle = data.bpTreat === 'yes' ? 
+        (i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)") :
+        (i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)");
+    
+    const bpContent = data.bpTreat === 'yes' ? advice.bp_treated : advice.bp_untreated;
+    
+    if (bpContent) {
         adviceArray.push({
-            title: i18n[currentLang].advice.bp_title || "Blood Pressure Management (On Medication)",
-            content: advice.bp_treated
-        });
-    } else {
-        adviceArray.push({
-            title: i18n[currentLang].advice.bp_title || "Blood Pressure Management",
-            content: advice.bp_untreated
+            title: bpTitle,
+            content: bpContent
         });
     }
 
     // 4. 添加糖尿病管理建议
-    if (data.diabetes === 'yes') {
+    if (data.diabetes === 'yes' && advice.diabetes) {
         adviceArray.push({
             title: i18n[currentLang].advice.diabetes_title || "Diabetes Management",
             content: advice.diabetes
@@ -260,6 +263,17 @@ function getRiskAdvice(risk, data) {
             title: i18n[currentLang].advice.lipids_title || "Lipid Management",
             content: advice.lipids
         });
+    }
+
+    // 6. 根据风险水平添加特定建议
+    if (risk >= 7.5) {
+        // 对于中高风险患者的额外建议
+        if (advice.high_risk_additional) {
+            adviceArray.push({
+                title: i18n[currentLang].advice.additional_title || "Additional Recommendations",
+                content: advice.high_risk_additional
+            });
+        }
     }
 
     return {
