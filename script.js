@@ -211,13 +211,14 @@ function getRiskAdvice(risk, data) {
     // 基于风险水平确定建议
     if (risk < 5) {
         level = "low";
+        advice = i18n[currentLang].advice.lowRisk;
     } else if (risk < 7.5) {
         level = "moderate";
+        advice = i18n[currentLang].advice.moderateRisk;
     } else {
         level = "high";
+        advice = i18n[currentLang].advice.highRisk;
     }
-
-    const advice = i18n[currentLang].advice.lowRisk;
 
     // 1. 添加指南参考
     if (advice.guidelines_notice) {
@@ -236,30 +237,28 @@ function getRiskAdvice(risk, data) {
     }
 
     // 3. 添加血压管理建议
-    // 根据是否服用降压药选择不同的标题和内容
+    const systolic = parseFloat(data.systolic);
     if (data.bpTreat === 'yes') {
         adviceArray.push({
             title: i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)",
             content: advice.bp_treated
         });
     } else {
-        // 未服用降压药时的建议
-        const systolic = parseFloat(data.systolic);
         let bpContent = advice.bp_untreated;
-
+        
         // 根据血压水平添加具体建议
         if (systolic >= 140) {
-            bpContent += "\n\n" + (i18n[currentLang].advice.bp_high || 
-                "Consider immediate medical consultation as your blood pressure is elevated.");
+            bpContent = (i18n[currentLang].advice.bp_untreated_high || advice.bp_untreated);
         } else if (systolic >= 130) {
-            bpContent += "\n\n" + (i18n[currentLang].advice.bp_elevated || 
-                "Your blood pressure is elevated. Consider lifestyle modifications and regular monitoring.");
+            bpContent = (i18n[currentLang].advice.bp_untreated_elevated || advice.bp_untreated);
         }
 
-        adviceArray.push({
-            title: i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)",
-            content: bpContent
-        });
+        if (bpContent) {
+            adviceArray.push({
+                title: i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)",
+                content: bpContent
+            });
+        }
     }
 
     // 4. 添加糖尿病管理建议
@@ -279,18 +278,14 @@ function getRiskAdvice(risk, data) {
     }
 
     // 6. 根据风险水平添加特定建议
-    if (risk >= 7.5) {
-        // 对于中高风险患者的额外建议
-        if (advice.high_risk_additional) {
-            adviceArray.push({
-                title: i18n[currentLang].advice.additional_title || "Additional Recommendations",
-                content: advice.high_risk_additional
-            });
-        }
+    if (risk >= 7.5 && advice.high_risk_additional) {
+        adviceArray.push({
+            title: i18n[currentLang].advice.additional_title || "Additional Recommendations",
+            content: advice.high_risk_additional
+        });
     }
 
-    // 7. 添加血压相关的额外建议
-    const systolic = parseFloat(data.systolic);
+    // 7. 添加血压紧急情况警告
     if (systolic >= 180) {
         adviceArray.push({
             title: i18n[currentLang].advice.urgent_bp_title || "Urgent Blood Pressure Notice",
