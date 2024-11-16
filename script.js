@@ -215,10 +215,17 @@ function getRiskAdvice(risk, data) {
         advice = i18n[currentLang].advice.lowRisk;
     } else if (risk < 7.5) {
         level = "moderate";
-        advice = i18n[currentLang].advice.lowRisk;  // 暂时使用相同的建议集
+        advice = i18n[currentLang].advice.moderateRisk;  // 使用中等风险的建议
     } else {
         level = "high";
-        advice = i18n[currentLang].advice.lowRisk;  // 暂时使用相同的建议集
+        advice = i18n[currentLang].advice.highRisk;  // 使用高风险的建议
+    }
+
+    // 确保advice对象存在
+    if (!advice) {
+        console.error('找不到对应风险等级的建议内容:', level);
+        // 如果找不到对应风险等级的建议，使用低风险建议作为后备
+        advice = i18n[currentLang].advice.lowRisk;
     }
 
     try {
@@ -240,20 +247,26 @@ function getRiskAdvice(risk, data) {
 
         // 3. 添加血压管理建议
         const systolic = parseFloat(data.systolic);
-        const bpTitle = data.bpTreat === 'yes' ? 
-            (i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)") :
-            (i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)");
-        
-        const bpContent = data.bpTreat === 'yes' ? advice.bp_treated : advice.bp_untreated;
-
-        // 确保血压建议总是被添加
-        if (bpContent) {
+        if (data.bpTreat === 'yes' && advice.bp_treated) {
             adviceArray.push({
-                title: bpTitle,
+                title: i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)",
+                content: advice.bp_treated
+            });
+        } else if (advice.bp_untreated) {
+            // 确保未服用降压药时显示正确的建议
+            let bpContent = advice.bp_untreated;
+            
+            // 根据血压水平添加具体建议
+            if (systolic >= 140) {
+                bpContent = advice.bp_untreated_high || advice.bp_untreated;
+            } else if (systolic >= 130) {
+                bpContent = advice.bp_untreated_elevated || advice.bp_untreated;
+            }
+
+            adviceArray.push({
+                title: i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)",
                 content: bpContent
             });
-        } else {
-            console.error('Blood pressure advice content missing for treatment status:', data.bpTreat);
         }
 
         // 4. 添加糖尿病管理建议
@@ -282,12 +295,12 @@ function getRiskAdvice(risk, data) {
         }
 
         // 添加调试日志
-        console.log('Generated advice:', {
-            riskLevel: level,
-            bpTreatment: data.bpTreat,
-            bpContent: bpContent,
-            adviceCount: adviceArray.length,
-            systolic: systolic
+        console.log('建议生成详情:', {
+            风险等级: level,
+            血压治疗状态: data.bpTreat,
+            建议内容: advice,
+            建议数量: adviceArray.length,
+            收缩压: systolic
         });
 
         return {
@@ -296,7 +309,7 @@ function getRiskAdvice(risk, data) {
         };
 
     } catch (err) {
-        console.error('Error generating advice:', err);
+        console.error('生成建议时出错:', err);
         return {
             level: level,
             adviceArray: [{
