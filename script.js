@@ -101,7 +101,8 @@ function displayResult(risk, data) {
         风险值: risk,
         风险等级: riskAdvice.level,
         建议数量: riskAdvice.adviceArray.length,
-        当前语言: currentLang
+        当前语言: currentLang,
+        血压治疗状态: data.bpTreat
     });
 }
 
@@ -247,20 +248,29 @@ function getRiskAdvice(risk, data) {
 
         // 3. 添加血压管理建议
         const systolic = parseFloat(data.systolic);
-        if (data.bpTreat === 'yes') {
-            if (advice.bp_treated) {
-                adviceArray.push({
-                    title: i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)",
-                    content: advice.bp_treated
-                });
-            }
-        } else {
-            if (advice.bp_untreated) {
-                adviceArray.push({
-                    title: i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)",
-                    content: advice.bp_untreated
-                });
-            }
+        
+        // 直接从 i18n 对象获取血压建议内容
+        const bpAdvice = data.bpTreat === 'yes' ? 
+            i18n[currentLang].advice.lowRisk.bp_treated : 
+            i18n[currentLang].advice.lowRisk.bp_untreated;
+
+        if (bpAdvice) {
+            const bpTitle = data.bpTreat === 'yes' ? 
+                (i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)") :
+                (i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)");
+
+            // 确保血压建议总是被添加
+            adviceArray.push({
+                title: bpTitle,
+                content: bpAdvice
+            });
+
+            // 添加调试日志
+            console.log('血压建议:', {
+                服用降压药: data.bpTreat === 'yes',
+                建议标题: bpTitle,
+                建议内容: bpAdvice
+            });
         }
 
         // 4. 添加糖尿病管理建议
@@ -283,10 +293,11 @@ function getRiskAdvice(risk, data) {
         console.log('建议生成详情:', {
             风险等级: level,
             血压治疗状态: data.bpTreat,
-            建议内容: advice,
+            血压建议内容: bpAdvice,
             建议数量: adviceArray.length,
             收缩压: systolic,
-            当前语言: currentLang
+            当前语言: currentLang,
+            建议对象: advice
         });
 
         return {
@@ -296,6 +307,11 @@ function getRiskAdvice(risk, data) {
 
     } catch (err) {
         console.error('生成建议时出错:', err);
+        console.error('错误详情:', {
+            advice: advice,
+            currentLang: currentLang,
+            bpTreat: data.bpTreat
+        });
         return {
             level: level,
             adviceArray: [{
