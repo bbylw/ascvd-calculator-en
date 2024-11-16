@@ -273,11 +273,10 @@ function calculateRisk(data) {
         // 将输入值转换为数值
         const age = parseFloat(data.age);
         const systolic = parseFloat(data.systolic);
-        // 确保胆固醇值使用正确的单位（mg/dL）
         let totalChol = parseFloat(data.totalChol);
         let hdl = parseFloat(data.hdl);
         
-        // 如果当前单位是mmol/L，转换为mg/dL
+        // 单位转换：mmol/L -> mg/dL
         const totalCholUnit = document.getElementById('totalCholUnit').value;
         const hdlUnit = document.getElementById('hdlUnit').value;
         if (totalCholUnit === 'mmoll') {
@@ -293,10 +292,10 @@ function calculateRisk(data) {
         const race = data.race;
         const sex = data.sex;
 
-        // 选择正确的系数集
+        // 选择正确的种族系数
         let raceCoef = race;
         if (race === 'asian' || race === 'other') {
-            raceCoef = 'white'; // 亚裔和其他种族使用白人的系数
+            raceCoef = 'white';
         }
 
         // 计算自然对数值
@@ -307,65 +306,80 @@ function calculateRisk(data) {
 
         let sum = 0;
         let S0 = 0;
-        let meanSum = 0;
 
-        // 根据性别和种族使用不同的计算方法
+        // 根据2019 ACC/AHA指南更新的系数
         if (raceCoef === 'white') {
             if (sex === 'male') {
                 // 白人男性
-                sum = (12.344 * lnAge) + (11.853 * lnTotalChol) - (2.664 * lnAge * lnTotalChol) - 
-                      (7.99 * lnHDL) + (1.769 * lnAge * lnHDL) + (1.797 * lnSBP) +
-                      (onBPMeds ? 1.764 : 0) + 
+                sum = 12.344 * lnAge +
+                      11.853 * lnTotalChol +
+                      -2.664 * lnAge * lnTotalChol +
+                      -7.99 * lnHDL +
+                      1.769 * lnAge * lnHDL +
+                      1.797 * lnSBP +
+                      (onBPMeds ? 1.764 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
-                      (hasDiabetes ? 0.658 : 0);
+                      (hasDiabetes ? 0.658 : 0) +
+                      -29.799;
                 S0 = 0.9144;
-                meanSum = 61.18;
             } else {
                 // 白人女性
-                sum = (-29.799 * lnAge) + (4.884 * Math.pow(lnAge, 2)) + (13.54 * lnTotalChol) -
-                      (3.114 * lnAge * lnTotalChol) - (13.578 * lnHDL) + (3.149 * lnAge * lnHDL) +
-                      (2.019 * lnSBP) + 
+                sum = -29.799 * lnAge +
+                      4.884 * Math.pow(lnAge, 2) +
+                      13.540 * lnTotalChol +
+                      -3.114 * lnAge * lnTotalChol +
+                      -13.578 * lnHDL +
+                      3.149 * lnAge * lnHDL +
+                      2.019 * lnSBP +
                       (onBPMeds ? 2.019 : 0) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
                       (hasDiabetes ? 0.661 : 0);
                 S0 = 0.9665;
-                meanSum = -29.18;
             }
-        } else {
+        } else { // African American
             if (sex === 'male') {
                 // 非裔美国人男性
-                sum = (2.469 * lnAge) + (0.302 * lnTotalChol) - (0.307 * lnHDL) +
-                      (1.916 * lnSBP) + 
+                sum = 2.469 * lnAge +
+                      0.302 * lnTotalChol +
+                      -0.307 * lnHDL +
+                      1.916 * lnSBP +
                       (onBPMeds ? 1.809 : 0) +
                       (isSmoker ? 0.549 : 0) +
-                      (hasDiabetes ? 0.645 : 0);
+                      (hasDiabetes ? 0.645 : 0) +
+                      12.344;
                 S0 = 0.8954;
-                meanSum = 19.54;
             } else {
                 // 非裔美国人女性
-                sum = (17.114 * lnAge) + (0.94 * lnTotalChol) - (18.92 * lnHDL) +
-                      (4.475 * lnAge * lnHDL) + (29.291 * lnSBP) - (6.432 * lnAge * lnSBP) +
+                sum = 17.114 * lnAge +
+                      0.940 * lnTotalChol +
+                      -18.920 * lnHDL +
+                      4.475 * lnAge * lnHDL +
+                      29.291 * lnSBP +
+                      -6.432 * lnAge * lnSBP +
                       (onBPMeds ? (29.291 - 6.432 * lnAge) : 0) +
                       (isSmoker ? 0.691 : 0) +
                       (hasDiabetes ? 0.874 : 0);
                 S0 = 0.9533;
-                meanSum = 86.61;
             }
         }
 
         // 计算10年风险
-        let risk = 1 - Math.pow(S0, Math.exp(sum - meanSum));
-        risk = risk * 100;
+        let risk = (1 - Math.pow(S0, Math.exp(sum))) * 100;
         
-        // 确保结果在有效范围内
+        // 确保结果在有效范围内（0-100%）
         risk = Math.min(Math.max(risk, 0), 100);
-        
+
         console.log('Risk calculation details:', {
-            age, totalChol, hdl, systolic,
-            isSmoker, hasDiabetes, onBPMeds,
-            race: raceCoef, sex,
-            sum, S0, meanSum,
-            risk
+            input: {
+                age, totalChol, hdl, systolic,
+                isSmoker, hasDiabetes, onBPMeds,
+                race: raceCoef, sex
+            },
+            calculation: {
+                lnAge, lnTotalChol, lnHDL, lnSBP,
+                sum, S0
+            },
+            result: risk
         });
 
         return parseFloat(risk.toFixed(1));
