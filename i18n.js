@@ -87,34 +87,40 @@ const i18n = {
 
                 bp_treated: "Blood pressure management (on medication):\n" +
                     "BP Targets:\n" +
-                    "• General target: <130/80 mmHg\n" +
-                    "• Age >65: <130-139/70-79 mmHg\n" +
-                    "• With diabetes: <130/80 mmHg\n" +
-                    "• With CKD: <130/80 mmHg\n\n" +
+                    "• Primary target: <130/80 mmHg for most adults\n" +
+                    "• Age ≥65: Consider <130/80 mmHg if tolerated\n" +
+                    "• With CKD + albuminuria: <130/80 mmHg\n" +
+                    "• With diabetes: <130/80 mmHg\n\n" +
                     "Medications:\n" +
                     "• First-line options:\n" +
-                    "  - ACEi/ARB (e.g., Lisinopril, Valsartan)\n" +
-                    "  - CCB (e.g., Amlodipine)\n" +
-                    "  - Thiazide diuretics (e.g., HCTZ)\n" +
-                    "• Combination therapy if >20/10 mmHg above target:\n" +
-                    "  - ACEi/ARB + CCB preferred\n" +
-                    "  - ACEi/ARB + Thiazide alternative\n" +
-                    "  - Avoid ACEi + ARB combination\n\n" +
+                    "  - ACEi/ARB (e.g., Lisinopril 10-40mg, Valsartan 80-320mg)\n" +
+                    "  - CCB (e.g., Amlodipine 2.5-10mg)\n" +
+                    "  - Thiazide-like diuretics (e.g., Chlorthalidone 12.5-25mg)\n\n" +
+                    "• Initial combination therapy if BP ≥20/10 mmHg above target:\n" +
+                    "  - Preferred: ACEi/ARB + CCB\n" +
+                    "  - Alternative: ACEi/ARB + Thiazide-like diuretic\n" +
+                    "  - Consider SPC (Single-pill combination)\n\n" +
+                    "• Third-line options:\n" +
+                    "  - Add Spironolactone (25-50mg)\n" +
+                    "  - Or other potassium-sparing diuretic\n" +
+                    "  - Beta-blockers for specific indications\n\n" +
                     "Monitoring:\n" +
-                    "• Home BP monitoring 2x daily\n" +
-                    "• Check kidney function and electrolytes:\n" +
-                    "  - 2-4 weeks after starting/changing ACEi/ARB\n" +
-                    "  - Then every 6-12 months\n" +
-                    "• Monitor for side effects:\n" +
-                    "  - ACEi/ARB: cough, hyperkalemia\n" +
-                    "  - CCB: edema\n" +
-                    "  - Thiazides: hypokalemia\n\n" +
-                    "Lifestyle Modifications:\n" +
-                    "• Reduce sodium (<2.3g/day)\n" +
+                    "• Home BP monitoring: twice daily\n" +
+                    "• Lab monitoring:\n" +
+                    "  - Baseline: Cr, K+, eGFR\n" +
+                    "  - 2-4 weeks after starting/changing ACEi/ARB/diuretics\n" +
+                    "  - Then every 3-12 months based on stability\n\n" +
+                    "Side effects monitoring:\n" +
+                    "• ACEi/ARB: cough, hyperkalemia, acute kidney injury\n" +
+                    "• CCB: peripheral edema, constipation\n" +
+                    "• Thiazides: hypokalemia, hyperuricemia\n" +
+                    "• Spironolactone: hyperkalemia, gynecomastia\n\n" +
+                    "Lifestyle modifications (essential):\n" +
+                    "• Sodium restriction: <2000mg/day\n" +
                     "• DASH diet\n" +
-                    "• Regular physical activity\n" +
+                    "• Regular aerobic exercise\n" +
                     "• Weight management\n" +
-                    "• Limit alcohol\n" +
+                    "• Alcohol limitation\n" +
                     "• Stress management",
 
                 bp_untreated: "Blood pressure management (no medication):\n" +
@@ -272,32 +278,38 @@ const i18n = {
                     "- 维持健康体重（BMI <25 kg/m²）",
                 bp_treated: "高血压管理（服用降压药）：\n" +
                     "血压目标：\n" +
-                    "• 一般目标：<130/80 mmHg\n" +
-                    "• 65岁以上：<130-139/70-79 mmHg\n" +
-                    "• 合并糖尿病：<130/80 mmHg\n" +
-                    "• 合并慢性肾病：<130/80 mmHg\n\n" +
+                    "• 主要目标：大多数成年人 <130/80 mmHg\n" +
+                    "• 65岁及以上：如果耐受则考虑 <130/80 mmHg\n" +
+                    "• 慢性肾病伴蛋白尿：<130/80 mmHg\n" +
+                    "• 合并糖尿病：<130/80 mmHg\n\n" +
                     "药物治疗：\n" +
                     "• 一线用药选择：\n" +
-                    "  - ACEi/ARB（如：赖诺普利、缬沙坦）\n" +
-                    "  - CCB（如：氨氯地平）\n" +
-                    "  - 噻嗪类利尿剂（如：氢氯噻嗪）\n" +
-                    "• 血压超过目标值20/10 mmHg以上考虑联合用药：\n" +
-                    "  - 首选ACEi/ARB + CCB\n" +
-                    "  - 替代方案ACEi/ARB + 噻嗪类\n" +
-                    "  - 避免ACEi + ARB联用\n\n" +
+                    "  - ACEi/ARB（如：赖诺普利10-40mg、缬沙坦80-320mg）\n" +
+                    "  - CCB（如：氨氯地平2.5-10mg）\n" +
+                    "  - 噻嗪样利尿剂（如：氯噻酮12.5-25mg）\n\n" +
+                    "• 血压超过目标值20/10 mmHg以上时的初始联合治疗：\n" +
+                    "  - 首选：ACEi/ARB + CCB\n" +
+                    "  - 替代：ACEi/ARB + 噻嗪样利尿剂\n" +
+                    "  - 考虑单片复方制剂\n\n" +
+                    "• 三线用药选择：\n" +
+                    "  - 加用螺内酯（25-50mg）\n" +
+                    "  - 或其他保钾利尿剂\n" +
+                    "  - 特定适应证时使用β受体阻滞剂\n\n" +
                     "监测要求：\n" +
-                    "• 每天2次家庭血压监测\n" +
-                    "• 肾功能和电解质检查：\n" +
-                    "  - ACEi/ARB开始/调整后2-4周\n" +
-                    "  - 之后每6-12个月\n" +
-                    "• 药物不良反应监测：\n" +
-                    "  - ACEi/ARB：咳嗽、高钾血症\n" +
-                    "  - CCB：水肿\n" +
-                    "  - 噻嗪类：低钾血症\n\n" +
-                    "生活方式干预：\n" +
-                    "• 限制钠摄入（<2.3g/天）\n" +
+                    "• 家庭血压监测：每天两次\n" +
+                    "• 实验室监测：\n" +
+                    "  - 基线：肌酐、钾离子、eGFR\n" +
+                    "  - ACEi/ARB/利尿剂开始/调整后2-4周\n" +
+                    "  - 之后根据稳定性每3-12个月\n\n" +
+                    "不良反应监测：\n" +
+                    "• ACEi/ARB：咳嗽、高钾血症、急性肾损伤\n" +
+                    "• CCB：外周水肿、便秘\n" +
+                    "• 噻嗪类：低钾血症、高尿酸血症\n" +
+                    "• 螺内酯：高钾血症、男性乳腺发育\n\n" +
+                    "生活方式干预（必要）：\n" +
+                    "• 限制钠摄入：<2000mg/天\n" +
                     "• DASH饮食\n" +
-                    "• 规律运动\n" +
+                    "• 规律有氧运动\n" +
                     "• 体重管理\n" +
                     "• 限制饮酒\n" +
                     "• 压力管理",
@@ -809,7 +821,7 @@ const i18n = {
                     "薬物治療を考慮する場合：\n" +
                     "• 心血管リスク高値で血圧が持続的に≥130/80 mmHg\n" +
                     "• その他の場合で血圧が持続的に≥140/90 mmHg\n" +
-                    "• 糖尿病または腎臓病合併\n" +
+                    "• 糖尿���または腎臓病合併\n" +
                     "• 標的臓器障害あり\n\n" +
                     "生活習慣の改善（必須）：\n" +
                     "• DASH食\n" +
