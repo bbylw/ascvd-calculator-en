@@ -312,7 +312,7 @@ function calculateRisk(data) {
                       (-7.99 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
                       (2.019 * lnSBP) +
-                      (onBPMeds ? 0.752 : 0) +
+                      (onBPMeds && systolic > 120 ? 0.241 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0);
                 S0 = 0.9144;
@@ -326,7 +326,7 @@ function calculateRisk(data) {
                       (-13.578 * lnHDL) +
                       (3.149 * lnAge * lnHDL) +
                       (2.019 * lnSBP) +
-                      (onBPMeds ? 0.691 : 0) +
+                      (onBPMeds && systolic > 120 ? 0.198 : 0) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
                       (hasDiabetes ? 0.661 : 0);
                 S0 = 0.9665;
@@ -339,7 +339,7 @@ function calculateRisk(data) {
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
                       (1.916 * lnSBP) +
-                      (onBPMeds ? 0.645 : 0) +
+                      (onBPMeds && systolic > 120 ? 0.162 : 0) +
                       (isSmoker ? 0.549 : 0) +
                       (hasDiabetes ? 0.645 : 0);
                 S0 = 0.8954;
@@ -352,7 +352,7 @@ function calculateRisk(data) {
                       (4.475 * lnAge * lnHDL) +
                       (29.291 * lnSBP) +
                       (-6.432 * lnAge * lnSBP) +
-                      (onBPMeds ? 0.691 : 0) +
+                      (onBPMeds && systolic > 120 ? 0.224 : 0) +
                       (isSmoker ? 0.691 : 0) +
                       (hasDiabetes ? 0.874 : 0);
                 S0 = 0.9533;
