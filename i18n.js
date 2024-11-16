@@ -59,38 +59,104 @@ const i18n = {
             moderate: "Your 10-year risk is moderate.",
             high: "Your 10-year risk is high.",
             lowRisk: {
-                guidelines_notice: "Based on latest international guidelines:\n" +
-                    "• ADA (American Diabetes Association) Annual Standards\n" +
-                    "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
-                    "• ESC (European Society of Cardiology) CVD Prevention Guidelines",
+                guidelines_notice: "Based on latest ACC/AHA and ESC Guidelines:\n" +
+                    "• 2023 ACC/AHA Prevention Guidelines\n" +
+                    "• 2023 ACC/AHA Blood Pressure Guidelines\n" +
+                    "• 2023 ACC/AHA Cholesterol Guidelines\n" +
+                    "• 2023 ADA Standards of Care",
+
                 lifestyle: "Lifestyle recommendations:\n" +
-                    "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
-                    "- Follow Mediterranean diet pattern\n" +
-                    "- Maintain healthy weight (BMI <25 kg/m²)",
+                    "Physical Activity:\n" +
+                    "• 150-300 min/week moderate or 75-150 min/week vigorous activity\n" +
+                    "• Muscle strengthening 2-3 times/week\n" +
+                    "• Reduce sedentary time\n\n" +
+                    "Diet:\n" +
+                    "• Mediterranean or DASH diet pattern\n" +
+                    "• Reduce saturated fats (<7% of calories)\n" +
+                    "• Increase fruits, vegetables, whole grains\n" +
+                    "• Limit processed foods and added sugars\n" +
+                    "• Reduce sodium (<2.3g/day)\n\n" +
+                    "Weight Management:\n" +
+                    "• Target BMI <25 kg/m²\n" +
+                    "• Waist circumference: men <40 inches, women <35 inches\n\n" +
+                    "Other:\n" +
+                    "• Smoking cessation\n" +
+                    "• Limit alcohol (men ≤2, women ≤1 drinks/day)\n" +
+                    "• Adequate sleep (7-9 hours)\n" +
+                    "• Stress management",
+
                 bp_treated: "Blood pressure management (on medication):\n" +
-                    "- Target BP <130/80 mmHg\n" +
-                    "- Continue medication and monitor weekly\n" +
-                    "- Regular follow-up\n" +
-                    "- Monitor for side effects",
+                    "BP Targets:\n" +
+                    "• General target: <130/80 mmHg\n" +
+                    "• Age >65: <130-139/70-79 mmHg\n" +
+                    "• With diabetes: <130/80 mmHg\n\n" +
+                    "Medications:\n" +
+                    "• First-line: ACEi/ARB, CCB, thiazide diuretics\n" +
+                    "• Consider combination therapy if >20/10 mmHg above target\n" +
+                    "• Fixed-dose combinations preferred\n\n" +
+                    "Monitoring:\n" +
+                    "• Home BP monitoring 2x daily\n" +
+                    "• Regular kidney function and electrolytes\n" +
+                    "• Monitor for side effects\n" +
+                    "• Follow-up every 3-6 months if stable",
+
                 bp_untreated: "Blood pressure management (no medication):\n" +
-                    "- Consult healthcare provider\n" +
-                    "- Target BP <130/80 mmHg\n" +
-                    "- Consider starting medication\n" +
-                    "- Regular monitoring",
+                    "BP Targets:\n" +
+                    "• General target: <130/80 mmHg\n" +
+                    "• Consider medication if:\n" +
+                    "  - BP consistently >130/80 mmHg\n" +
+                    "  - With high CV risk\n" +
+                    "  - With diabetes or kidney disease\n\n" +
+                    "Lifestyle Modifications:\n" +
+                    "• DASH diet\n" +
+                    "• Sodium restriction (<2.3g/day)\n" +
+                    "• Regular physical activity\n" +
+                    "• Weight management\n" +
+                    "• Stress reduction\n\n" +
+                    "Monitoring:\n" +
+                    "• Regular BP checks\n" +
+                    "• Keep BP diary\n" +
+                    "• Follow-up as advised",
+
                 diabetes: "Diabetes management:\n" +
-                    "- Target HbA1c <7%\n" +
-                    "- Consider SGLT2 inhibitors\n" +
-                    "- Monitor blood glucose and kidney function\n" +
-                    "- Check HbA1c every 3-6 months",
+                    "Glycemic Targets:\n" +
+                    "• HbA1c <7.0% for most adults\n" +
+                    "• Consider <6.5% for selected individuals\n" +
+                    "• Less stringent targets for elderly/comorbid\n\n" +
+                    "Medications:\n" +
+                    "• First-line: Metformin\n" +
+                    "• Early consideration of GLP-1 RA or SGLT2i\n" +
+                    "• SGLT2i preferred with CV disease\n\n" +
+                    "Monitoring:\n" +
+                    "• HbA1c every 3-6 months\n" +
+                    "• Regular kidney function\n" +
+                    "• Annual eye and foot exams\n" +
+                    "• Regular CV risk assessment",
+
                 lipids: "Lipid management:\n" +
-                    "- Very high risk (ASCVD risk >20%): LDL-C <55 mg/dL (1.4 mmol/L)\n" +
-                    "- High risk (risk 7.5-19.9%): LDL-C <70 mg/dL (1.8 mmol/L)\n" +
-                    "- Moderate risk (risk 5-7.4%): LDL-C <100 mg/dL (2.6 mmol/L)\n" +
-                    "- Low risk (risk <5%): Consider LDL-C <116 mg/dL (3.0 mmol/L)\n" +
-                    "- High-intensity statin if 10-year risk ≥20%\n" +
-                    "- Moderate-intensity statin if risk 7.5-19.9%\n" +
-                    "- Monitor lipids every 3-12 months\n" +
-                    "- Consider non-statin therapy if targets not met"
+                    "LDL-C Targets by Risk:\n" +
+                    "• Very high risk (>20%): <55 mg/dL (1.4 mmol/L)\n" +
+                    "• High risk (7.5-19.9%): <70 mg/dL (1.8 mmol/L)\n" +
+                    "• Moderate risk (5-7.4%): <100 mg/dL (2.6 mmol/L)\n" +
+                    "• Low risk (<5%): <116 mg/dL (3.0 mmol/L)\n\n" +
+                    "Statin Therapy:\n" +
+                    "• High intensity:\n" +
+                    "  - Atorvastatin 40-80mg\n" +
+                    "  - Rosuvastatin 20-40mg\n" +
+                    "• Moderate intensity:\n" +
+                    "  - Atorvastatin 10-20mg\n" +
+                    "  - Rosuvastatin 5-10mg\n" +
+                    "  - Simvastatin 20-40mg\n" +
+                    "  - Pravastatin 40-80mg\n\n" +
+                    "Non-statin Therapy:\n" +
+                    "• Ezetimibe 10mg\n" +
+                    "• PCSK9 inhibitors\n" +
+                    "• Bempedoic acid\n" +
+                    "• Icosapent ethyl\n\n" +
+                    "Monitoring:\n" +
+                    "• Lipids every 3-12 months\n" +
+                    "• Liver function at baseline and as needed\n" +
+                    "• Monitor for muscle symptoms"
             }
         },
         error: {
@@ -173,11 +239,18 @@ const i18n = {
                     "- 每周进行150-300分钟中等强度或75-150分钟高强度有氧运动\n" +
                     "- 遵循地中海饮食模式\n" +
                     "- 维持健康体重（BMI <25 kg/m²）",
-                bp_treated: "高血压管理（已在服用降压药）：\n" +
+                bp_treated: "高血压管理（服用降压药）：\n" +
                     "- 血压控制目标 <130/80 mmHg\n" +
-                    "- 坚持服药并每周监测血压\n" +
-                    "- 定期随访评估用药效果\n" +
-                    "- 注意监测不良反应",
+                    "- 一线用药：ACEi/ARB、CCB或噻嗪类利尿剂\n" +
+                    "- 如血压超过目标值20/10 mmHg以上考虑联合用药\n" +
+                    "- 控制前每周监测血压，之后每月监测\n" +
+                    "- 定期监测肾功能和电解质\n" +
+                    "- 必要的生活方式干预：\n" +
+                    "  • 限制钠摄入（<2.3g/天）\n" +
+                    "  • DASH饮食\n" +
+                    "  • 规律运动\n" +
+                    "  • 限制饮酒\n" +
+                    "  • 压力管理",
                 bp_untreated: "高血压管理（未服用降压药）：\n" +
                     "- 建议就医评估降压治疗\n" +
                     "- 血压控制目标 <130/80 mmHg\n" +
@@ -189,14 +262,25 @@ const i18n = {
                     "- 定期监测血糖和肾功能\n" +
                     "- 每3-6个月进行HbA1c检查",
                 lipids: "血脂管理：\n" +
-                    "- 极高风险（ASCVD风险>20%）：LDL-C <55 mg/dL (1.4 mmol/L)\n" +
-                    "- 高风险（风险7.5-19.9%）：LDL-C <70 mg/dL (1.8 mmol/L)\n" +
-                    "- 中等风险（风险5-7.4%）：LDL-C <100 mg/dL (2.6 mmol/L)\n" +
-                    "- 低风险（风险<5%）：考虑LDL-C <116 mg/dL (3.0 mmol/L)\n" +
-                    "- 10年风险≥20%使用高强度他汀\n" +
-                    "- 风险在7.5-19.9%使用中等强度他汀\n" +
-                    "- 每3-12个月监测血脂\n" +
-                    "- 未达标时考虑非他汀类药物治疗"
+                    "- 基于风险的LDL-C目标值：\n" +
+                    "  • 极高风险（>20%）：<55 mg/dL (1.4 mmol/L)\n" +
+                    "  • 高风险（7.5-19.9%）：<70 mg/dL (1.8 mmol/L)\n" +
+                    "  • 中等风险（5-7.4%）：<100 mg/dL (2.6 mmol/L)\n" +
+                    "  • 低风险（<5%）：<116 mg/dL (3.0 mmol/L)\n" +
+                    "- 他汀类药物治疗：\n" +
+                    "  • 高强度：阿托伐他汀40-80mg或瑞舒伐他汀20-40mg\n" +
+                    "  • 中等强度：阿托伐他汀10-20mg或瑞舒伐他汀5-10mg\n" +
+                    "- 需要时的非他汀类药物：\n" +
+                    "  • 依折麦布\n" +
+                    "  • PCSK9抑制剂\n" +
+                    "  • 倍他米酸\n" +
+                    "- 生活方式干预：\n" +
+                    "  • 地中海式饮食模式\n" +
+                    "  • 规律运动\n" +
+                    "  • 体重管理\n" +
+                    "  • 戒烟\n" +
+                    "- 每3-12个月监测\n" +
+                    "- 治疗前及治疗期间检查肝功能"
             }
         },
         error: {
@@ -283,7 +367,7 @@ const i18n = {
                 bp_treated: "Manejo de la presión arterial (con medicación):\n" +
                     "- Objetivo PA <130/80 mmHg\n" +
                     "- Continuar medicación y monitorear semanalmente\n" +
-                    "- Seguimiento regular\n" +
+                    "- Suivi régulier\n" +
                     "- Monitorear efectos secundarios",
                 bp_untreated: "Manejo de la presión arterial (sin medicación):\n" +
                     "- Consultar al profesional de salud\n" +
@@ -590,7 +674,7 @@ const i18n = {
         },
         advice: {
             low: "あなたの10年リスクは低リスクです。",
-            moderate: "あなたの10年リスクは中程度リスクです。",
+            moderate: "あなたの10年リ��クは中程度リスクです。",
             high: "あなたの10年リスクは高リスクです。",
             lowRisk: {
                 guidelines_notice: "Based on latest international guidelines:\n" +
@@ -605,7 +689,7 @@ const i18n = {
                     "- 目標血圧 <130/80 mmHg\n" +
                     "- 服薬を継続し、週1回モニタリング\n" +
                     "- 定期的なフォローアップ\n" +
-                    "- 副作用のモニタリング",
+                    "- 副作用のモニタ���ング",
                 bp_untreated: "血圧管理（未服薬）：\n" +
                     "- 医療機関を受診\n" +
                     "- 目標血圧 <130/80 mmHg\n" +

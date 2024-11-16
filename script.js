@@ -72,43 +72,50 @@ function displayResult(risk, data) {
     riskScore.textContent = risk.toFixed(1);
     
     const riskAdvice = getRiskAdvice(risk, data);
-    
-    // 使用当前语言显示风险等级
     const translations = i18n[currentLang].result.levels;
+    
     let adviceHtml = `<div class="${riskAdvice.level.toLowerCase().replace(/\s+/g, '-')}-risk">`;
     adviceHtml += `<h3>${translations[riskAdvice.level.toLowerCase()]}</h3>`;
     
     // 添加指南参考
-    adviceHtml += `<div class="guidelines-section">
-        <h4>Guidelines Reference</h4>
-        <pre>${riskAdvice.advice[0]}</pre>
-    </div>`;
+    if (riskAdvice.advice[0]) {
+        adviceHtml += `<div class="guidelines-section">
+            <h4>${i18n[currentLang].guidelines.title}</h4>
+            <pre>${riskAdvice.advice[0]}</pre>
+        </div>`;
+    }
     
     // 添加生活方式建议
-    adviceHtml += `<div class="lifestyle-section">
-        <h4>Lifestyle Recommendations</h4>
-        <pre>${riskAdvice.advice[1]}</pre>
-    </div>`;
+    if (riskAdvice.advice[1]) {
+        adviceHtml += `<div class="lifestyle-section">
+            <h4>${i18n[currentLang].advice.lifestyle_title || 'Lifestyle Recommendations'}</h4>
+            <pre>${riskAdvice.advice[1]}</pre>
+        </div>`;
+    }
     
     // 添加血压管理建议
-    adviceHtml += `<div class="bp-section">
-        <h4>Blood Pressure Management</h4>
-        <pre>${data.bpTreat === 'yes' ? riskAdvice.advice[2] : riskAdvice.advice[3]}</pre>
-    </div>`;
+    if (riskAdvice.advice[2]) {
+        adviceHtml += `<div class="bp-section">
+            <h4>${i18n[currentLang].advice.bp_title || 'Blood Pressure Management'}</h4>
+            <pre>${data.bpTreat === 'yes' ? riskAdvice.advice[2] : riskAdvice.advice[3]}</pre>
+        </div>`;
+    }
     
     // 添加糖尿病管理建议（如果适用）
-    if (data.diabetes === 'yes') {
+    if (data.diabetes === 'yes' && riskAdvice.advice[4]) {
         adviceHtml += `<div class="diabetes-section">
-            <h4>Diabetes Management</h4>
+            <h4>${i18n[currentLang].advice.diabetes_title || 'Diabetes Management'}</h4>
             <pre>${riskAdvice.advice[4]}</pre>
         </div>`;
     }
     
     // 添加血脂管理建议
-    adviceHtml += `<div class="lipids-section">
-        <h4>Lipid Management</h4>
-        <pre>${riskAdvice.advice[5]}</pre>
-    </div>`;
+    if (riskAdvice.advice[5]) {
+        adviceHtml += `<div class="lipids-section">
+            <h4>${i18n[currentLang].advice.lipids_title || 'Lipid Management'}</h4>
+            <pre>${riskAdvice.advice[5]}</pre>
+        </div>`;
+    }
     
     adviceHtml += '</div>';
     
@@ -230,48 +237,36 @@ function getRiskAdvice(risk, data) {
     // 基于风险水平确定建议
     if (risk < 5) {
         level = "low";
-        advice.push(i18n[currentLang].advice.lowRisk.guidelines_notice);
-        advice.push(i18n[currentLang].advice.lowRisk.lifestyle);
-        
-        if (data.bpTreat === 'yes') {
-            advice.push(i18n[currentLang].advice.lowRisk.bp_treated);
-        } else if (parseFloat(data.systolic) > 130) {
-            advice.push(i18n[currentLang].advice.lowRisk.bp_untreated);
-        }
-
-        if (data.diabetes === 'yes') {
-            advice.push(i18n[currentLang].advice.lowRisk.diabetes);
-        }
-
-        advice.push(i18n[currentLang].advice.lowRisk.lipids);
     } else if (risk < 7.5) {
         level = "moderate";
-        advice.push(i18n[currentLang].advice.moderate);
-        advice.push(i18n[currentLang].advice.lowRisk.guidelines_notice);
-        advice.push(i18n[currentLang].advice.lowRisk.lifestyle);
-        
-        if (data.bpTreat === 'yes') {
-            advice.push(i18n[currentLang].advice.lowRisk.bp_treated);
-        }
-        if (data.diabetes === 'yes') {
-            advice.push(i18n[currentLang].advice.lowRisk.diabetes);
-        }
-        advice.push(i18n[currentLang].advice.lowRisk.lipids);
     } else {
         level = "high";
-        advice.push(i18n[currentLang].advice.high);
-        advice.push(i18n[currentLang].advice.lowRisk.guidelines_notice);
-        advice.push(i18n[currentLang].advice.lowRisk.lifestyle);
-        
-        if (data.bpTreat === 'yes') {
-            advice.push(i18n[currentLang].advice.lowRisk.bp_treated);
-        }
-        if (data.diabetes === 'yes') {
-            advice.push(i18n[currentLang].advice.lowRisk.diabetes);
-        }
-        advice.push(i18n[currentLang].advice.lowRisk.lipids);
     }
-    
+
+    // 获取当前语言的建议
+    const currentAdvice = i18n[currentLang].advice.lowRisk;
+
+    // 添加指南参考
+    advice.push(currentAdvice.guidelines_notice);
+
+    // 添加生活方式建议
+    advice.push(currentAdvice.lifestyle);
+
+    // 添加血压管理建议
+    if (data.bpTreat === 'yes') {
+        advice.push(currentAdvice.bp_treated);
+    } else {
+        advice.push(currentAdvice.bp_untreated);
+    }
+
+    // 添加糖尿病管理建议
+    if (data.diabetes === 'yes') {
+        advice.push(currentAdvice.diabetes);
+    }
+
+    // 添加血脂管理建议
+    advice.push(currentAdvice.lipids);
+
     return {
         level: level,
         advice: advice
