@@ -300,6 +300,7 @@ function calculateRisk(data) {
 
         let sum = 0;
         let S0 = 0;
+        let meanCoeffSum = 0;
 
         // 根据2019 ACC/AHA指南更新的系数
         if (race === 'white' || race === 'asian' || race === 'other') {
@@ -310,12 +311,12 @@ function calculateRisk(data) {
                       (-2.664 * lnAge * lnTotalChol) +
                       (-7.99 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
-                      (2.019 * lnSBP) + // 修正血压系数
-                      (onBPMeds ? 1.957 : 0) + // 修正服用降压药系数
+                      (1.797 * lnSBP) +
+                      (onBPMeds ? 1.764 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
-                      (hasDiabetes ? 0.658 : 0) +
-                      (-29.799);
+                      (hasDiabetes ? 0.658 : 0);
                 S0 = 0.9144;
+                meanCoeffSum = 61.18;
             } else {
                 // 白人女性
                 sum = (-29.799 * lnAge) +
@@ -324,12 +325,12 @@ function calculateRisk(data) {
                       (-3.114 * lnAge * lnTotalChol) +
                       (-13.578 * lnHDL) +
                       (3.149 * lnAge * lnHDL) +
-                      (2.019 * lnSBP) + // 修正血压系数
-                      (onBPMeds ? 2.019 : 0) + // 修正服用降压药系数
+                      (2.019 * lnSBP) +
+                      (onBPMeds ? 2.019 : 0) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
-                      (hasDiabetes ? 0.661 : 0) +
-                      (29.18);
+                      (hasDiabetes ? 0.661 : 0);
                 S0 = 0.9665;
+                meanCoeffSum = 29.18;
             }
         } else { // African American
             if (sex === 'male') {
@@ -337,30 +338,30 @@ function calculateRisk(data) {
                 sum = (2.469 * lnAge) +
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
-                      (1.916 * lnSBP) + // 修正血压系数
-                      (onBPMeds ? 1.809 : 0) + // 修正服用降压药系数
+                      (1.916 * lnSBP) +
+                      (onBPMeds ? 1.809 : 0) +
                       (isSmoker ? 0.549 : 0) +
-                      (hasDiabetes ? 0.645 : 0) +
-                      (2.469);
+                      (hasDiabetes ? 0.645 : 0);
                 S0 = 0.8954;
+                meanCoeffSum = 19.54;
             } else {
                 // 非裔美国人女性
                 sum = (17.114 * lnAge) +
                       (0.940 * lnTotalChol) +
                       (-18.920 * lnHDL) +
                       (4.475 * lnAge * lnHDL) +
-                      (27.820 * lnSBP) + // 修正血压系数
-                      (-6.087 * lnAge * lnSBP) + // 修正年龄与血压的交互作用
-                      (onBPMeds ? (29.291 - 6.432 * lnAge) : 0) + // 修正服用降压药系数
+                      (29.291 * lnSBP) +
+                      (-6.432 * lnAge * lnSBP) +
+                      (onBPMeds ? (29.291 - 6.432 * lnAge) : 0) +
                       (isSmoker ? 0.691 : 0) +
-                      (hasDiabetes ? 0.874 : 0) +
-                      (-29.799);
+                      (hasDiabetes ? 0.874 : 0);
                 S0 = 0.9533;
+                meanCoeffSum = 86.61;
             }
         }
 
         // 计算10年风险
-        const indX = sum;
+        const indX = sum - meanCoeffSum;
         const risk = (1 - Math.pow(S0, Math.exp(indX))) * 100;
         
         // 确保结果在有效范围内（0-100%）
@@ -378,7 +379,7 @@ function calculateRisk(data) {
             },
             calculation: {
                 lnAge, lnTotalChol, lnHDL, lnSBP,
-                sum, S0, indX
+                sum, S0, meanCoeffSum, indX
             },
             result: finalRisk
         });
