@@ -1,8 +1,8 @@
 # PCE Risk Calculator (多语言版)
 
-[English](#english) | [中文](#中文) | [Español](#español) | [Français](#français) | [Deutsch](#deutsch) | [日本語](#日本語)
+[English](#english) | [中文](#chinese) | [Español](#spanish) | [Français](#french) | [Deutsch](#german) | [日本語](#japanese)
 
-## English
+## English {#english}
 
 A multilingual Progressive Web Application (PWA) for calculating 10-year ASCVD risk based on the Pooled Cohort Equations.
 
