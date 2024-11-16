@@ -74,48 +74,20 @@ function displayResult(risk, data) {
     const riskAdvice = getRiskAdvice(risk, data);
     const translations = i18n[currentLang].result.levels;
     
-    let adviceHtml = `<div class="${riskAdvice.level.toLowerCase().replace(/\s+/g, '-')}-risk">`;
-    adviceHtml += `<h3>${translations[riskAdvice.level.toLowerCase()]}</h3>`;
+    let adviceHtml = `<div class="${riskAdvice.level}-risk">`;
+    adviceHtml += `<h3>${translations[riskAdvice.level]}</h3>`;
     
-    // 添加指南参考
-    if (riskAdvice.advice[0]) {
-        adviceHtml += `<div class="guidelines-section">
-            <h4>${i18n[currentLang].guidelines.title}</h4>
-            <pre>${riskAdvice.advice[0]}</pre>
-        </div>`;
-    }
-    
-    // 添加生活方式建议
-    if (riskAdvice.advice[1]) {
-        adviceHtml += `<div class="lifestyle-section">
-            <h4>${i18n[currentLang].advice.lifestyle_title || 'Lifestyle Recommendations'}</h4>
-            <pre>${riskAdvice.advice[1]}</pre>
-        </div>`;
-    }
-    
-    // 添加血压管理建议
-    if (riskAdvice.advice[2]) {
-        adviceHtml += `<div class="bp-section">
-            <h4>${i18n[currentLang].advice.bp_title || 'Blood Pressure Management'}</h4>
-            <pre>${data.bpTreat === 'yes' ? riskAdvice.advice[2] : riskAdvice.advice[3]}</pre>
-        </div>`;
-    }
-    
-    // 添加糖尿病管理建议（如果适用）
-    if (data.diabetes === 'yes' && riskAdvice.advice[4]) {
-        adviceHtml += `<div class="diabetes-section">
-            <h4>${i18n[currentLang].advice.diabetes_title || 'Diabetes Management'}</h4>
-            <pre>${riskAdvice.advice[4]}</pre>
-        </div>`;
-    }
-    
-    // 添加血脂管理建议
-    if (riskAdvice.advice[5]) {
-        adviceHtml += `<div class="lipids-section">
-            <h4>${i18n[currentLang].advice.lipids_title || 'Lipid Management'}</h4>
-            <pre>${riskAdvice.advice[5]}</pre>
-        </div>`;
-    }
+    // 添加所有建议部分
+    riskAdvice.adviceArray.forEach(advice => {
+        adviceHtml += `
+            <div class="advice-section">
+                <h4>${advice.title}</h4>
+                <div class="advice-content">
+                    <pre>${advice.content}</pre>
+                </div>
+            </div>
+        `;
+    });
     
     adviceHtml += '</div>';
     
@@ -232,7 +204,7 @@ function handleUnitChange(field, unit) {
 // 修改风险建议函数
 function getRiskAdvice(risk, data) {
     let level;
-    let advice = [];
+    let adviceArray = [];
     
     // 基于风险水平确定建议
     if (risk < 5) {
@@ -243,33 +215,56 @@ function getRiskAdvice(risk, data) {
         level = "high";
     }
 
-    // 获取当前语言的建议
-    const currentAdvice = i18n[currentLang].advice.lowRisk;
+    const advice = i18n[currentLang].advice.lowRisk;
 
-    // 添加指南参考
-    advice.push(currentAdvice.guidelines_notice);
+    // 1. 添加指南参考
+    if (advice.guidelines_notice) {
+        adviceArray.push({
+            title: i18n[currentLang].guidelines.title || "Guidelines Reference",
+            content: advice.guidelines_notice
+        });
+    }
 
-    // 添加生活方式建议
-    advice.push(currentAdvice.lifestyle);
+    // 2. 添加生活方式建议
+    if (advice.lifestyle) {
+        adviceArray.push({
+            title: i18n[currentLang].advice.lifestyle_title || "Lifestyle Recommendations",
+            content: advice.lifestyle
+        });
+    }
 
-    // 添加血压管理建议
+    // 3. 添加血压管理建议
     if (data.bpTreat === 'yes') {
-        advice.push(currentAdvice.bp_treated);
+        adviceArray.push({
+            title: i18n[currentLang].advice.bp_title || "Blood Pressure Management (On Medication)",
+            content: advice.bp_treated
+        });
     } else {
-        advice.push(currentAdvice.bp_untreated);
+        adviceArray.push({
+            title: i18n[currentLang].advice.bp_title || "Blood Pressure Management",
+            content: advice.bp_untreated
+        });
     }
 
-    // 添加糖尿病管理建议
+    // 4. 添加糖尿病管理建议
     if (data.diabetes === 'yes') {
-        advice.push(currentAdvice.diabetes);
+        adviceArray.push({
+            title: i18n[currentLang].advice.diabetes_title || "Diabetes Management",
+            content: advice.diabetes
+        });
     }
 
-    // 添加血脂管理建议
-    advice.push(currentAdvice.lipids);
+    // 5. 添加血脂管理建议
+    if (advice.lipids) {
+        adviceArray.push({
+            title: i18n[currentLang].advice.lipids_title || "Lipid Management",
+            content: advice.lipids
+        });
+    }
 
     return {
         level: level,
-        advice: advice
+        adviceArray: adviceArray
     };
 }
 
