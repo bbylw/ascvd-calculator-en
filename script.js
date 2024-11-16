@@ -10,13 +10,11 @@ function initLanguageSelector() {
     if (!savedLang) {
         // 如果没有保存的语言设置，则使用浏览器语言
         const userLang = navigator.language || navigator.userLanguage;
-        savedLang = userLang.split('-')[0];
-        
-        // 如果不支持该语言，默认使用英语
-        if (!i18n[savedLang]) savedLang = 'en';
+        savedLang = userLang.startsWith('zh') ? 'zh' : 'en';
     }
     
-    currentLang = savedLang;
+    // 确保语言选项有效（只允许中英文）
+    currentLang = ['zh', 'en'].includes(savedLang) ? savedLang : 'en';
     languageSelect.value = currentLang;
     updateLanguage(currentLang);
 
@@ -226,59 +224,65 @@ function getRiskAdvice(risk, data) {
         level = "high";
     }
 
-    // 获取最新的建议内容
-    const currentAdvice = i18n[currentLang].advice.lowRisk;
+    // 根据风险等级获取对应的建议内容
+    const advice = i18n[currentLang].advice[`${level}Risk`];
 
     try {
         // 1. 添加指南参考
-        if (currentAdvice.guidelines_notice) {
+        if (advice.guidelines_notice) {
             adviceArray.push({
                 title: i18n[currentLang].guidelines.title || "Guidelines Reference",
-                content: currentAdvice.guidelines_notice
+                content: advice.guidelines_notice
             });
         }
 
         // 2. 添加生活方式建议
-        if (currentAdvice.lifestyle) {
+        if (advice.lifestyle) {
             adviceArray.push({
                 title: i18n[currentLang].advice.lifestyle_title || "Lifestyle Recommendations",
-                content: currentAdvice.lifestyle
+                content: advice.lifestyle
             });
         }
 
         // 3. 添加血压管理建议
         const systolic = parseFloat(data.systolic);
         
-        // 根据是否服用降压药选择最新的建议内容
+        // 根据是否服用降压药选择建议内容
         if (data.bpTreat === 'yes') {
-            if (currentAdvice.bp_treated) {
+            if (advice.bp_treated) {
                 adviceArray.push({
                     title: i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)",
-                    content: currentAdvice.bp_treated
+                    content: advice.bp_treated
                 });
             }
         } else {
-            if (currentAdvice.bp_untreated) {
+            if (advice.bp_untreated) {
+                // 添加调试日志
+                console.log('未服用降压药建议选择:', {
+                    风险等级: level,
+                    建议内容: advice.bp_untreated
+                });
+
                 adviceArray.push({
                     title: i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)",
-                    content: currentAdvice.bp_untreated
+                    content: advice.bp_untreated
                 });
             }
         }
 
         // 4. 添加糖尿病管理建议
-        if (data.diabetes === 'yes' && currentAdvice.diabetes) {
+        if (data.diabetes === 'yes' && advice.diabetes) {
             adviceArray.push({
                 title: i18n[currentLang].advice.diabetes_title || "Diabetes Management",
-                content: currentAdvice.diabetes
+                content: advice.diabetes
             });
         }
 
         // 5. 添加血脂管理建议
-        if (currentAdvice.lipids) {
+        if (advice.lipids) {
             adviceArray.push({
                 title: i18n[currentLang].advice.lipids_title || "Lipid Management",
-                content: currentAdvice.lipids
+                content: advice.lipids
             });
         }
 
@@ -286,11 +290,10 @@ function getRiskAdvice(risk, data) {
         console.log('建议生成详情:', {
             风险等级: level,
             血压治疗状态: data.bpTreat,
-            血压建议内容: data.bpTreat === 'yes' ? currentAdvice.bp_treated : currentAdvice.bp_untreated,
+            建议内容: advice,
             建议数量: adviceArray.length,
             收缩压: systolic,
-            当前语言: currentLang,
-            建议对象: currentAdvice
+            当前语言: currentLang
         });
 
         return {
@@ -301,7 +304,7 @@ function getRiskAdvice(risk, data) {
     } catch (err) {
         console.error('生成建议时出错:', err);
         console.error('错误详情:', {
-            advice: currentAdvice,
+            advice: advice,
             currentLang: currentLang,
             bpTreat: data.bpTreat,
             风险等级: level

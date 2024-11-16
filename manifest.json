@@ -1,7 +1,7 @@
 {
-    "name": "PCE Risk Calculator",
+    "name": "PCE Risk Calculator | PCE风险评估计算器",
     "short_name": "PCE Calc",
-    "description": "10-year ASCVD Risk Assessment Calculator",
+    "description": "10-year ASCVD Risk Assessment Calculator | 10年动脉粥样硬化性心血管疾病风险评估计算器",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
