@@ -83,9 +83,13 @@ const i18n = {
                     "- Monitor blood glucose and kidney function\n" +
                     "- Check HbA1c every 3-6 months",
                 lipids: "Lipid management:\n" +
-                    "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
-                    "- Lifestyle intervention first\n" +
-                    "- Annual lipid monitoring"
+                    "- Primary prevention: Target LDL-C reduction ≥50%\n" +
+                    "- Consider statin therapy based on risk level\n" +
+                    "- High-intensity statin if 10-year risk ≥20%\n" +
+                    "- Moderate-intensity statin if risk 7.5-19.9%\n" +
+                    "- Lifestyle modification essential for all\n" +
+                    "- Monitor lipids every 3-12 months\n" +
+                    "- Consider non-statin therapy if needed"
             }
         },
         error: {
@@ -184,9 +188,13 @@ const i18n = {
                     "- 定期监测血糖和肾功能\n" +
                     "- 每3-6个月进行HbA1c检查",
                 lipids: "血脂管理：\n" +
-                    "- LDL-C 目标值 <2.6 mmol/L (100 mg/dL)\n" +
-                    "- 优先考虑生活方式干预\n" +
-                    "- 每年监测血脂水平"
+                    "- 一级预防：目标LDL-C降低≥50%\n" +
+                    "- 根据风险水平考虑他汀类药物治疗\n" +
+                    "- 10年风险≥20%使用高强度他汀\n" +
+                    "- 风险在7.5-19.9%使用中等强度他汀\n" +
+                    "- 所有患者都需要生活方式干预\n" +
+                    "- 每3-12个月监测血脂\n" +
+                    "- 必要时考虑非他汀类药物治疗"
             }
         },
         error: {
@@ -285,10 +293,14 @@ const i18n = {
                     "- Consider SGLT2 inhibitors\n" +
                     "- Monitor blood glucose and kidney function\n" +
                     "- Check HbA1c every 3-6 months",
-                lipids: "Lipid management:\n" +
-                    "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
-                    "- Lifestyle intervention first\n" +
-                    "- Annual lipid monitoring"
+                lipids: "Manejo de lípidos:\n" +
+                    "- Prevención primaria: Reducción objetivo de LDL-C ≥50%\n" +
+                    "- Considerar terapia con estatinas según nivel de riesgo\n" +
+                    "- Estatinas de alta intensidad si riesgo a 10 años ≥20%\n" +
+                    "- Estatinas de intensidad moderada si riesgo 7.5-19.9%\n" +
+                    "- Modificación del estilo de vida esencial para todos\n" +
+                    "- Monitorear lípidos cada 3-12 meses\n" +
+                    "- Considerar terapia sin estatinas si es necesario"
             }
         },
         error: {
@@ -387,10 +399,14 @@ const i18n = {
                     "- Consider SGLT2 inhibitors\n" +
                     "- Monitor blood glucose and kidney function\n" +
                     "- Check HbA1c every 3-6 months",
-                lipids: "Lipid management:\n" +
-                    "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
-                    "- Lifestyle intervention first\n" +
-                    "- Annual lipid monitoring"
+                lipids: "Gestion des lipides:\n" +
+                    "- Prévention primaire : Réduction cible du LDL-C ≥50%\n" +
+                    "- Envisager un traitement par statines selon le niveau de risque\n" +
+                    "- Statines haute intensité si risque à 10 ans ≥20%\n" +
+                    "- Statines intensité modérée si risque 7.5-19.9%\n" +
+                    "- Modification du mode de vie essentielle pour tous\n" +
+                    "- Surveiller les lipides tous les 3-12 mois\n" +
+                    "- Envisager une thérapie sans statines si nécessaire"
             }
         },
         error: {
@@ -489,10 +505,14 @@ const i18n = {
                     "- Consider SGLT2 inhibitors\n" +
                     "- Monitor blood glucose and kidney function\n" +
                     "- Check HbA1c every 3-6 months",
-                lipids: "Lipid management:\n" +
-                    "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
-                    "- Lifestyle intervention first\n" +
-                    "- Annual lipid monitoring"
+                lipids: "Lipidmanagement:\n" +
+                    "- Primärprävention: Zielreduktion LDL-C ≥50%\n" +
+                    "- Statintherapie basierend auf Risikoniveau erwägen\n" +
+                    "- Hochintensive Statine bei 10-Jahres-Risiko ≥20%\n" +
+                    "- Moderat intensive Statine bei Risiko 7.5-19.9%\n" +
+                    "- Lebensstiländerung essentiell für alle\n" +
+                    "- Lipide alle 3-12 Monate überwachen\n" +
+                    "- Bei Bedarf Nicht-Statin-Therapie erwägen"
             }
         },
         error: {
@@ -591,10 +611,14 @@ const i18n = {
                     "- Consider SGLT2 inhibitors\n" +
                     "- Monitor blood glucose and kidney function\n" +
                     "- Check HbA1c every 3-6 months",
-                lipids: "Lipid management:\n" +
-                    "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
-                    "- Lifestyle intervention first\n" +
-                    "- Annual lipid monitoring"
+                lipids: "脂質管理：\n" +
+                    "- 一次予防：LDL-C ≥50%低下を目標\n" +
+                    "- リスクレベルに基づくスタチン療法の検討\n" +
+                    "- 10年リスク≥20%の場合は高強度スタチン\n" +
+                    "- リスク7.5-19.9%の場合は中等度スタチン\n" +
+                    "- 全患者に生活習慣の改善が不可欠\n" +
+                    "- 3-12ヶ月ごとに脂質をモニタリング\n" +
+                    "- 必要に応じて非スタチン療法を検討"
             }
         },
         error: {
