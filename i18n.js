@@ -55,9 +55,6 @@ const i18n = {
             // ... 其他指南相关翻译
         },
         advice: {
-            low: "Your 10-year risk is low.",
-            moderate: "Your 10-year risk is moderate.",
-            high: "Your 10-year risk is high.",
             lowRisk: {
                 guidelines_notice: "Based on latest ACC/AHA and ESC Guidelines:\n" +
                     "• 2023 ACC/AHA Prevention Guidelines\n" +
@@ -153,47 +150,7 @@ const i18n = {
                     "Monitoring:\n" +
                     "• Regular BP checks\n" +
                     "• Keep BP diary\n" +
-                    "• Follow-up as advised by healthcare provider",
-
-                diabetes: "Diabetes management:\n" +
-                    "Glycemic Targets:\n" +
-                    "• HbA1c <7.0% for most adults\n" +
-                    "• Consider <6.5% for selected individuals\n" +
-                    "• Less stringent targets for elderly/comorbid\n\n" +
-                    "Medications:\n" +
-                    "• First-line: Metformin\n" +
-                    "• Early consideration of GLP-1 RA or SGLT2i\n" +
-                    "• SGLT2i preferred with CV disease\n\n" +
-                    "Monitoring:\n" +
-                    "• HbA1c every 3-6 months\n" +
-                    "• Regular kidney function\n" +
-                    "• Annual eye and foot exams\n" +
-                    "• Regular CV risk assessment",
-
-                lipids: "Lipid management:\n" +
-                    "LDL-C Targets by Risk:\n" +
-                    "• Very high risk (>20%): <55 mg/dL (1.4 mmol/L)\n" +
-                    "• High risk (7.5-19.9%): <70 mg/dL (1.8 mmol/L)\n" +
-                    "• Moderate risk (5-7.4%): <100 mg/dL (2.6 mmol/L)\n" +
-                    "• Low risk (<5%): <116 mg/dL (3.0 mmol/L)\n\n" +
-                    "Statin Therapy:\n" +
-                    "• High intensity:\n" +
-                    "  - Atorvastatin 40-80mg\n" +
-                    "  - Rosuvastatin 20-40mg\n" +
-                    "• Moderate intensity:\n" +
-                    "  - Atorvastatin 10-20mg\n" +
-                    "  - Rosuvastatin 5-10mg\n" +
-                    "  - Simvastatin 20-40mg\n" +
-                    "  - Pravastatin 40-80mg\n\n" +
-                    "Non-statin Therapy:\n" +
-                    "• Ezetimibe 10mg\n" +
-                    "• PCSK9 inhibitors\n" +
-                    "• Bempedoic acid\n" +
-                    "• Icosapent ethyl\n\n" +
-                    "Monitoring:\n" +
-                    "• Lipids every 3-12 months\n" +
-                    "• Liver function at baseline and as needed\n" +
-                    "• Monitor for muscle symptoms"
+                    "• Follow-up as advised by healthcare provider"
             }
         },
         error: {
@@ -264,9 +221,6 @@ const i18n = {
             // ... 其他指南相关翻译
         },
         advice: {
-            low: "您的10年风险是低风险。",
-            moderate: "您的10年风险是中等风险。",
-            high: "您的10年风险是高风险。",
             lowRisk: {
                 guidelines_notice: "基于最新国际指南：\n" +
                     "• ADA（美国糖尿病协会）年度标准\n" +
@@ -297,7 +251,7 @@ const i18n = {
                     "  - 特定适应证时使用β受体阻滞剂\n\n" +
                     "监测要求：\n" +
                     "• 家庭血压监测：每天两次\n" +
-                    "• 实验室监测：\n" +
+                    "• 实验室测：\n" +
                     "  - 基线：肌酐、钾离子、eGFR\n" +
                     "  - ACEi/ARB/利尿剂开始/调整后2-4周\n" +
                     "  - 之后根据稳定性每3-12个月\n\n" +
@@ -313,7 +267,7 @@ const i18n = {
                     "• 体重管理\n" +
                     "• 限制饮酒\n" +
                     "• 压力管理",
-                bp_untreated: "高血压管理（未服用降压药）：\n" +
+                bp_untreated: "高血压管理（服用降压药）：\n" +
                     "血压目标：\n" +
                     "• 理想：<120/80 mmHg\n" +
                     "• 正常：120-129/<80 mmHg\n" +
@@ -332,43 +286,54 @@ const i18n = {
                     "  - 理想：<1.5g/天\n" +
                     "  - 最大：<2.3g/天\n" +
                     "• 体育活动：\n" +
-                    "  - 每周150分钟中等强度活动\n" +
-                    "  - 或每周75分钟剧烈活动\n" +
+                    "  - 150 min/week moderate activity\n" +
+                    "  - Or 75 min/week vigorous activity\n" +
                     "• 体重管理：\n" +
                     "  - 目标BMI <25 kg/m²\n" +
                     "  - 超重者减重\n" +
                     "• 限制饮酒：\n" +
-                    "  - 男性：≤2杯/天\n" +
-                    "  - 女性：≤1杯/天\n\n" +
+                    "  - 男性：≤2 drinks/day\n" +
+                    "  - 女性：≤1 drink/day\n\n" +
                     "监测要求：\n" +
                     "• 定期测量血压\n" +
                     "• 记录血压日志\n" +
                     "• 遵医嘱随访",
                 diabetes: "糖尿病管理：\n" +
-                    "- HbA1c控制目标 <7%\n" +
-                    "- 优先考虑SGLT2抑制剂\n" +
-                    "- 定期监测血糖和肾功能\n" +
-                    "- 每3-6个月进行HbA1c检查",
+                    "• 血糖控制目标：\n" +
+                    "  - HbA1c <7%（大多数患者）\n" +
+                    "  - 个体化目标：6.5-8%\n" +
+                    "• 药物治疗：\n" +
+                    "  - 一线：二甲双胍\n" +
+                    "  - 优先考虑SGLT2抑制剂或GLP-1受体激动剂\n" +
+                    "  - 有心血管疾病时首选SGLT2抑制剂\n" +
+                    "• 监测要求：\n" +
+                    "  - 每3-6个月检查HbA1c\n" +
+                    "  - 定期监测肾功能\n" +
+                    "  - 每年进行眼底和足部检查\n" +
+                    "  - 定期评估心血管风险",
                 lipids: "血脂管理：\n" +
-                    "- 基于风险的LDL-C目标值：\n" +
-                    "  • 极高风险（>20%）：<55 mg/dL (1.4 mmol/L)\n" +
-                    "  • 高风险（7.5-19.9%）：<70 mg/dL (1.8 mmol/L)\n" +
-                    "  • 中等风险（5-7.4%）：<100 mg/dL (2.6 mmol/L)\n" +
-                    "  • 低风险（<5%）：<116 mg/dL (3.0 mmol/L)\n" +
-                    "- 他汀类药物治疗：\n" +
-                    "  • 高强度：阿托伐他汀40-80mg或瑞舒伐他汀20-40mg\n" +
-                    "  • 中等强度：阿托伐他汀10-20mg或瑞舒伐他汀5-10mg\n" +
-                    "- 需要时的非他汀类药物：\n" +
-                    "  • 依折麦布\n" +
-                    "  • PCSK9抑制剂\n" +
-                    "  • 倍他米酸\n" +
-                    "- 生活方式干预：\n" +
-                    "  • 地中海式饮食模式\n" +
-                    "  • 规律运动\n" +
-                    "  • 体重管理\n" +
-                    "  • 戒烟\n" +
-                    "- 每3-12个月监测\n" +
-                    "- 治疗前及治疗期间检查肝功能"
+                    "• 基于风险的LDL-C目标值：\n" +
+                    "  - 极高风险（>20%）：<55 mg/dL (1.4 mmol/L)\n" +
+                    "  - 高风险（7.5-19.9%）：<70 mg/dL (1.8 mmol/L)\n" +
+                    "  - 中等风险（5-7.4%）：<100 mg/dL (2.6 mmol/L)\n" +
+                    "  - 低风险（<5%）：<116 mg/dL (3.0 mmol/L)\n\n" +
+                    "• 他汀类药物治疗：\n" +
+                    "  - 高强度：阿托伐他汀40-80mg或瑞舒伐他汀20-40mg\n" +
+                    "  - 中等强度：阿托伐他汀10-20mg或瑞舒伐他汀5-10mg\n\n" +
+                    "• 非他汀类药物：\n" +
+                    "  - 依折麦布10mg\n" +
+                    "  - PCSK9抑制剂\n" +
+                    "  - 倍他米酸\n\n" +
+                    "• 生活方式干预：\n" +
+                    "  - 地中海式或低脂饮食\n" +
+                    "  - 规律运动\n" +
+                    "  - 体重管理\n" +
+                    "  - 戒烟\n\n" +
+                    "• 监测要求：\n" +
+                    "  - 开始治疗前检查肝功能\n" +
+                    "  - 治疗后4-12周复查血脂和肝功能\n" +
+                    "  - 之后每3-12个月监测\n" +
+                    "  - 注意肌肉症状"
             }
         },
         error: {
@@ -440,14 +405,13 @@ const i18n = {
             // ... 其他指南相关翻译
         },
         advice: {
-            low: "Su riesgo de 10 años es bajo.",
-            moderate: "Su riesgo de 10 años es moderado.",
-            high: "Su riesgo de 10 años es alto.",
             lowRisk: {
                 guidelines_notice: "Basado en las últimas guías internacionales:\n" +
-                    "• Estándares Anuales de la ADA (Asociación Americana de Diabetes)\n" +
-                    "• Guías de Prevención de Enfermedades Cardiovasculares ACC/AHA\n" +
-                    "• Guías de Prevención de ECV de la ESC (Sociedad Europea de Cardiología)",
+                    "• Guías ACC/AHA 2023 de Prevención\n" +
+                    "• Guías ACC/AHA 2023 de Presión Arterial\n" +
+                    "• Guías ACC/AHA 2023 de Colesterol\n" +
+                    "• Estándares de Atención ADA 2023",
+
                 lifestyle: "Recomendaciones de estilo de vida:\n" +
                     "- 150-300 minutos de actividad aeróbica moderada o 75-150 minutos de actividad vigorosa por semana\n" +
                     "- Seguir el patrón de dieta mediterránea\n" +
@@ -466,7 +430,7 @@ const i18n = {
                     "- Objetivo HbA1c <7%\n" +
                     "- Considerar inhibidores SGLT2\n" +
                     "- Monitorear glucosa en sangre y función renal\n" +
-                    "- Verificar HbA1c cada 3-6 meses",
+                    "- Vérifier HbA1c cada 3-6 meses",
                 lipids: "Manejo de lípidos:\n" +
                     "- Riesgo muy alto (riesgo ASCVD >20%): LDL-C <55 mg/dL (1.4 mmol/L)\n" +
                     "- Riesgo alto (riesgo 7.5-19.9%): LDL-C <70 mg/dL (1.8 mmol/L)\n" +
@@ -547,14 +511,12 @@ const i18n = {
             // ... 其他指南相关翻译
         },
         advice: {
-            low: "Votre risque de 10 ans est faible.",
-            moderate: "Votre risque de 10 ans est modéré.",
-            high: "Votre risque de 10 ans est élevé.",
             lowRisk: {
                 guidelines_notice: "Basé sur les dernières directives internationales :\n" +
-                    "• Standards annuels de l'ADA (Association Américaine du Diabète)\n" +
-                    "• Directives ACC/AHA de prévention des maladies cardiovasculaires\n" +
-                    "• Directives ESC (Société Européenne de Cardiologie) pour la prévention des MCV",
+                    "• Directives ACC/AHA 2023 de Prévention\n" +
+                    "• Directives ACC/AHA 2023 de Pression Artérielle\n" +
+                    "• Directives ACC/AHA 2023 de Cholestérol\n" +
+                    "• Standards de Soins ADA 2023",
                 lifestyle: "Recommandations sur le mode de vie :\n" +
                     "- 150-300 minutes d'activité aérobique modérée ou 75-150 minutes d'activité vigoureuse par semaine\n" +
                     "- Suivre le régime méditerranéen\n" +
@@ -654,9 +616,6 @@ const i18n = {
             // ... 其他指南相关翻译
         },
         advice: {
-            low: "Ihr 10-Jahres-Risiko ist niedrig.",
-            moderate: "Ihr 10-Jahres-Risiko ist mittel.",
-            high: "Ihr 10-Jahres-Risiko ist hoch.",
             lowRisk: {
                 guidelines_notice: "Basierend auf den neuesten internationalen Richtlinien:\n" +
                     "• ADA (American Diabetes Association) Jahresstandards\n" +
@@ -669,27 +628,40 @@ const i18n = {
                 bp_treated: "Blutdruckmanagement (mit Medikation):\n" +
                     "Blutdruckziele:\n" +
                     "• Allgemeines Ziel: <130/80 mmHg\n" +
-                    "• Alter >65: <130-139/70-79 mmHg\n" +
-                    "• Mit Diabetes: <130/80 mmHg\n" +
-                    "• Mit chronischer Nierenerkrankung: <130/80 mmHg\n\n" +
+                    "• Alter ≥65: <130/80 mmHg wenn vertragen\n" +
+                    "• Mit CKD + Albuminurie: <130/80 mmHg\n" +
+                    "• Mit Diabetes: <130/80 mmHg\n\n" +
                     "Medikamente:\n" +
                     "• Erstlinienoptionen:\n" +
-                    "  - ACE-Hemmer/ARB (z.B. Lisinopril, Valsartan)\n" +
-                    "  - Kalziumkanalblocker (z.B. Amlodipine)\n" +
-                    "  - Thiazid-Diuretika (z.B. HCT)\n" +
-                    "• Kombinationstherapie wenn >20/10 mmHg über Zielwert:\n" +
-                    "  - ACE-Hemmer/ARB + Kalziumkanalblocker bevorzugt\n" +
-                    "  - ACE-Hemmer/ARB + Thiazid alternativ\n" +
-                    "  - ACE-Hemmer + ARB Kombination vermeiden\n\n" +
+                    "  - ACE-Hemmer/ARB (z.B. Lisinopril 10-40mg, Valsartan 80-320mg)\n" +
+                    "  - Kalziumkanalblocker (z.B. Amlodipin 2,5-10mg)\n" +
+                    "  - Thiazid-ähnliche Diuretika (z.B. Chlortalidon 12,5-25mg)\n\n" +
+                    "• Initiale Kombinationstherapie bei BP ≥20/10 mmHg über Zielwert:\n" +
+                    "  - Bevorzugt: ACE-Hemmer/ARB + Kalziumkanalblocker\n" +
+                    "  - Alternative: ACE-Hemmer/ARB + Thiazid-ähnliches Diuretikum\n" +
+                    "  - Erwägen Sie Fixkombinationen\n\n" +
+                    "• Drittlinienoptionen:\n" +
+                    "  - Spironolacton (25-50mg) hinzufügen\n" +
+                    "  - Oder anderes kaliumsparendes Diuretikum\n" +
+                    "  - Betablocker für spezifische Indikationen\n\n" +
                     "Überwachung:\n" +
-                    "• Häusliche Blutdruckmessung 2x täglich\n" +
-                    "• Nierenfunktion und Elektrolyte kontrollieren:\n" +
-                    "  - 2-4 Wochen nach Start/Änderung von ACE-Hemmer/ARB\n" +
-                    "  - Dann alle 6-12 Monate\n" +
-                    "• Nebenwirkungsüberwachung:\n" +
-                    "  - ACE-Hemmer/ARB: Husten, Hyperkaliämie\n" +
-                    "  - Kalziumkanalblocker: Ödeme\n" +
-                    "  - Thiazide: Hypokaliämie",
+                    "• Häusliche Blutdruckmessung: zweimal täglich\n" +
+                    "• Laborüberwachung:\n" +
+                    "  - Baseline: Kreatinin, K+, DFGe\n" +
+                    "  - 2-4 Wochen nach Start/Änderung von ACE-Hemmer/ARB/Diuretika\n" +
+                    "  - Dann alle 3-12 Monate je nach Stabilität\n\n" +
+                    "Nebenwirkungsüberwachung:\n" +
+                    "• ACE-Hemmer/ARB: Husten, Hyperkaliämie, akutes Nierenversagen\n" +
+                    "• Kalziumkanalblocker: periphere Ödeme, Obstipation\n" +
+                    "• Thiazide: Hypokaliämie, Hyperurikämie\n" +
+                    "• Spironolacton: Hyperkaliämie, Gynäkomastie\n\n" +
+                    "Lebensstiländerungen (essentiell):\n" +
+                    "• Natriumrestriktion: <2000mg/Tag\n" +
+                    "• DASH-Diät\n" +
+                    "• Regelmäßige aerobe Aktivität\n" +
+                    "• Gewichtsmanagement\n" +
+                    "• Alkoholeinschränkung\n" +
+                    "• Stressmanagement",
                 bp_untreated: "Blutdruckmanagement (ohne Medikation):\n" +
                     "Blutdruckziele:\n" +
                     "• Optimal: <120/80 mmHg\n" +
@@ -701,11 +673,26 @@ const i18n = {
                     "• Mit Diabetes oder Nierenerkrankung\n" +
                     "• Mit Endorganschäden\n\n" +
                     "Lebensstiländerungen (essentiell):\n" +
-                    "• DASH-Ernährungsplan\n" +
-                    "• Natriumrestriktion (<2,3g/Tag)\n" +
-                    "• Regelmäßige körperliche Aktivität\n" +
-                    "• Gewichtsmanagement\n" +
-                    "• Alkoholeinschränkung"
+                    "• DASH-Ernährungsplan:\n" +
+                    "  - Reich an Obst, Gemüse, Vollkornprodukten\n" +
+                    "  - Fettarme Milchprodukte\n" +
+                    "  - Reduzierte gesättigte Fette\n" +
+                    "• Natriumrestriktion:\n" +
+                    "  - Ideal: <1,5g/Tag\n" +
+                    "  - Maximum: <2,3g/Tag\n" +
+                    "• Körperliche Aktivität:\n" +
+                    "  - 150 Min/Woche moderate Aktivität\n" +
+                    "  - Oder 75 Min/Woche intensive Aktivität\n" +
+                    "• Gewichtsmanagement:\n" +
+                    "  - Ziel-BMI <25 kg/m²\n" +
+                    "  - Gewichtsreduktion bei Übergewicht\n" +
+                    "• Alkoholeinschränkung:\n" +
+                    "  - Männer: ≤2 Drinks/Tag\n" +
+                    "  - Frauen: ≤1 Drink/Tag\n\n" +
+                    "Überwachung:\n" +
+                    "• Regelmäßige Blutdruckmessungen\n" +
+                    "• Blutdrucktagebuch führen\n" +
+                    "• Ärztliche Kontrollen nach Anweisung"
             }
         },
         error: {
@@ -777,42 +764,71 @@ const i18n = {
             // ... 其他指南相关翻译
         },
         advice: {
-            low: "あなたの10年リスクは低リスクです。",
-            moderate: "あなたの10年リスクは中程度リスクです。",
-            high: "あなたの10年リスクは高リスクです。",
             lowRisk: {
                 guidelines_notice: "最新の国際ガイドラインに基づく：\n" +
-                    "• ADA（米国糖尿病学会）年次基準\n" +
-                    "• ACC/AHA心血管疾患予防ガイドライン\n" +
-                    "• ESC（欧州心臓病学会）CVD予防ガイドライン",
-                lifestyle: "Lifestyle recommendations:\n" +
-                    "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
-                    "- Follow Mediterranean diet pattern\n" +
-                    "- Maintain healthy weight (BMI <25 kg/m²)",
+                    "• 2023年 ACC/AHA予防ガイドライン\n" +
+                    "• 2023年 ACC/AHA血圧ガイドライン\n" +
+                    "• 2023年 ACC/AHAコレステロールガイドライン\n" +
+                    "• 2023年 ADA糖尿病診療基準",
+
+                lifestyle: "生活習慣の改善：\n" +
+                    "運動：\n" +
+                    "• 週150-300分の中等度運動または75-150分の高強度運動\n" +
+                    "• 週2-3回の筋力トレーニング\n" +
+                    "• 座位時間の削減\n\n" +
+                    "食事：\n" +
+                    "• 地中海式食事またはDASH食\n" +
+                    "• 飽和脂肪を減らす（カロリーの7%未満）\n" +
+                    "• 果物、野菜全粒穀物を増やす\n" +
+                    "• 加工食品と添加糖を制限\n" +
+                    "• 塩分制限（<2.3g/日）\n\n" +
+                    "体重管理：\n" +
+                    "• 目標BMI <25 kg/m²\n" +
+                    "• 腹囲：男性 <90cm、女性 <80cm\n\n" +
+                    "その他：\n" +
+                    "• 禁煙\n" +
+                    "• アルコール制限（男性≤2杯/日、女性≤1杯/日）\n" +
+                    "• 十分な睡眠（7-9時間）\n" +
+                    "• ストレス管理",
+
                 bp_treated: "血圧管理（服薬中）：\n" +
                     "血圧目標：\n" +
                     "• 一般目標：<130/80 mmHg\n" +
-                    "• 65歳以上：<130-139/70-79 mmHg\n" +
-                    "• 糖尿病合併：<130/80 mmHg\n" +
-                    "• 慢性腎臓病合併：<130/80 mmHg\n\n" +
+                    "• 65歳以上：忍容性があれば <130/80 mmHg\n" +
+                    "• CKD+アルブミン尿：<130/80 mmHg\n" +
+                    "• 糖尿病合併：<130/80 mmHg\n\n" +
                     "薬物治療：\n" +
                     "• 第一選択薬：\n" +
-                    "  - ACE阻害薬/ARB（例：リシノプリル、バルサルタン）\n" +
-                    "  - Ca拮抗薬（例：アムロジピン）\n" +
-                    "  - サイアザイド系利尿薬（例：HCTZ）\n" +
+                    "  - ACE阻害薬/ARB（例：リシノプリル10-40mg、バルサルタン80-320mg）\n" +
+                    "  - Ca拮抗薬（例：アムロジピン2.5-10mg）\n" +
+                    "  - チアジド系利尿薬（例：クロルタリドン12.5-25mg）\n\n" +
                     "• 目標値より20/10 mmHg以上高い場合の併用療法：\n" +
-                    "  - ACE阻害薬/ARB + Ca拮抗薬が推奨\n" +
-                    "  - ACE阻害薬/ARB + サイアザイド系が代替\n" +
-                    "  - ACE阻害薬 + ARBの併用は避ける\n\n" +
+                    "  - 推奨：ACE阻害薬/ARB + Ca拮抗薬\n" +
+                    "  - 代替：ACE阻害薬/ARB + チアジド系利尿薬\n" +
+                    "  - 配合剤の使用を考慮\n\n" +
+                    "• 第三選択薬：\n" +
+                    "  - スピロノラクトン（25-50mg）\n" +
+                    "  - または他のK保持性利尿薬\n" +
+                    "  - 特定の適応でβ遮断薬\n\n" +
                     "モニタリング：\n" +
-                    "• 家庭血圧を1日2回測定\n" +
-                    "• 腎機能と電解質の確認：\n" +
-                    "  - ACE阻害薬/ARB開始/変更後2-4週間\n" +
-                    "  - その後6-12ヶ月ごと\n" +
-                    "• 副作用モニタリング：\n" +
-                    "  - ACE阻害薬/ARB：咳嗽、高カリウム血症\n" +
-                    "  - Ca拮抗薬：浮腫\n" +
-                    "  - サイアザイド系：低カリウム血症",
+                    "• 家庭血圧：1日2回測定\n" +
+                    "• 検査モニタリング：\n" +
+                    "  - ベースライン：Cr、K+、eGFR\n" +
+                    "  - ACE阻害薬/ARB/利尿薬開始/変更後2-4週\n" +
+                    "  - その後は安定性に応じて3-12ヶ月毎\n\n" +
+                    "副作用モニタリング：\n" +
+                    "• ACE阻害薬/ARB：咳嗽、高K血症、急性腎障害\n" +
+                    "• Ca拮抗薬：末梢性浮腫、便秘\n" +
+                    "• チアジド系：低K血症、高尿酸血症\n" +
+                    "• スピロノラクトン：高K血症、女性化乳房\n\n" +
+                    "生活習慣の改善（必須）：\n" +
+                    "• 塩分制限：<2000mg/日\n" +
+                    "• DASH食\n" +
+                    "• 定期的な有酸素運動\n" +
+                    "• 体重管理\n" +
+                    "• アルコール制限\n" +
+                    "• ストレス管理",
+
                 bp_untreated: "血圧管理（未服薬）：\n" +
                     "血圧目標：\n" +
                     "• 最適：<120/80 mmHg\n" +
@@ -821,14 +837,67 @@ const i18n = {
                     "薬物治療を考慮する場合：\n" +
                     "• 心血管リスク高値で血圧が持続的に≥130/80 mmHg\n" +
                     "• その他の場合で血圧が持続的に≥140/90 mmHg\n" +
-                    "• 糖尿���または腎臓病合併\n" +
+                    "• 糖尿病または腎臓病合併\n" +
                     "• 標的臓器障害あり\n\n" +
                     "生活習慣の改善（必須）：\n" +
-                    "• DASH食\n" +
-                    "• 食塩制限（<2.3g/日）\n" +
-                    "• 定期的な運動\n" +
-                    "• 体重管理\n" +
-                    "• 節酒"
+                    "• DASH食：\n" +
+                    "  - 果物、野菜、全粒穀物が豊富\n" +
+                    "  - 低脂肪乳製品\n" +
+                    "  - 飽和脂肪を減らす\n" +
+                    "• 塩分制限：\n" +
+                    "  - 理想：<1.5g/日\n" +
+                    "  - 最大：<2.3g/日\n" +
+                    "• 運動：\n" +
+                    "  - 週150分の中等度運動\n" +
+                    "  - または週75分の高強度運動\n" +
+                    "• 体重管理：\n" +
+                    "  - 目標BMI <25 kg/m²\n" +
+                    "  - 過体重の場合は減量\n" +
+                    "• アルコール制限：\n" +
+                    "  - 男性：≤2杯/日\n" +
+                    "  - 女性：≤1杯/日\n\n" +
+                    "モニタリング：\n" +
+                    "• 定期的な血圧測定\n" +
+                    "• 血圧日記をつける\n" +
+                    "• 医師の指示に従って受診",
+
+                diabetes: "糖尿病管理：\n" +
+                    "• 血糖コントロール目標：\n" +
+                    "  - HbA1c <7.0%（多くの成人）\n" +
+                    "  - 個別化目標：6.5-8.0%\n" +
+                    "• 薬物治療：\n" +
+                    "  - 第一選択：メトホルミン\n" +
+                    "  - SGLT2阻害薬またはGLP-1受容体作動薬を優先考慮\n" +
+                    "  - 心血管疾患がある場合はSGLT2阻害薬を推奨\n" +
+                    "• モニタリング：\n" +
+                    "  - 3-6ヶ月毎のHbA1c測定\n" +
+                    "  - 定期的な腎機能検査\n" +
+                    "  - 年1回の眼底・足部検査\n" +
+                    "  - 定期的な心血管リスク評価",
+
+                lipids: "脂質管理：\n" +
+                    "• リスクに基づくLDL-C目標値：\n" +
+                    "  - 超高リスク（>20%）：<55 mg/dL (1.4 mmol/L)\n" +
+                    "  - 高リスク（7.5-19.9%）：<70 mg/dL (1.8 mmol/L)\n" +
+                    "  - 中等度リスク（5-7.4%）：<100 mg/dL (2.6 mmol/L)\n" +
+                    "  - 低リスク（<5%）：<116 mg/dL (3.0 mmol/L)\n\n" +
+                    "• スタチン治療：\n" +
+                    "  - 高強度：アトルバスタチン40-80mgまたはロスバスタチン20-40mg\n" +
+                    "  - 中等度：アトルバスタチン10-20mgまたはロスバスタチン5-10mg\n\n" +
+                    "• 非スタチン薬：\n" +
+                    "  - エゼチミブ10mg\n" +
+                    "  - PCSK9阻害薬\n" +
+                    "  - ベンペド酸\n\n" +
+                    "• 生活習慣の改善：\n" +
+                    "  - 地中海式食事または低脂肪食\n" +
+                    "  - 定期的な運動\n" +
+                    "  - 体重管理\n" +
+                    "  - 禁煙\n\n" +
+                    "• モニタリング：\n" +
+                    "  - 治療開始前の肝機能検査\n" +
+                    "  - 治療開始4-12週後の脂質・肝機能検査\n" +
+                    "  - その後3-12ヶ月毎のモニタリング\n" +
+                    "  - 筋症状に注意"
             }
         },
         error: {

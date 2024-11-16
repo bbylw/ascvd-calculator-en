@@ -226,66 +226,59 @@ function getRiskAdvice(risk, data) {
         level = "high";
     }
 
-    // 获取建议内容
-    const advice = i18n[currentLang].advice.lowRisk;
+    // 获取最新的建议内容
+    const currentAdvice = i18n[currentLang].advice.lowRisk;
 
     try {
         // 1. 添加指南参考
-        if (advice.guidelines_notice) {
+        if (currentAdvice.guidelines_notice) {
             adviceArray.push({
                 title: i18n[currentLang].guidelines.title || "Guidelines Reference",
-                content: advice.guidelines_notice
+                content: currentAdvice.guidelines_notice
             });
         }
 
         // 2. 添加生活方式建议
-        if (advice.lifestyle) {
+        if (currentAdvice.lifestyle) {
             adviceArray.push({
                 title: i18n[currentLang].advice.lifestyle_title || "Lifestyle Recommendations",
-                content: advice.lifestyle
+                content: currentAdvice.lifestyle
             });
         }
 
         // 3. 添加血压管理建议
         const systolic = parseFloat(data.systolic);
         
-        // 直接从 i18n 对象获取血压建议内容
-        const bpAdvice = data.bpTreat === 'yes' ? 
-            i18n[currentLang].advice.lowRisk.bp_treated : 
-            i18n[currentLang].advice.lowRisk.bp_untreated;
-
-        if (bpAdvice) {
-            const bpTitle = data.bpTreat === 'yes' ? 
-                (i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)") :
-                (i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)");
-
-            // 确保血压建议总是被添加
-            adviceArray.push({
-                title: bpTitle,
-                content: bpAdvice
-            });
-
-            // 添加调试日志
-            console.log('血压建议:', {
-                服用降压药: data.bpTreat === 'yes',
-                建议标题: bpTitle,
-                建议内容: bpAdvice
-            });
+        // 根据是否服用降压药选择最新的建议内容
+        if (data.bpTreat === 'yes') {
+            if (currentAdvice.bp_treated) {
+                adviceArray.push({
+                    title: i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)",
+                    content: currentAdvice.bp_treated
+                });
+            }
+        } else {
+            if (currentAdvice.bp_untreated) {
+                adviceArray.push({
+                    title: i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)",
+                    content: currentAdvice.bp_untreated
+                });
+            }
         }
 
         // 4. 添加糖尿病管理建议
-        if (data.diabetes === 'yes' && advice.diabetes) {
+        if (data.diabetes === 'yes' && currentAdvice.diabetes) {
             adviceArray.push({
                 title: i18n[currentLang].advice.diabetes_title || "Diabetes Management",
-                content: advice.diabetes
+                content: currentAdvice.diabetes
             });
         }
 
         // 5. 添加血脂管理建议
-        if (advice.lipids) {
+        if (currentAdvice.lipids) {
             adviceArray.push({
                 title: i18n[currentLang].advice.lipids_title || "Lipid Management",
-                content: advice.lipids
+                content: currentAdvice.lipids
             });
         }
 
@@ -293,11 +286,11 @@ function getRiskAdvice(risk, data) {
         console.log('建议生成详情:', {
             风险等级: level,
             血压治疗状态: data.bpTreat,
-            血压建议内容: bpAdvice,
+            血压建议内容: data.bpTreat === 'yes' ? currentAdvice.bp_treated : currentAdvice.bp_untreated,
             建议数量: adviceArray.length,
             收缩压: systolic,
             当前语言: currentLang,
-            建议对象: advice
+            建议对象: currentAdvice
         });
 
         return {
@@ -308,9 +301,10 @@ function getRiskAdvice(risk, data) {
     } catch (err) {
         console.error('生成建议时出错:', err);
         console.error('错误详情:', {
-            advice: advice,
+            advice: currentAdvice,
             currentLang: currentLang,
-            bpTreat: data.bpTreat
+            bpTreat: data.bpTreat,
+            风险等级: level
         });
         return {
             level: level,
