@@ -79,7 +79,7 @@ function displayResult(risk, data) {
     
     // 添加所有建议部分
     riskAdvice.adviceArray.forEach(advice => {
-        if (advice.content) {  // 确保只显示有内容的建议
+        if (advice && advice.content) {  // 确保建议内容存在
             adviceHtml += `
                 <div class="advice-section">
                     <h4>${advice.title}</h4>
@@ -95,6 +95,14 @@ function displayResult(risk, data) {
     
     riskLevel.innerHTML = adviceHtml;
     resultDiv.scrollIntoView({ behavior: 'smooth' });
+
+    // 添加调试日志
+    console.log('显示结果:', {
+        风险值: risk,
+        风险等级: riskAdvice.level,
+        建议数量: riskAdvice.adviceArray.length,
+        当前语言: currentLang
+    });
 }
 
 // 添加表单数据保持功能
@@ -207,23 +215,22 @@ function handleUnitChange(field, unit) {
 function getRiskAdvice(risk, data) {
     let level;
     let adviceArray = [];
-    let advice;
     
     // 基于风险水平确定建议
     if (risk < 5) {
         level = "low";
-        advice = i18n[currentLang].advice.lowRisk;
     } else if (risk < 7.5) {
         level = "moderate";
-        advice = i18n[currentLang].advice.moderateRisk;  // 使用中等风险的建议
     } else {
         level = "high";
-        advice = i18n[currentLang].advice.highRisk;  // 使用高风险的建议
     }
+
+    // 获取建议内容
+    const advice = i18n[currentLang].advice.lowRisk;
 
     try {
         // 1. 添加指南参考
-        if (advice && advice.guidelines_notice) {
+        if (advice.guidelines_notice) {
             adviceArray.push({
                 title: i18n[currentLang].guidelines.title || "Guidelines Reference",
                 content: advice.guidelines_notice
@@ -231,7 +238,7 @@ function getRiskAdvice(risk, data) {
         }
 
         // 2. 添加生活方式建议
-        if (advice && advice.lifestyle) {
+        if (advice.lifestyle) {
             adviceArray.push({
                 title: i18n[currentLang].advice.lifestyle_title || "Lifestyle Recommendations",
                 content: advice.lifestyle
@@ -240,32 +247,24 @@ function getRiskAdvice(risk, data) {
 
         // 3. 添加血压管理建议
         const systolic = parseFloat(data.systolic);
-        
-        // 根据是否服用降压药选择建议内容
-        if (data.bpTreat === 'yes' && advice && advice.bp_treated) {
-            adviceArray.push({
-                title: i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)",
-                content: advice.bp_treated
-            });
-        } else if (advice && advice.bp_untreated) {
-            // 未服用降压药时的建议
-            let bpContent = advice.bp_untreated;
-            
-            // 根据血压水平添加具体建议
-            if (systolic >= 140) {
-                bpContent = advice.bp_untreated_high || advice.bp_untreated;
-            } else if (systolic >= 130) {
-                bpContent = advice.bp_untreated_elevated || advice.bp_untreated;
+        if (data.bpTreat === 'yes') {
+            if (advice.bp_treated) {
+                adviceArray.push({
+                    title: i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)",
+                    content: advice.bp_treated
+                });
             }
-
-            adviceArray.push({
-                title: i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)",
-                content: bpContent
-            });
+        } else {
+            if (advice.bp_untreated) {
+                adviceArray.push({
+                    title: i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)",
+                    content: advice.bp_untreated
+                });
+            }
         }
 
         // 4. 添加糖尿病管理建议
-        if (data.diabetes === 'yes' && advice && advice.diabetes) {
+        if (data.diabetes === 'yes' && advice.diabetes) {
             adviceArray.push({
                 title: i18n[currentLang].advice.diabetes_title || "Diabetes Management",
                 content: advice.diabetes
@@ -273,19 +272,10 @@ function getRiskAdvice(risk, data) {
         }
 
         // 5. 添加血脂管理建议
-        if (advice && advice.lipids) {
+        if (advice.lipids) {
             adviceArray.push({
                 title: i18n[currentLang].advice.lipids_title || "Lipid Management",
                 content: advice.lipids
-            });
-        }
-
-        // 6. 添加血压紧急情况警告
-        if (systolic >= 180) {
-            adviceArray.push({
-                title: i18n[currentLang].advice.urgent_bp_title || "Urgent Blood Pressure Notice",
-                content: i18n[currentLang].advice.urgent_bp || 
-                    "Your blood pressure is severely elevated. Seek immediate medical attention."
             });
         }
 
