@@ -160,33 +160,33 @@ const i18n = {
             moderate: "您的10年风险是中等风险。",
             high: "您的10年风险是高风险。",
             lowRisk: {
-                guidelines_notice: "Based on latest international guidelines:\n" +
-                    "• ADA (American Diabetes Association) Annual Standards\n" +
-                    "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
-                    "• ESC (European Society of Cardiology) CVD Prevention Guidelines",
-                lifestyle: "Lifestyle recommendations:\n" +
-                    "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
-                    "- Follow Mediterranean diet pattern\n" +
-                    "- Maintain healthy weight (BMI <25 kg/m²)",
-                bp_treated: "Blood pressure management (on medication):\n" +
-                    "- Target BP <130/80 mmHg\n" +
-                    "- Continue medication and monitor weekly\n" +
-                    "- Regular follow-up\n" +
-                    "- Monitor for side effects",
-                bp_untreated: "Blood pressure management (no medication):\n" +
-                    "- Consult healthcare provider\n" +
-                    "- Target BP <130/80 mmHg\n" +
-                    "- Consider starting medication\n" +
-                    "- Regular monitoring",
-                diabetes: "Diabetes management:\n" +
-                    "- Target HbA1c <7%\n" +
-                    "- Consider SGLT2 inhibitors\n" +
-                    "- Monitor blood glucose and kidney function\n" +
-                    "- Check HbA1c every 3-6 months",
-                lipids: "Lipid management:\n" +
-                    "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
-                    "- Lifestyle intervention first\n" +
-                    "- Annual lipid monitoring"
+                guidelines_notice: "基于最新国际指南：\n" +
+                    "• ADA（美国糖尿病协会）年度标准\n" +
+                    "• ACC/AHA 心血管疾病预防指南\n" +
+                    "• ESC（欧洲心脏病学会）心血管疾病预防指南",
+                lifestyle: "生活方式建议：\n" +
+                    "- 每周进行150-300分钟中等强度或75-150分钟高强度有氧运动\n" +
+                    "- 遵循地中海饮食模式\n" +
+                    "- 维持健康体重（BMI <25 kg/m²）",
+                bp_treated: "高血压管理（已在服用降压药）：\n" +
+                    "- 血压控制目标 <130/80 mmHg\n" +
+                    "- 坚持服药并每周监测血压\n" +
+                    "- 定期随访评估用药效果\n" +
+                    "- 注意监测不良反应",
+                bp_untreated: "高血压管理（未服用降压药）：\n" +
+                    "- 建议就医评估降压治疗\n" +
+                    "- 血压控制目标 <130/80 mmHg\n" +
+                    "- 考虑开始药物治疗\n" +
+                    "- 定期监测血压",
+                diabetes: "糖尿病管理：\n" +
+                    "- HbA1c控制目标 <7%\n" +
+                    "- 优先考虑SGLT2抑制剂\n" +
+                    "- 定期监测血糖和肾功能\n" +
+                    "- 每3-6个月进行HbA1c检查",
+                lipids: "血脂管理：\n" +
+                    "- LDL-C 目标值 <2.6 mmol/L (100 mg/dL)\n" +
+                    "- 优先考虑生活方式干预\n" +
+                    "- 每年监测血脂水平"
             }
         },
         error: {
@@ -262,14 +262,14 @@ const i18n = {
             moderate: "Su riesgo de 10 años es moderado.",
             high: "Su riesgo de 10 años es alto.",
             lowRisk: {
-                guidelines_notice: "Based on latest international guidelines:\n" +
-                    "• ADA (American Diabetes Association) Annual Standards\n" +
-                    "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
-                    "• ESC (European Society of Cardiology) CVD Prevention Guidelines",
-                lifestyle: "Lifestyle recommendations:\n" +
-                    "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
-                    "- Follow Mediterranean diet pattern\n" +
-                    "- Maintain healthy weight (BMI <25 kg/m²)",
+                guidelines_notice: "Basado en las últimas guías internacionales:\n" +
+                    "• Estándares Anuales de la ADA (Asociación Americana de Diabetes)\n" +
+                    "• Guías de Prevención de Enfermedades Cardiovasculares ACC/AHA\n" +
+                    "• Guías de Prevención de ECV de la ESC (Sociedad Europea de Cardiología)",
+                lifestyle: "Recomendaciones de estilo de vida:\n" +
+                    "- 150-300 minutos de actividad aeróbica moderada o 75-150 minutos de actividad vigorosa por semana\n" +
+                    "- Seguir el patrón de dieta mediterránea\n" +
+                    "- Mantener un peso saludable (IMC <25 kg/m²)",
                 bp_treated: "Blood pressure management (on medication):\n" +
                     "- Target BP <130/80 mmHg\n" +
                     "- Continue medication and monitor weekly\n" +
@@ -364,14 +364,14 @@ const i18n = {
             moderate: "Votre risque de 10 ans est modéré.",
             high: "Votre risque de 10 ans est élevé.",
             lowRisk: {
-                guidelines_notice: "Based on latest international guidelines:\n" +
-                    "• ADA (American Diabetes Association) Annual Standards\n" +
-                    "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
-                    "• ESC (European Society of Cardiology) CVD Prevention Guidelines",
-                lifestyle: "Lifestyle recommendations:\n" +
-                    "- 150-300 minutes moderate or 75-150 minutes vigorous aerobic activity per week\n" +
-                    "- Follow Mediterranean diet pattern\n" +
-                    "- Maintain healthy weight (BMI <25 kg/m²)",
+                guidelines_notice: "Basé sur les dernières directives internationales :\n" +
+                    "• Standards annuels de l'ADA (Association Américaine du Diabète)\n" +
+                    "• Directives ACC/AHA de prévention des maladies cardiovasculaires\n" +
+                    "• Directives ESC (Société Européenne de Cardiologie) pour la prévention des MCV",
+                lifestyle: "Recommandations sur le mode de vie :\n" +
+                    "- 150-300 minutes d'activité aérobique modérée ou 75-150 minutes d'activité vigoureuse par semaine\n" +
+                    "- Suivre le régime méditerranéen\n" +
+                    "- Maintenir un poids santé (IMC <25 kg/m²)",
                 bp_treated: "Blood pressure management (on medication):\n" +
                     "- Target BP <130/80 mmHg\n" +
                     "- Continue medication and monitor weekly\n" +

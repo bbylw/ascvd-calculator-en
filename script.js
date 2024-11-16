@@ -273,8 +273,20 @@ function calculateRisk(data) {
         // 将输入值转换为数值
         const age = parseFloat(data.age);
         const systolic = parseFloat(data.systolic);
-        const totalChol = parseFloat(data.totalChol);
-        const hdl = parseFloat(data.hdl);
+        // 确保胆固醇值使用正确的单位（mg/dL）
+        let totalChol = parseFloat(data.totalChol);
+        let hdl = parseFloat(data.hdl);
+        
+        // 如果当前单位是mmol/L，转换为mg/dL
+        const totalCholUnit = document.getElementById('totalCholUnit').value;
+        const hdlUnit = document.getElementById('hdlUnit').value;
+        if (totalCholUnit === 'mmoll') {
+            totalChol = totalChol * 38.67;
+        }
+        if (hdlUnit === 'mmoll') {
+            hdl = hdl * 38.67;
+        }
+
         const isSmoker = data.smoker === 'yes';
         const hasDiabetes = data.diabetes === 'yes';
         const onBPMeds = data.bpTreat === 'yes';
@@ -334,12 +346,15 @@ function calculateRisk(data) {
             sum += coef.diabetes;
         }
 
+        // 添加基线值
+        sum += coef.baseline;
+
         // 计算10年风险
         let risk;
         if (raceCoef === 'white') {
-            risk = 1 - Math.pow(0.9144, Math.exp(sum - coef.meanSum));
+            risk = 1 - Math.pow(0.9144, Math.exp(sum - 19.54));
         } else { // 非裔美国人
-            risk = 1 - Math.pow(0.8954, Math.exp(sum - coef.meanSum));
+            risk = 1 - Math.pow(0.8954, Math.exp(sum - (-29.18)));
         }
 
         // 转换为百分比
@@ -348,6 +363,14 @@ function calculateRisk(data) {
         // 确保结果在有效范围内
         risk = Math.min(Math.max(risk, 0), 100);
         
+        console.log('Risk calculation details:', {
+            age, totalChol, hdl, systolic,
+            isSmoker, hasDiabetes, onBPMeds,
+            race: raceCoef, sex,
+            sum,
+            risk
+        });
+
         return parseFloat(risk.toFixed(1));
     } catch (err) {
         console.error('Risk calculation error:', err);
