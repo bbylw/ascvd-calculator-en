@@ -314,7 +314,7 @@ function calculateRisk(data) {
                       (onBPMeds ? 1.764 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
-                      (-29.799);
+                      (-61.18);
                 S0 = 0.9144;
             } else {
                 // 白人女性
@@ -327,7 +327,8 @@ function calculateRisk(data) {
                       (2.019 * lnSBP) +
                       (onBPMeds ? 2.019 : 0) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
-                      (hasDiabetes ? 0.661 : 0);
+                      (hasDiabetes ? 0.661 : 0) +
+                      (29.18);
                 S0 = 0.9665;
             }
         } else { // African American
@@ -340,7 +341,7 @@ function calculateRisk(data) {
                       (onBPMeds ? 1.809 : 0) +
                       (isSmoker ? 0.549 : 0) +
                       (hasDiabetes ? 0.645 : 0) +
-                      (12.344);
+                      (19.54);
                 S0 = 0.8954;
             } else {
                 // 非裔美国人女性
@@ -353,23 +354,13 @@ function calculateRisk(data) {
                       (onBPMeds ? (29.291 - 6.432 * lnAge) : 0) +
                       (isSmoker ? 0.691 : 0) +
                       (hasDiabetes ? 0.874 : 0) +
-                      (-29.799);
+                      (-86.61);
                 S0 = 0.9533;
             }
         }
 
         // 计算10年风险
-        let indX = sum;
-        let meanX = 0;
-
-        // 根据种族和性别选择均值
-        if (race === 'white' || race === 'asian' || race === 'other') {
-            meanX = (sex === 'male') ? 61.18 : -29.18;
-        } else {
-            meanX = (sex === 'male') ? 19.54 : 86.61;
-        }
-
-        const risk = (1 - Math.pow(S0, Math.exp(indX - meanX))) * 100;
+        const risk = (1 - Math.pow(S0, Math.exp(sum))) * 100;
         
         // 确保结果在有效范围内（0-100%）
         const finalRisk = Math.min(Math.max(risk, 0), 100);
@@ -378,11 +369,15 @@ function calculateRisk(data) {
             input: {
                 age, totalChol, hdl, systolic,
                 isSmoker, hasDiabetes, onBPMeds,
-                race, sex
+                race, sex,
+                units: {
+                    totalChol: totalCholUnit,
+                    hdl: hdlUnit
+                }
             },
             calculation: {
                 lnAge, lnTotalChol, lnHDL, lnSBP,
-                sum, S0, meanX, indX
+                sum, S0
             },
             result: finalRisk
         });
