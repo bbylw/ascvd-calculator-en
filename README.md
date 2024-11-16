@@ -1,9 +1,6 @@
-# PCE Risk Calculator (多语言版)
+# PCE Risk Calculator | PCE风险评估计算器 | Calculadora de Riesgo PCE | Calculateur de Risque PCE | PCE-Risikorechner | PCEリスク計算機
 
-[English](#english) | [中文](#chinese) | [Español](#spanish) | [Français](#french) | [Deutsch](#german) | [日本語](#japanese)
-
-## English {#english}
-
+## English
 A multilingual Progressive Web Application (PWA) for calculating 10-year ASCVD risk based on the Pooled Cohort Equations.
 
 ### Features
