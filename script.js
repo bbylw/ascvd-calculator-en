@@ -236,15 +236,28 @@ function getRiskAdvice(risk, data) {
     }
 
     // 3. 添加血压管理建议
-    const bpTitle = data.bpTreat === 'yes' ? 
-        (i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)") :
-        (i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)");
-    
-    const bpContent = data.bpTreat === 'yes' ? advice.bp_treated : advice.bp_untreated;
-    
-    if (bpContent) {
+    // 根据是否服用降压药选择不同的标题和内容
+    if (data.bpTreat === 'yes') {
         adviceArray.push({
-            title: bpTitle,
+            title: i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)",
+            content: advice.bp_treated
+        });
+    } else {
+        // 未服用降压药时的建议
+        const systolic = parseFloat(data.systolic);
+        let bpContent = advice.bp_untreated;
+
+        // 根据血压水平添加具体建议
+        if (systolic >= 140) {
+            bpContent += "\n\n" + (i18n[currentLang].advice.bp_high || 
+                "Consider immediate medical consultation as your blood pressure is elevated.");
+        } else if (systolic >= 130) {
+            bpContent += "\n\n" + (i18n[currentLang].advice.bp_elevated || 
+                "Your blood pressure is elevated. Consider lifestyle modifications and regular monitoring.");
+        }
+
+        adviceArray.push({
+            title: i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)",
             content: bpContent
         });
     }
@@ -274,6 +287,16 @@ function getRiskAdvice(risk, data) {
                 content: advice.high_risk_additional
             });
         }
+    }
+
+    // 7. 添加血压相关的额外建议
+    const systolic = parseFloat(data.systolic);
+    if (systolic >= 180) {
+        adviceArray.push({
+            title: i18n[currentLang].advice.urgent_bp_title || "Urgent Blood Pressure Notice",
+            content: i18n[currentLang].advice.urgent_bp || 
+                "Your blood pressure is severely elevated. Seek immediate medical attention."
+        });
     }
 
     return {
