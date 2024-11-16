@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="./style.css" />
     <link rel="manifest" href="./manifest.json" />
     <meta name="theme-color" content="#2c3e50" />
-    <script src="./lang.js"></script>
+    <script src="./i18n.js"></script>
+    <script src="./script.js" defer></script>
   </head>
   <body>
     <div class="language-selector">
@@ -42,17 +43,21 @@
         </div>
 
         <div class="form-group">
-          <label for="race">Race:</label>
+          <label for="race" data-i18n="form.race.label">Race:</label>
           <select id="race" required>
-            <option value="asian">Asian</option>
-            <option value="white">White</option>
-            <option value="aa">African American</option>
-            <option value="other">Other</option>
+            <option value="asian" data-i18n="form.race.asian">Asian</option>
+            <option value="white" data-i18n="form.race.white">White</option>
+            <option value="aa" data-i18n="form.race.aa">
+              African American
+            </option>
+            <option value="other" data-i18n="form.race.other">Other</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="totalChol">Total Cholesterol:</label>
+          <label for="totalChol" data-i18n="form.cholesterol.total"
+            >Total Cholesterol:</label
+          >
           <div class="input-unit-group">
             <input type="number" id="totalChol" required step="0.01" min="0" />
             <select
@@ -67,7 +72,9 @@
         </div>
 
         <div class="form-group">
-          <label for="hdl">HDL Cholesterol:</label>
+          <label for="hdl" data-i18n="form.cholesterol.hdl"
+            >HDL Cholesterol:</label
+          >
           <div class="input-unit-group">
             <input type="number" id="hdl" required step="0.01" min="0" />
             <select id="hdlUnit" onchange="handleUnitChange('hdl', this.value)">
@@ -79,18 +86,22 @@
         </div>
 
         <div class="form-group">
-          <label for="systolic">Systolic Blood Pressure (mmHg):</label>
-          <input type="number" id="systolic" required />
-          <small class="unit-hint"
-            >Please enter your current systolic blood pressure, whether or not
-            you are taking blood pressure medication</small
+          <label for="systolic" data-i18n="form.systolic"
+            >Systolic Blood Pressure (mmHg):</label
           >
+          <input type="number" id="systolic" required />
+          <small class="unit-hint" data-i18n="form.bpMedication.hint">
+            Please enter your current systolic blood pressure, whether or not
+            you are taking blood pressure medication
+          </small>
         </div>
 
         <div class="form-group">
-          <label>Are you currently taking blood pressure medication:</label>
+          <label data-i18n="form.bpMedication.label"
+            >Are you currently taking blood pressure medication:</label
+          >
           <input type="radio" id="bpTreatYes" name="bpTreat" value="yes" />
-          <label for="bpTreatYes">Yes</label>
+          <label for="bpTreatYes" data-i18n="form.diabetes.yes">Yes</label>
           <input
             type="radio"
             id="bpTreatNo"
@@ -98,17 +109,13 @@
             value="no"
             checked
           />
-          <label for="bpTreatNo">No</label>
-          <small class="unit-hint"
-            >If you are currently taking blood pressure medication, please
-            select "Yes"</small
-          >
+          <label for="bpTreatNo" data-i18n="form.diabetes.no">No</label>
         </div>
 
         <div class="form-group">
-          <label>Diabetes:</label>
+          <label data-i18n="form.diabetes.label">Diabetes:</label>
           <input type="radio" id="diabetesYes" name="diabetes" value="yes" />
-          <label for="diabetesYes">Yes</label>
+          <label for="diabetesYes" data-i18n="form.diabetes.yes">Yes</label>
           <input
             type="radio"
             id="diabetesNo"
@@ -116,27 +123,29 @@
             value="no"
             checked
           />
-          <label for="diabetesNo">No</label>
+          <label for="diabetesNo" data-i18n="form.diabetes.no">No</label>
         </div>
 
         <div class="form-group">
-          <label>Smoker:</label>
+          <label data-i18n="form.smoker.label">Smoker:</label>
           <input type="radio" id="smokerYes" name="smoker" value="yes" />
-          <label for="smokerYes">Yes</label>
+          <label for="smokerYes" data-i18n="form.smoker.yes">Yes</label>
           <input type="radio" id="smokerNo" name="smoker" value="no" checked />
-          <label for="smokerNo">No</label>
+          <label for="smokerNo" data-i18n="form.smoker.no">No</label>
         </div>
 
         <button type="submit">Calculate Risk</button>
       </form>
 
       <div id="result" class="hidden">
-        <h2>Results</h2>
-        <p>10-year ASCVD Risk: <span id="riskScore"></span>%</p>
+        <h2 data-i18n="result.title">Results</h2>
+        <p>
+          <span data-i18n="result.risk">10-year ASCVD Risk:</span>
+          <span id="riskScore"></span>%
+        </p>
         <div id="riskLevel"></div>
       </div>
     </div>
-    <script src="./script.js"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {

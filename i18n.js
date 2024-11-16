@@ -58,6 +58,13 @@ const i18n = {
             low: "Your 10-year risk is low.",
             moderate: "Your 10-year risk is moderate.",
             high: "Your 10-year risk is high."
+        },
+        error: {
+            general: "An error occurred. Please try again.",
+            validation: "Please check your input values."
+        },
+        validation: {
+            error: "Please enter valid values in all fields."
         }
     },
     zh: {
@@ -119,6 +126,13 @@ const i18n = {
             low: "您的10年风险是低风险。",
             moderate: "您的10年风险是中等风险。",
             high: "您的10年风险是高风险。"
+        },
+        error: {
+            general: "发生错误，请重试。",
+            validation: "请检查输入值。"
+        },
+        validation: {
+            error: "请在所有字段中输入有效值。"
         }
     },
     es: {
@@ -181,6 +195,13 @@ const i18n = {
             low: "Su riesgo de 10 años es bajo.",
             moderate: "Su riesgo de 10 años es moderado.",
             high: "Su riesgo de 10 años es alto."
+        },
+        error: {
+            general: "An error occurred. Please try again.",
+            validation: "Please check your input values."
+        },
+        validation: {
+            error: "Please enter valid values in all fields."
         }
     },
     fr: {
@@ -243,6 +264,13 @@ const i18n = {
             low: "Votre risque de 10 ans est faible.",
             moderate: "Votre risque de 10 ans est modéré.",
             high: "Votre risque de 10 ans est élevé."
+        },
+        error: {
+            general: "An error occurred. Please try again.",
+            validation: "Please check your input values."
+        },
+        validation: {
+            error: "Please enter valid values in all fields."
         }
     },
     de: {
@@ -305,6 +333,13 @@ const i18n = {
             low: "Ihr 10-Jahres-Risiko ist niedrig.",
             moderate: "Ihr 10-Jahres-Risiko ist mittel.",
             high: "Ihr 10-Jahres-Risiko ist hoch."
+        },
+        error: {
+            general: "An error occurred. Please try again.",
+            validation: "Please check your input values."
+        },
+        validation: {
+            error: "Please enter valid values in all fields."
         }
     },
     ja: {
@@ -367,8 +402,15 @@ const i18n = {
             low: "あなたの10年リスクは低リスクです。",
             moderate: "あなたの10年リスクは中程度リスクです。",
             high: "あなたの10年リスクは高リスクです。"
+        },
+        error: {
+            general: "An error occurred. Please try again.",
+            validation: "Please check your input values."
+        },
+        validation: {
+            error: "Please enter valid values in all fields."
         }
     }
 };
 
-export default i18n; 
+window.i18n = i18n; 

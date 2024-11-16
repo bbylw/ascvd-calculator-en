@@ -1,21 +1,29 @@
-import i18n from './i18n.js';
-
 let currentLang = 'en';
 
 // 语言切换功能
 function initLanguageSelector() {
     const languageSelect = document.getElementById('languageSelect');
     
-    // 设置初始语言
-    const userLang = navigator.language || navigator.userLanguage;
-    currentLang = userLang.split('-')[0];
-    if (!i18n[currentLang]) currentLang = 'en';
+    // 先尝试从localStorage获取语言设置
+    let savedLang = localStorage.getItem('preferred-language');
     
+    if (!savedLang) {
+        // 如果没有保存的语言设置，则使用浏览器语言
+        const userLang = navigator.language || navigator.userLanguage;
+        savedLang = userLang.split('-')[0];
+        
+        // 如果不支持该语言，默认使用英语
+        if (!i18n[savedLang]) savedLang = 'en';
+    }
+    
+    currentLang = savedLang;
     languageSelect.value = currentLang;
     updateLanguage(currentLang);
 
+    // 监听语言切换
     languageSelect.addEventListener('change', (e) => {
         currentLang = e.target.value;
+        localStorage.setItem('preferred-language', currentLang);
         updateLanguage(currentLang);
     });
 }
@@ -92,21 +100,98 @@ function displayResult(risk, data) {
     resultDiv.scrollIntoView({ behavior: 'smooth' });
 }
 
+// 添加表单数据保持功能
+function saveFormData() {
+    const formData = {
+        age: document.getElementById('age').value,
+        sex: document.getElementById('sex').value,
+        race: document.getElementById('race').value,
+        totalChol: document.getElementById('totalChol').value,
+        hdl: document.getElementById('hdl').value,
+        systolic: document.getElementById('systolic').value,
+        bpTreat: document.querySelector('input[name="bpTreat"]:checked')?.value,
+        diabetes: document.querySelector('input[name="diabetes"]:checked')?.value,
+        smoker: document.querySelector('input[name="smoker"]:checked')?.value
+    };
+    
+    sessionStorage.setItem('formData', JSON.stringify(formData));
+}
+
+// 恢复表单数据
+function restoreFormData() {
+    const savedData = sessionStorage.getItem('formData');
+    if (savedData) {
+        const formData = JSON.parse(savedData);
+        Object.entries(formData).forEach(([key, value]) => {
+            if (value) {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.value = value;
+                } else {
+                    // 处理单选按钮
+                    const radio = document.querySelector(`input[name="${key}"][value="${value}"]`);
+                    if (radio) radio.checked = true;
+                }
+            }
+        });
+    }
+}
+
+// 在页面加载时恢复数据
+document.addEventListener('DOMContentLoaded', () => {
+    initLanguageSelector();
+    restoreFormData();
+});
+
+// 在表单输入时保存数据
+document.getElementById('riskForm').addEventListener('input', saveFormData);
+
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
     initLanguageSelector();
 });
 
-// 需要添加表单提交处理
+// 修改表单提交处理
 document.getElementById('riskForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData);
     
-    // 计算风险
-    const risk = calculateRisk(data);
-    displayResult(risk, data);
+    try {
+        // 收集表单数据
+        const data = {
+            age: document.getElementById('age').value,
+            sex: document.getElementById('sex').value,
+            race: document.getElementById('race').value,
+            totalChol: document.getElementById('totalChol').value,
+            hdl: document.getElementById('hdl').value,
+            systolic: document.getElementById('systolic').value,
+            bpTreat: document.querySelector('input[name="bpTreat"]:checked').value,
+            diabetes: document.querySelector('input[name="diabetes"]:checked').value,
+            smoker: document.querySelector('input[name="smoker"]:checked').value
+        };
+        
+        // 验证数据
+        if (!validateData(data)) {
+            alert(i18n[currentLang].validation.error);
+            return;
+        }
+        
+        // 计算风险
+        const risk = calculateRisk(data);
+        displayResult(risk, data);
+    } catch (err) {
+        console.error('Form submission error:', err);
+        alert(i18n[currentLang].error.general);
+    }
 });
+
+// 添加数据验证函数
+function validateData(data) {
+    if (isNaN(data.age) || data.age < 40 || data.age > 79) return false;
+    if (isNaN(data.systolic) || data.systolic < 90 || data.systolic > 200) return false;
+    if (isNaN(data.totalChol) || data.totalChol <= 0) return false;
+    if (isNaN(data.hdl) || data.hdl <= 0) return false;
+    return true;
+}
 
 // 需要添加单位转换处理函数
 function handleUnitChange(field, unit) {
@@ -140,4 +225,22 @@ function getRiskAdvice(risk, data) {
         level: level,
         advice: advice
     };
+}
+
+// 添加风险计算函数
+function calculateRisk(data) {
+    // 这里添加实际的风险计算逻辑
+    const age = parseFloat(data.age);
+    const systolic = parseFloat(data.systolic);
+    const totalChol = parseFloat(data.totalChol);
+    const hdl = parseFloat(data.hdl);
+    
+    // 示例计算逻辑，需要根据实际PCE算法修改
+    let risk = (age * 0.1 + systolic * 0.01 + totalChol * 0.05 - hdl * 0.1);
+    
+    if (data.smoker === 'yes') risk *= 1.5;
+    if (data.diabetes === 'yes') risk *= 1.4;
+    if (data.bpTreat === 'yes') risk *= 1.2;
+    
+    return Math.min(Math.max(risk, 0), 100); // 确保结果在0-100之间
 } 
