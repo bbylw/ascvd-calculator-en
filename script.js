@@ -285,43 +285,72 @@ function calculateRisk(data) {
             throw new Error(i18n[currentLang].error.validation);
         }
 
-        // 基于PCE方程的风险计算
-        let lnAge = Math.log(age);
-        let lnTotalChol = Math.log(totalChol);
-        let lnHDL = Math.log(hdl);
-        let lnSBP = Math.log(systolic);
-
         // 选择正确的系数集
-        const raceCoef = (race === 'asian' || race === 'other') ? 'white' : race;
+        let raceCoef = race;
+        if (race === 'asian' || race === 'other') {
+            raceCoef = 'white'; // 亚裔和其他种族使用白人的系数
+        }
+
+        // 获取对应的系数
         const coef = coefficients[raceCoef][sex];
 
+        // 计算自然对数值
+        const lnAge = Math.log(age);
+        const lnTotalChol = Math.log(totalChol);
+        const lnHDL = Math.log(hdl);
+        const lnSBP = Math.log(systolic);
+
         // 计算风险得分
-        let sum = coef.baseline;
+        let sum = 0;
+
+        // 添加基础项
         sum += coef.age * lnAge;
-        sum += coef.ageSquared * Math.pow(lnAge, 2);
+        if (coef.ageSquared) {
+            sum += coef.ageSquared * Math.pow(lnAge, 2);
+        }
         sum += coef.totalChol * lnTotalChol;
-        sum += coef.ageTC * lnAge * lnTotalChol;
+        if (coef.ageTC) {
+            sum += coef.ageTC * lnAge * lnTotalChol;
+        }
         sum += coef.hdl * lnHDL;
-        sum += coef.ageHDL * lnAge * lnHDL;
+        if (coef.ageHDL) {
+            sum += coef.ageHDL * lnAge * lnHDL;
+        }
         sum += coef.systolic * lnSBP;
-        sum += coef.ageSBP * lnAge * lnSBP;
-        
+        if (coef.ageSBP) {
+            sum += coef.ageSBP * lnAge * lnSBP;
+        }
+
+        // 添加条件项
         if (onBPMeds) {
             sum += coef.bpTreat;
-            sum += coef.ageTreat * lnAge;
+            if (coef.ageTreat) {
+                sum += coef.ageTreat * lnAge;
+            }
         }
-        
         if (isSmoker) {
             sum += coef.smoker;
-            sum += coef.ageSmoker * lnAge;
+            if (coef.ageSmoker) {
+                sum += coef.ageSmoker * lnAge;
+            }
         }
-        
         if (hasDiabetes) {
             sum += coef.diabetes;
         }
 
+        // 添加基线值
+        sum += coef.baseline;
+
         // 计算10年风险
-        let risk = (1 - Math.pow(0.9533, Math.exp(sum - coef.meanSum))) * 100;
+        let risk;
+        if (raceCoef === 'white') {
+            risk = 1 - Math.pow(0.9144, Math.exp(sum));
+        } else { // 非裔美国人
+            risk = 1 - Math.pow(0.8954, Math.exp(sum));
+        }
+
+        // 转换为百分比
+        risk = risk * 100;
         
         // 确保结果在有效范围内
         risk = Math.min(Math.max(risk, 0), 100);
