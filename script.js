@@ -214,46 +214,47 @@ function getRiskAdvice(risk, data) {
     // 基于风险水平确定建议
     if (risk < 5) {
         level = "low";
-        advice = [
-            i18n[currentLang].advice.lifestyle,
-            i18n[currentLang].advice.checkup,
-            i18n[currentLang].advice.diet,
-            i18n[currentLang].advice.exercise
-        ];
+        advice.push(i18n[currentLang].advice.lowRisk.guidelines_notice);
+        advice.push(i18n[currentLang].advice.lowRisk.lifestyle);
+        
+        if (data.bpTreat === 'yes') {
+            advice.push(i18n[currentLang].advice.lowRisk.bp_treated);
+        } else if (parseFloat(data.systolic) > 130) {
+            advice.push(i18n[currentLang].advice.lowRisk.bp_untreated);
+        }
+
+        if (data.diabetes === 'yes') {
+            advice.push(i18n[currentLang].advice.lowRisk.diabetes);
+        }
+
+        advice.push(i18n[currentLang].advice.lowRisk.lipids);
     } else if (risk < 7.5) {
         level = "moderate";
-        advice = [
-            i18n[currentLang].advice.monitor,
-            i18n[currentLang].advice.intervention,
-            i18n[currentLang].advice.statin,
-            i18n[currentLang].advice.followup
-        ];
+        advice.push(i18n[currentLang].advice.moderate);
+        advice.push(i18n[currentLang].advice.lowRisk.guidelines_notice);
+        advice.push(i18n[currentLang].advice.lowRisk.lifestyle);
+        
+        if (data.bpTreat === 'yes') {
+            advice.push(i18n[currentLang].advice.lowRisk.bp_treated);
+        }
+        if (data.diabetes === 'yes') {
+            advice.push(i18n[currentLang].advice.lowRisk.diabetes);
+        }
+        advice.push(i18n[currentLang].advice.lowRisk.lipids);
     } else {
         level = "high";
-        advice = [
-            i18n[currentLang].advice.doctor,
-            i18n[currentLang].advice.medication,
-            i18n[currentLang].advice.control,
-            i18n[currentLang].advice.followup
-        ];
+        advice.push(i18n[currentLang].advice.high);
+        advice.push(i18n[currentLang].advice.lowRisk.guidelines_notice);
+        advice.push(i18n[currentLang].advice.lowRisk.lifestyle);
+        
+        if (data.bpTreat === 'yes') {
+            advice.push(i18n[currentLang].advice.lowRisk.bp_treated);
+        }
+        if (data.diabetes === 'yes') {
+            advice.push(i18n[currentLang].advice.lowRisk.diabetes);
+        }
+        advice.push(i18n[currentLang].advice.lowRisk.lipids);
     }
-
-    // 添加特定情况的建议
-    if (data.bpTreat === 'yes') {
-        advice.push(i18n[currentLang].advice.lowRisk.bp_treated);
-    } else if (parseFloat(data.systolic) > 130) {
-        advice.push(i18n[currentLang].advice.lowRisk.bp_untreated);
-    }
-
-    if (data.diabetes === 'yes') {
-        advice.push(i18n[currentLang].advice.lowRisk.diabetes);
-    }
-
-    // 添加血脂管理建议
-    advice.push(i18n[currentLang].advice.lowRisk.lipids);
-
-    // 添加指南提示
-    advice.push(i18n[currentLang].advice.lowRisk.guidelines_notice);
     
     return {
         level: level,
@@ -279,11 +280,6 @@ function calculateRisk(data) {
         const onBPMeds = data.bpTreat === 'yes';
         const race = data.race;
         const sex = data.sex;
-
-        // 验证转换后的值
-        if (isNaN(age) || isNaN(systolic) || isNaN(totalChol) || isNaN(hdl)) {
-            throw new Error(i18n[currentLang].error.validation);
-        }
 
         // 选择正确的系数集
         let raceCoef = race;
@@ -338,15 +334,12 @@ function calculateRisk(data) {
             sum += coef.diabetes;
         }
 
-        // 添加基线值
-        sum += coef.baseline;
-
         // 计算10年风险
         let risk;
         if (raceCoef === 'white') {
-            risk = 1 - Math.pow(0.9144, Math.exp(sum));
+            risk = 1 - Math.pow(0.9144, Math.exp(sum - coef.meanSum));
         } else { // 非裔美国人
-            risk = 1 - Math.pow(0.8954, Math.exp(sum));
+            risk = 1 - Math.pow(0.8954, Math.exp(sum - coef.meanSum));
         }
 
         // 转换为百分比
@@ -355,7 +348,7 @@ function calculateRisk(data) {
         // 确保结果在有效范围内
         risk = Math.min(Math.max(risk, 0), 100);
         
-        return risk;
+        return parseFloat(risk.toFixed(1));
     } catch (err) {
         console.error('Risk calculation error:', err);
         throw new Error(i18n[currentLang].error.general);
