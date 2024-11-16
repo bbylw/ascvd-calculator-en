@@ -221,16 +221,9 @@ function getRiskAdvice(risk, data) {
         advice = i18n[currentLang].advice.highRisk;  // 使用高风险的建议
     }
 
-    // 确保advice对象存在
-    if (!advice) {
-        console.error('找不到对应风险等级的建议内容:', level);
-        // 如果找不到对应风险等级的建议，使用低风险建议作为后备
-        advice = i18n[currentLang].advice.lowRisk;
-    }
-
     try {
         // 1. 添加指南参考
-        if (advice.guidelines_notice) {
+        if (advice && advice.guidelines_notice) {
             adviceArray.push({
                 title: i18n[currentLang].guidelines.title || "Guidelines Reference",
                 content: advice.guidelines_notice
@@ -238,7 +231,7 @@ function getRiskAdvice(risk, data) {
         }
 
         // 2. 添加生活方式建议
-        if (advice.lifestyle) {
+        if (advice && advice.lifestyle) {
             adviceArray.push({
                 title: i18n[currentLang].advice.lifestyle_title || "Lifestyle Recommendations",
                 content: advice.lifestyle
@@ -247,13 +240,15 @@ function getRiskAdvice(risk, data) {
 
         // 3. 添加血压管理建议
         const systolic = parseFloat(data.systolic);
-        if (data.bpTreat === 'yes' && advice.bp_treated) {
+        
+        // 根据是否服用降压药选择建议内容
+        if (data.bpTreat === 'yes' && advice && advice.bp_treated) {
             adviceArray.push({
                 title: i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)",
                 content: advice.bp_treated
             });
-        } else if (advice.bp_untreated) {
-            // 确保未服用降压药时显示正确的建议
+        } else if (advice && advice.bp_untreated) {
+            // 未服用降压药时的建议
             let bpContent = advice.bp_untreated;
             
             // 根据血压水平添加具体建议
@@ -270,7 +265,7 @@ function getRiskAdvice(risk, data) {
         }
 
         // 4. 添加糖尿病管理建议
-        if (data.diabetes === 'yes' && advice.diabetes) {
+        if (data.diabetes === 'yes' && advice && advice.diabetes) {
             adviceArray.push({
                 title: i18n[currentLang].advice.diabetes_title || "Diabetes Management",
                 content: advice.diabetes
@@ -278,7 +273,7 @@ function getRiskAdvice(risk, data) {
         }
 
         // 5. 添加血脂管理建议
-        if (advice.lipids) {
+        if (advice && advice.lipids) {
             adviceArray.push({
                 title: i18n[currentLang].advice.lipids_title || "Lipid Management",
                 content: advice.lipids
@@ -300,7 +295,8 @@ function getRiskAdvice(risk, data) {
             血压治疗状态: data.bpTreat,
             建议内容: advice,
             建议数量: adviceArray.length,
-            收缩压: systolic
+            收缩压: systolic,
+            当前语言: currentLang
         });
 
         return {
