@@ -219,26 +219,23 @@ function handleUnitChange(field, unit) {
 
 // 修改风险建议函数
 function getRiskAdvice(risk, data) {
-    let level;
-    let adviceArray = [];
-    
-    // 基于风险水平确定建议
-    if (risk < 5) {
-        level = "low";
-    } else if (risk < 7.5) {
-        level = "moderate";
-    } else {
-        level = "high";
-    }
-
-    // 根据风险等级获取对应的建议内容
-    const advice = i18n[currentLang].advice[`${level}Risk`];
-
     try {
-        // 1. 添加指南参考
+        let level = getRiskLevel(risk);
+        let advice = i18n[currentLang].advice[level];
+        let adviceArray = [];
+
+        // 添加风险等级说明
+        if (i18n[currentLang].advice.risk_explanation[level.replace('Risk', '')]) {
+            adviceArray.push({
+                title: i18n[currentLang].result.levels[level.replace('Risk', '')] || "Risk Level",
+                content: i18n[currentLang].advice.risk_explanation[level.replace('Risk', '')]
+            });
+        }
+
+        // 1. 添加指南提示
         if (advice.guidelines_notice) {
             adviceArray.push({
-                title: i18n[currentLang].guidelines.title || "Guidelines Reference",
+                title: i18n[currentLang].guidelines.title || "重要指南",
                 content: advice.guidelines_notice
             });
         }
@@ -246,81 +243,46 @@ function getRiskAdvice(risk, data) {
         // 2. 添加生活方式建议
         if (advice.lifestyle) {
             adviceArray.push({
-                title: i18n[currentLang].advice.lifestyle_title || "Lifestyle Recommendations",
+                title: i18n[currentLang].advice.lifestyle_title || "生活方式建议",
                 content: advice.lifestyle
             });
         }
 
         // 3. 添加血压管理建议
-        const systolic = parseFloat(data.systolic);
-        
-        // 根据是否服用降压药选择建议内容
-        if (data.bpTreat === 'yes') {
-            if (advice.bp_treated) {
-                adviceArray.push({
-                    title: i18n[currentLang].advice.bp_treated_title || "Blood Pressure Management (On Medication)",
-                    content: advice.bp_treated
-                });
-            }
-        } else {
-            if (advice.bp_untreated) {
-                // 添加调试日志
-                console.log('未服用降压药建议选择:', {
-                    风险等级: level,
-                    建议内容: advice.bp_untreated
-                });
-
-                adviceArray.push({
-                    title: i18n[currentLang].advice.bp_untreated_title || "Blood Pressure Management (No Medication)",
-                    content: advice.bp_untreated
-                });
-            }
-        }
-
-        // 4. 添加糖尿病管理建议
-        if (data.diabetes === 'yes' && advice.diabetes) {
+        if (advice.bp) {
             adviceArray.push({
-                title: i18n[currentLang].advice.diabetes_title || "Diabetes Management",
-                content: advice.diabetes
+                title: i18n[currentLang].advice.bp_title || "血压管理",
+                content: advice.bp
             });
         }
 
-        // 5. 添加血脂管理建议
+        // 4. 添加血脂管理建议
         if (advice.lipids) {
             adviceArray.push({
-                title: i18n[currentLang].advice.lipids_title || "Lipid Management",
+                title: i18n[currentLang].advice.lipids_title || "血脂管理",
                 content: advice.lipids
             });
         }
 
-        // 添加调试日志
-        console.log('建议生成详情:', {
-            风险等级: level,
-            血压治疗状态: data.bpTreat,
-            建议内容: advice,
-            建议数量: adviceArray.length,
-            收缩压: systolic,
-            当前语言: currentLang
-        });
+        // 5. 如果患者有糖尿病，添加血糖管理建议
+        if (data.diabetes === 'yes' && advice.diabetes) {
+            adviceArray.push({
+                title: i18n[currentLang].advice.diabetes_title || "血糖管理",
+                content: advice.diabetes
+            });
+        }
 
         return {
             level: level,
             adviceArray: adviceArray
         };
-
     } catch (err) {
         console.error('生成建议时出错:', err);
-        console.error('错误详情:', {
-            advice: advice,
-            currentLang: currentLang,
-            bpTreat: data.bpTreat,
-            风险等级: level
-        });
         return {
             level: level,
             adviceArray: [{
                 title: "Error",
-                content: i18n[currentLang].error.general || "An error occurred. Please try again."
+                content: i18n[currentLang].error.general
             }]
         };
     }
@@ -613,5 +575,15 @@ function updateServiceWorker() {
                 registration.waiting.postMessage('skipWaiting');
             }
         });
+    }
+}
+
+function getRiskLevel(risk) {
+    if (risk < 5) {
+        return "lowRisk";
+    } else if (risk < 7.5) {
+        return "moderateRisk";
+    } else {
+        return "highRisk";
     }
 } 
