@@ -100,6 +100,13 @@ function displayResults(risk, data) {
     resultDiv.appendChild(adviceContainer);
     resultDiv.classList.remove('hidden');
     resultDiv.scrollIntoView({ behavior: 'smooth' });
+
+    // 添加调试日志
+    console.log('Display results:', {
+        risk,
+        riskLevel,
+        advice
+    });
 }
 
 // 添加表单数据保持功能
@@ -185,59 +192,7 @@ document.getElementById('riskForm').addEventListener('submit', function(e) {
         console.log('Calculated risk:', risk);
         
         // 显示结果
-        const resultDiv = document.getElementById('result');
-        const riskScoreSpan = document.getElementById('riskScore');
-        const riskLevelDiv = document.getElementById('riskLevel');
-        
-        // 清除之前的建议内容
-        const oldAdvice = document.getElementById('adviceContainer');
-        if (oldAdvice) {
-            oldAdvice.remove();
-        }
-
-        // 显示风险分数
-        riskScoreSpan.textContent = risk.toFixed(1);
-        
-        // 获取建议
-        const riskLevel = getRiskLevel(risk);
-        const advice = i18n[currentLang].advice[riskLevel];
-        
-        // 创建建议容器
-        const adviceContainer = document.createElement('div');
-        adviceContainer.id = 'adviceContainer';
-        
-        // 添加每条建议
-        ['guidelines_notice', 'lifestyle', 'bp', 'lipids'].forEach(section => {
-            if (advice[section]) {
-                const div = document.createElement('div');
-                div.className = 'advice-section';
-                div.innerHTML = `
-                    <h4>${i18n[currentLang][section + '_title'] || section}</h4>
-                    <div class="advice-content">
-                        <pre>${advice[section]}</pre>
-                    </div>
-                `;
-                adviceContainer.appendChild(div);
-            }
-        });
-        
-        // 如果有糖尿病，添加糖尿病建议
-        if (formData.diabetes === 'yes' && advice.diabetes) {
-            const div = document.createElement('div');
-            div.className = 'advice-section';
-            div.innerHTML = `
-                <h4>${i18n[currentLang].diabetes_title}</h4>
-                <div class="advice-content">
-                    <pre>${advice.diabetes}</pre>
-                </div>
-            `;
-            adviceContainer.appendChild(div);
-        }
-        
-        // 添加建议到结果区域
-        resultDiv.appendChild(adviceContainer);
-        resultDiv.classList.remove('hidden');
-        resultDiv.scrollIntoView({ behavior: 'smooth' });
+        displayResults(risk, formData);
 
     } catch (err) {
         console.error('Form submission error:', err);
