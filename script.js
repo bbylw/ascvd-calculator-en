@@ -364,7 +364,7 @@ function calculateRisk(data) {
         let sum = 0;
         let S0 = 0;
 
-        // 根据2023 ACC/AHA指南更新的系数
+        // 严格按照2013 ACC/AHA指南的系数计算
         if (race === 'white' || race === 'asian' || race === 'other') {
             if (sex === 'male') {
                 // 白人/亚裔男性
@@ -401,7 +401,7 @@ function calculateRisk(data) {
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
                       (1.916 * lnSBP) +
-                      (onBPMeds ? 1.892 : 0) +
+                      (onBPMeds ? 1.809 : 0) +
                       (isSmoker ? 0.549 : 0) +
                       (hasDiabetes ? 0.645 : 0) +
                       (-19.54);
@@ -422,35 +422,25 @@ function calculateRisk(data) {
             }
         }
 
-        // 计算10年风险（按照PCE标准公式）
-        const indX = sum;
-        const risk = (1 - Math.pow(S0, Math.exp(indX))) * 100;
-        
-        // 确保结果在有效范围内（0-100%）
+        // 严格按照PCE公式计算10年风险
+        const risk = (1 - Math.pow(S0, Math.exp(sum))) * 100;
         const finalRisk = Math.min(Math.max(risk, 0), 100);
 
-        // 添加更详细的调试日志
+        // 添加详细的计算过程日志
         console.log('PCE Risk calculation details:', {
             input: {
                 age, sex, race,
                 totalChol: totalCholValue,
                 hdl: hdlValue,
                 systolic,
-                isSmoker, hasDiabetes, onBPMeds,
-                units: {
-                    totalChol: totalCholUnit,
-                    hdl: hdlUnit
-                }
+                isSmoker, hasDiabetes, onBPMeds
             },
             calculation: {
                 lnAge, lnTotalChol, lnHDL, lnSBP,
-                sum, S0, indX,
+                sum, S0,
                 risk, finalRisk,
-                bp_effect: {
-                    systolic_value: systolic,
-                    bp_coefficient: onBPMeds ? 'Using medication coefficient' : 'Using base SBP coefficient',
-                    medication_status: onBPMeds ? 'On medication' : 'No medication'
-                }
+                equation: `${race}_${sex}`,
+                reference: '2013 ACC/AHA Guideline on the Assessment of Cardiovascular Risk'
             }
         });
 
