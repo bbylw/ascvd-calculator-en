@@ -77,7 +77,27 @@ function displayResults(risk, data) {
     
     // 获取风险等级和建议
     const riskLevel = getRiskLevel(risk);
-    const advice = i18n[currentLang].advice[riskLevel];
+    
+    // 确保正确获取建议内容
+    let adviceContent = '';
+    let diabetesAddon = '';
+    
+    try {
+        // 从 i18n 获取建议内容
+        const advice = i18n[currentLang].advice[riskLevel];
+        if (advice && advice.content) {
+            adviceContent = advice.content;
+            if (data.diabetes === 'yes' && advice.diabetes_addon) {
+                diabetesAddon = advice.diabetes_addon;
+            }
+        } else {
+            console.error('Advice content not found for risk level:', riskLevel);
+            throw new Error('Advice content not found');
+        }
+    } catch (err) {
+        console.error('Error getting advice content:', err);
+        adviceContent = i18n[currentLang].error.general;
+    }
     
     // 创建建议容器
     const adviceContainer = document.createElement('div');
@@ -88,12 +108,12 @@ function displayResults(risk, data) {
     adviceSection.className = 'advice-section';
     
     // 构建完整的建议内容
-    let adviceContent = `<div class="${riskLevel}">
-        ${advice.content}
-        ${data.diabetes === 'yes' ? advice.diabetes_addon : ''}
+    let fullAdviceContent = `<div class="${riskLevel}">
+        ${adviceContent}
+        ${diabetesAddon}
     </div>`;
     
-    adviceSection.innerHTML = adviceContent;
+    adviceSection.innerHTML = fullAdviceContent;
     adviceContainer.appendChild(adviceSection);
     
     // 添加建议到结果区域
@@ -105,7 +125,8 @@ function displayResults(risk, data) {
     console.log('Display results:', {
         risk,
         riskLevel,
-        advice
+        adviceContent: adviceContent ? 'Content found' : 'Content missing',
+        diabetesAddon: diabetesAddon ? 'Addon found' : 'No addon'
     });
 }
 
