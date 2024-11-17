@@ -371,7 +371,6 @@ function calculateRisk(data) {
 
         let sum = 0;
         let S0 = 0;
-        let meanCoeffSum = 0;
 
         // 根据2023 ACC/AHA指南更新的系数
         if (race === 'white' || race === 'asian' || race === 'other') {
@@ -386,9 +385,8 @@ function calculateRisk(data) {
                       (onBPMeds ? 1.764 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
-                      (-29.799);
+                      (-61.18);
                 S0 = 0.9144;
-                meanCoeffSum = 61.18;
             } else {
                 // 白人/亚裔女性
                 sum = (-29.799 * lnAge) +
@@ -402,7 +400,6 @@ function calculateRisk(data) {
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
                       (hasDiabetes ? 0.661 : 0);
                 S0 = 0.9665;
-                meanCoeffSum = -29.18;
             }
         } else { // African American
             if (sex === 'male') {
@@ -416,7 +413,6 @@ function calculateRisk(data) {
                       (hasDiabetes ? 0.645 : 0) +
                       (-19.54);
                 S0 = 0.8954;
-                meanCoeffSum = 19.54;
             } else {
                 // 非裔美国人女性
                 sum = (17.114 * lnAge) +
@@ -430,13 +426,11 @@ function calculateRisk(data) {
                       (hasDiabetes ? 0.874 : 0) +
                       (-86.61);
                 S0 = 0.9533;
-                meanCoeffSum = -86.61;
             }
         }
 
         // 计算10年风险
-        const indX = sum - meanCoeffSum;
-        const risk = (1 - Math.pow(S0, Math.exp(indX))) * 100;
+        const risk = (1 - Math.pow(S0, Math.exp(sum))) * 100;
         
         // 确保结果在有效范围内（0-100%）
         const finalRisk = Math.min(Math.max(risk, 0), 100);
@@ -454,7 +448,7 @@ function calculateRisk(data) {
             },
             calculation: {
                 lnAge, lnTotalChol, lnHDL, lnSBP,
-                sum, S0, meanCoeffSum, indX,
+                sum, S0,
                 risk, finalRisk
             }
         });
