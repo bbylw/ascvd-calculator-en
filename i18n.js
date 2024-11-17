@@ -62,30 +62,30 @@ const i18n = {
                     "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
                     "• ESC Cardiovascular Disease Prevention Guidelines",
 
-                lifestyle: "<low-risk>Lifestyle Interventions:\n" +
+                lifestyle: "Lifestyle Interventions (Low Risk):\n" +
                     "- 150-300 minutes moderate exercise weekly\n" +
                     "- Follow Mediterranean or DASH diet\n" +
                     "- Sodium intake <2300mg/day\n" +
-                    "- Quit smoking, limit alcohol</low-risk>",
+                    "- Quit smoking, limit alcohol",
 
-                bp: "<low-risk>Blood Pressure Management:\n" +
+                bp: "Blood Pressure Management (Low Risk):\n" +
                     "- Target BP <130/80 mmHg\n" +
                     "- Regular BP monitoring\n" +
                     "- Consider medication if needed\n" +
-                    "- Follow-up every 3-6 months</low-risk>",
+                    "- Follow-up every 3-6 months",
 
-                lipids: "<low-risk>Lipid Management:\n" +
+                lipids: "Lipid Management (Low Risk):\n" +
                     "- Target LDL-C <2.6 mmol/L (100 mg/dL)\n" +
                     "- Consider statin therapy\n" +
                     "- Regular lipid monitoring\n" +
-                    "- Annual CV risk assessment</low-risk>",
+                    "- Annual CV risk assessment",
 
-                diabetes: "<low-risk>Diabetes Management:\n" +
+                diabetes: "Diabetes Management (Low Risk):\n" +
                     "- Target HbA1c <7.0%\n" +
                     "- Fasting glucose 4.4-7.0 mmol/L\n" +
                     "- 2h postprandial glucose <10.0 mmol/L\n" +
                     "- Consider metformin\n" +
-                    "- Monitor HbA1c every 3-6 months</low-risk>"
+                    "- Monitor HbA1c every 3-6 months"
             },
             moderateRisk: {
                 guidelines_notice: "Based on latest international guidelines:\n" +
@@ -93,30 +93,30 @@ const i18n = {
                     "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
                     "• ESC Cardiovascular Disease Prevention Guidelines",
 
-                lifestyle: "<moderate-risk>Lifestyle Interventions:\n" +
+                lifestyle: "Lifestyle Interventions (Moderate Risk):\n" +
                     "- >300 minutes exercise weekly\n" +
                     "- Strict Mediterranean diet\n" +
                     "- Sodium intake <2000mg/day\n" +
-                    "- BMI target: 18.5-24.9</moderate-risk>",
+                    "- BMI target: 18.5-24.9",
 
-                bp: "<moderate-risk>Blood Pressure Management:\n" +
+                bp: "Blood Pressure Management (Moderate Risk):\n" +
                     "- Target BP <130/80 mmHg\n" +
                     "- Start antihypertensive therapy\n" +
                     "- Regular follow-up\n" +
-                    "- Consider combination therapy</moderate-risk>",
+                    "- Consider combination therapy",
 
-                lipids: "<moderate-risk>Lipid Management:\n" +
+                lipids: "Lipid Management (Moderate Risk):\n" +
                     "- Target LDL-C <1.8 mmol/L (70 mg/dL)\n" +
                     "- Moderate intensity statin\n" +
                     "- Increase dose if not at goal after 3 months\n" +
-                    "- Monitor every 6 months</moderate-risk>",
+                    "- Monitor every 6 months",
 
-                diabetes: "<moderate-risk>Diabetes Management:\n" +
+                diabetes: "Diabetes Management (Moderate Risk):\n" +
                     "- Target HbA1c <6.5%\n" +
                     "- Fasting glucose 4.4-6.1 mmol/L\n" +
                     "- 2h postprandial glucose <7.8 mmol/L\n" +
                     "- Prefer SGLT2i or GLP-1 RA\n" +
-                    "- Monitor HbA1c every 3 months</moderate-risk>"
+                    "- Monitor HbA1c every 3 months"
             },
             highRisk: {
                 guidelines_notice: "Based on latest international guidelines:\n" +
@@ -125,14 +125,14 @@ const i18n = {
                     "• ESC Cardiovascular Disease Prevention Guidelines\n" +
                     "As you are in high-risk group, please seek medical attention promptly.",
 
-                lifestyle: "<high-risk>Lifestyle Interventions:\n" +
+                lifestyle: "Lifestyle Interventions (High Risk):\n" +
                     "- >300 minutes exercise weekly\n" +
                     "- Strict Mediterranean diet\n" +
                     "- Sodium intake <2000mg/day\n" +
                     "- BMI target: 18.5-24.9\n" +
-                    "- Quit smoking and alcohol</high-risk>",
+                    "- Quit smoking and alcohol",
 
-                bp: "<high-risk>Blood Pressure Management:\n" +
+                bp: "Blood Pressure Management (High Risk):\n" +
                     "<level-1>• 血压严格控制至 <130/80 mmHg\n" +
                     "• 立即启动联合降压治疗\n" +
                     "• 优先选用ACEi/ARB+CCB或噻嗪类利尿剂</level-1>\n" +
@@ -141,14 +141,14 @@ const i18n = {
                     "<level-3>• 考虑家庭血压监测\n" +
                     "• 调整生活方式</level-3>",
 
-                lipids: "<high-risk>Lipid Management:\n" +
+                lipids: "Lipid Management (High Risk):\n" +
                     "<level-1>• LDL-C目标值 <55 mg/dL (1.4 mmol/L)\n" +
                     "• 高强度他汀（如阿托伐他汀40-80mg）</level-1>\n" +
                     "<level-2>• 如4-6周未达标，联合依折麦布\n" +
                     "必要时考虑PCSK9抑制剂</level-2>\n" +
                     "<level-3>• 每3个月监测血脂水平</level-3>",
 
-                diabetes: "<high-risk>Diabetes Management:\n" +
+                diabetes: "Diabetes Management (High Risk):\n" +
                     "<level-1>• HbA1c目标 <7.0%（个体化目标：6.5-8.0%）\n" +
                     "• 建议早期联合用药：\n" +
                     "  - GLP-1受体激动剂\n" +
@@ -257,30 +257,30 @@ const i18n = {
                     "• 美国心脏病学会(ACC/AHA)心血管疾病预防指南\n" +
                     "• 欧洲心脏病学会(ESC)心血管疾病预防指南",
 
-                lifestyle: "<low-risk>生活方式干预：\n" +
+                lifestyle: "生活方式干预（低风险）：\n" +
                     "- 每周150-300分钟中等强度运动\n" +
                     "- 遵循地中海饮食或DASH饮食\n" +
                     "- 限制钠摄入（<2300mg/日）\n" +
-                    "- 戒烟限酒</low-risk>",
+                    "- 戒烟限酒",
 
-                bp: "<low-risk>血压管理：\n" +
+                bp: "血压管理（低风险）：\n" +
                     "- 目标血压 <130/80 mmHg\n" +
                     "- 定期监测血压\n" +
                     "- 必要时考虑药物治疗\n" +
-                    "- 每3-6���月随访</low-risk>",
+                    "- 每3-6个月随访",
 
-                lipids: "<low-risk>血脂管理：\n" +
+                lipids: "血脂管理（低风险）：\n" +
                     "- LDL-C目标值 <2.6 mmol/L (100 mg/dL)\n" +
                     "- 考虑他汀类药物\n" +
                     "- 定期监测血脂\n" +
-                    "- 每年评估心血管风险</low-risk>",
+                    "- 每年评估心血管风险",
 
-                diabetes: "<low-risk>血糖管理：\n" +
+                diabetes: "血糖管理（低风险）：\n" +
                     "- HbA1c目标 <7.0%\n" +
                     "- 空腹血糖 4.4-7.0 mmol/L\n" +
                     "- 餐后2小时血糖 <10.0 mmol/L\n" +
                     "- 考虑二甲双胍\n" +
-                    "- 每3-6个月监测HbA1c</low-risk>"
+                    "- 每3-6个月监测HbA1c"
             },
             moderateRisk: {
                 guidelines_notice: "以下建议基于最新国际指南：\n" +
@@ -288,30 +288,30 @@ const i18n = {
                     "• 美国心脏病学会(ACC/AHA)心血管疾病预防指南\n" +
                     "• 欧洲心脏病学会(ESC)心血管疾病预防指南",
 
-                lifestyle: "<moderate-risk>生活方式干预：\n" +
+                lifestyle: "生活方式干预（中等风险）：\n" +
                     "- 每周>200分钟中等强度运动\n" +
                     "- 严格执行地中海饮食或DASH饮食\n" +
                     "- 限制钠摄入（<2300mg/日）\n" +
-                    "- 必须戒烟限酒</moderate-risk>",
+                    "- 必须戒烟限酒",
 
-                bp: "<moderate-risk>血压管理：\n" +
+                bp: "血压管理（中等风险）：\n" +
                     "- 血压控制目标 <130/80 mmHg\n" +
                     "- 考虑启动降压治疗\n" +
                     "- 优先选用ACEi/ARB、CCB或噻嗪类利尿剂\n" +
-                    "- 每3个月随访评估</moderate-risk>",
+                    "- 每3个月随访评估",
 
-                lipids: "<moderate-risk>血脂管理：\n" +
+                lipids: "血脂管理（中等风险）：\n" +
                     "- LDL-C目标值 <70 mg/dL (1.8 mmol/L)\n" +
                     "- 中等强度他汀（如阿托伐他汀20mg）\n" +
                     "- 如3个月未达标，考虑增加剂量\n" +
-                    "- 每4-6个月监测血脂水平</moderate-risk>",
+                    "- 每4-6个月监测血脂水平",
 
-                diabetes: "<moderate-risk>血糖管理：\n" +
+                diabetes: "血糖管理（中等风险）：\n" +
                     "- HbA1c目标 <7.0%\n" +
                     "- 空腹血糖 4.4-7.2 mmol/L\n" +
                     "- 餐后2小时血糖 <10.0 mmol/L\n" +
                     "- 优先考虑SGLT2抑制剂或GLP-1受体激动剂\n" +
-                    "- 每3个月监测HbA1c</moderate-risk>"
+                    "- 每3个月监测HbA1c"
             },
             highRisk: {
                 guidelines_notice: "以下建议基于最新国际指南，强烈建议定期关注：\n" +
@@ -320,34 +320,34 @@ const i18n = {
                     "• 欧洲心脏病学会(ESC)心血管疾病预防指南\n" +
                     "由于您属于高风险人群，建议及时就医获取个性化治疗方案。",
 
-                lifestyle: "<high-risk>生活方式干预：\n" +
+                lifestyle: "生活方式干预（高风险）：\n" +
                     "- 每周>300分钟中等强度或>150分钟高强度运动\n" +
                     "- 严格执行地中海饮食或DASH饮食\n" +
                     "- 限制钠摄入（<2000mg/日）\n" +
                     "- BMI目标：18.5-24.9\n" +
-                    "- 戒烟限酒</high-risk>",
+                    "- 戒烟限酒",
 
-                bp: "<high-risk>血压管理：\n" +
+                bp: "血压管理（高风险）：\n" +
                     "- 血压严格控制至 <130/80 mmHg\n" +
                     "- 立即启动联合降压治疗\n" +
                     "- 优先选用ACEi/ARB+CCB或噻嗪类利尿剂\n" +
                     "- 每周监测血压\n" +
-                    "- 定期评估靶器官损害</high-risk>",
+                    "- 定期评估靶器官损害",
 
-                lipids: "<high-risk>血脂管理：\n" +
+                lipids: "血脂管理（高风险）：\n" +
                     "- LDL-C目标值 <55 mg/dL (1.4 mmol/L)\n" +
                     "- 高强度他汀（如阿托伐他汀40-80mg）\n" +
                     "- 如4-6周未达标，联合依折麦布\n" +
                     "- 必要时考虑PCSK9抑制剂\n" +
-                    "- 每3个月监测血脂水平</high-risk>",
+                    "- 每3个月监测血脂水平",
 
-                diabetes: "<high-risk>血糖管理：\n" +
+                diabetes: "血糖管理（高风险）：\n" +
                     "- HbA1c目标 <7.0%（个体化目标：6.5-8.0%）\n" +
                     "- 建议早期联合用药：\n" +
                     "  - GLP-1受体激动剂\n" +
                     "  - SGLT2抑制剂\n" +
                     "- 每2-3个月监测HbA1c\n" +
-                    "- 密切监测并发症</high-risk>"
+                    "- 密切监测并发症"
             }
         },
         error: {

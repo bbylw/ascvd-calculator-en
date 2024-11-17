@@ -85,7 +85,7 @@ function displayResults(risk, data) {
     
     // 添加风险等级说明
     const riskExplanation = document.createElement('div');
-    riskExplanation.className = `advice-section ${riskLevel}`;
+    riskExplanation.className = `advice-section`;
     riskExplanation.innerHTML = `
         <h4>${i18n[currentLang].result.levels[riskLevel.replace('Risk', '').toLowerCase()]}</h4>
         <div class="advice-content">
@@ -105,7 +105,7 @@ function displayResults(risk, data) {
     sections.forEach(section => {
         if (advice[section]) {
             const div = document.createElement('div');
-            div.className = `advice-section ${riskLevel}`;
+            div.className = 'advice-section';
             div.innerHTML = `
                 <h4>${i18n[currentLang][section + '_title'] || section}</h4>
                 <div class="advice-content">
@@ -118,10 +118,23 @@ function displayResults(risk, data) {
         }
     });
     
-    // 添加建议到结果区域
+    // 添加建议到结果区域并滚动到结果
     resultDiv.appendChild(adviceContainer);
     resultDiv.classList.remove('hidden');
-    resultDiv.scrollIntoView({ behavior: 'smooth' });
+    
+    // 平滑滚动到结果区域
+    resultDiv.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start'
+    });
+
+    // 添加调试日志
+    console.log('Risk assessment details:', {
+        calculatedRisk: risk,
+        riskLevel: riskLevel,
+        patientData: data,
+        adviceSections: sections.filter(section => advice[section])
+    });
 }
 
 // 添加表单数据保持功能
