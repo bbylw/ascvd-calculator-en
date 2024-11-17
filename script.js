@@ -336,38 +336,30 @@ function getRiskAdvice(risk, data) {
 // 修改风险计算函数
 function calculateRisk(data) {
     try {
-        // 数据验证
-        if (!validateData(data)) {
-            throw new Error(i18n[currentLang].validation.error);
-        }
+        // 提取并验证输入数据
+        const { age, sex, race, totalChol, hdl, systolic, smoker, diabetes, bpTreat } = data;
+        const isSmoker = smoker === 'yes';
+        const hasDiabetes = diabetes === 'yes';
+        const onBPMeds = bpTreat === 'yes';
 
-        // 将输入值转换为数值
-        const age = parseFloat(data.age);
-        const systolic = parseFloat(data.systolic);
-        let totalChol = parseFloat(data.totalChol);
-        let hdl = parseFloat(data.hdl);
-        
         // 单位转换：mmol/L -> mg/dL
         const totalCholUnit = document.getElementById('totalCholUnit').value;
         const hdlUnit = document.getElementById('hdlUnit').value;
+        let totalCholValue = parseFloat(totalChol);
+        let hdlValue = parseFloat(hdl);
+        
         if (totalCholUnit === 'mmoll') {
-            totalChol = totalChol * 38.67;
+            totalCholValue = totalCholValue * 38.67;
         }
         if (hdlUnit === 'mmoll') {
-            hdl = hdl * 38.67;
+            hdlValue = hdlValue * 38.67;
         }
 
-        const isSmoker = data.smoker === 'yes';
-        const hasDiabetes = data.diabetes === 'yes';
-        const onBPMeds = data.bpTreat === 'yes';
-        const race = data.race;
-        const sex = data.sex;
-
         // 计算自然对数值
-        const lnAge = Math.log(age);
-        const lnTotalChol = Math.log(totalChol);
-        const lnHDL = Math.log(hdl);
-        const lnSBP = Math.log(systolic);
+        const lnAge = Math.log(parseFloat(age));
+        const lnTotalChol = Math.log(totalCholValue);
+        const lnHDL = Math.log(hdlValue);
+        const lnSBP = Math.log(parseFloat(systolic));
 
         let sum = 0;
         let S0 = 0;
@@ -381,8 +373,8 @@ function calculateRisk(data) {
                       (-2.664 * lnAge * lnTotalChol) +
                       (-7.990 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
-                      (1.797 * lnSBP) +  // 基础血压系数
-                      (onBPMeds ? 1.764 : 0) +  // 服药状态系数，不再额外增加未服药高血压的权重
+                      (1.764 * lnSBP) +
+                      (onBPMeds ? 1.797 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
                       (-61.18);
@@ -395,10 +387,11 @@ function calculateRisk(data) {
                       (-3.114 * lnAge * lnTotalChol) +
                       (-13.578 * lnHDL) +
                       (3.149 * lnAge * lnHDL) +
-                      (2.019 * lnSBP) +  // 基础血压系数
-                      (onBPMeds ? 2.019 : 0) +  // 服药状态系数，不再额外增加未服药高血压的权重
+                      (2.019 * lnSBP) +
+                      (onBPMeds ? 1.957 : 0) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
-                      (hasDiabetes ? 0.661 : 0);
+                      (hasDiabetes ? 0.661 : 0) +
+                      (-29.18);
                 S0 = 0.9665;
             }
         } else { // African American
@@ -407,8 +400,8 @@ function calculateRisk(data) {
                 sum = (2.469 * lnAge) +
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
-                      (1.916 * lnSBP) +  // 基础血压系数
-                      (onBPMeds ? 1.809 : 0) +  // 服药状态系数，不再额外增加未服药高血压的权重
+                      (1.916 * lnSBP) +
+                      (onBPMeds ? 1.892 : 0) +
                       (isSmoker ? 0.549 : 0) +
                       (hasDiabetes ? 0.645 : 0) +
                       (-19.54);
@@ -419,28 +412,31 @@ function calculateRisk(data) {
                       (0.940 * lnTotalChol) +
                       (-18.920 * lnHDL) +
                       (4.475 * lnAge * lnHDL) +
-                      (29.291 * lnSBP) +  // 基础血压系数
-                      (-6.432 * lnAge * lnSBP) +
-                      (onBPMeds ? (29.291 - 6.432 * lnAge) : 0) +  // 服药状态系数，不再额外增加未服药高血压的权重
-                      (isSmoker ? 0.691 : 0) +
+                      (27.820 * lnSBP) +
+                      (-6.087 * lnAge * lnSBP) +
+                      (onBPMeds ? 0.691 : 0) +
+                      (isSmoker ? 0.874 : 0) +
                       (hasDiabetes ? 0.874 : 0) +
                       (-86.61);
                 S0 = 0.9533;
             }
         }
 
-        // 计算10年风险
-        const risk = (1 - Math.pow(S0, Math.exp(sum))) * 100;
+        // 计算10年风险（按照PCE标准公式）
+        const indX = sum;
+        const risk = (1 - Math.pow(S0, Math.exp(indX))) * 100;
         
         // 确保结果在有效范围内（0-100%）
         const finalRisk = Math.min(Math.max(risk, 0), 100);
 
-        // 添加更详细的调试日志
-        console.log('Risk calculation details:', {
+        // 添加详细的调试日志
+        console.log('PCE Risk calculation details:', {
             input: {
-                age, totalChol, hdl, systolic,
+                age, sex, race,
+                totalChol: totalCholValue,
+                hdl: hdlValue,
+                systolic,
                 isSmoker, hasDiabetes, onBPMeds,
-                race, sex,
                 units: {
                     totalChol: totalCholUnit,
                     hdl: hdlUnit
@@ -448,15 +444,9 @@ function calculateRisk(data) {
             },
             calculation: {
                 lnAge, lnTotalChol, lnHDL, lnSBP,
-                sum, S0,
+                sum, S0, indX,
                 risk, finalRisk,
-                bp_effect: {
-                    base_sbp_effect: lnSBP * (race === 'white' || race === 'asian' || race === 'other' ? 
-                        (sex === 'male' ? 1.797 : 2.019) : 
-                        (sex === 'male' ? 1.916 : 29.291)),
-                    age_interaction: race === 'aa' && sex === 'female' ? -6.432 * lnAge * lnSBP : 0,
-                    medication_effect: onBPMeds ? 'Applied standard medication coefficient' : 'No medication coefficient'
-                }
+                equation_used: `${race}_${sex}`
             }
         });
 
