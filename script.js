@@ -105,8 +105,8 @@ function displayResults(risk, data) {
             const div = document.createElement('div');
             div.className = 'advice-section';
             
-            // 处理不同类型的建议内容
             if (typeof advice[section] === 'object') {
+                // 处理新的对象格式
                 div.innerHTML = `
                     <h4>${advice[section].title}</h4>
                     <div class="advice-content">
@@ -114,6 +114,7 @@ function displayResults(risk, data) {
                     </div>
                 `;
             } else {
+                // 处理普通字符串格式（如 guidelines_notice）
                 div.innerHTML = `
                     <h4>${i18n[currentLang][section + '_title'] || section}</h4>
                     <div class="advice-content">
@@ -462,7 +463,7 @@ function calculateRisk(data) {
             }
         } else { // African American
             if (sex === 'male') {
-                // 非裔美国人男性
+                // 非���美国人男性
                 sum = (2.469 * lnAge) +
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
