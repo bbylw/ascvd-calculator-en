@@ -373,7 +373,7 @@ function calculateRisk(data) {
                       (-2.664 * lnAge * lnTotalChol) +
                       (-7.990 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
-                      (1.764 * lnSBP * (onBPMeds ? 1.0 : (systolic >= 140 ? 1.5 : 1.0))) +
+                      (1.764 * lnSBP) +
                       (onBPMeds ? 1.797 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
@@ -387,7 +387,7 @@ function calculateRisk(data) {
                       (-3.114 * lnAge * lnTotalChol) +
                       (-13.578 * lnHDL) +
                       (3.149 * lnAge * lnHDL) +
-                      (2.019 * lnSBP * (onBPMeds ? 1.0 : (systolic >= 140 ? 1.5 : 1.0))) +
+                      (2.019 * lnSBP) +
                       (onBPMeds ? 1.957 : 0) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
                       (hasDiabetes ? 0.661 : 0) +
@@ -400,7 +400,7 @@ function calculateRisk(data) {
                 sum = (2.469 * lnAge) +
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
-                      (1.916 * lnSBP * (onBPMeds ? 1.0 : (systolic >= 140 ? 1.5 : 1.0))) +
+                      (1.916 * lnSBP) +
                       (onBPMeds ? 1.892 : 0) +
                       (isSmoker ? 0.549 : 0) +
                       (hasDiabetes ? 0.645 : 0) +
@@ -412,7 +412,7 @@ function calculateRisk(data) {
                       (0.940 * lnTotalChol) +
                       (-18.920 * lnHDL) +
                       (4.475 * lnAge * lnHDL) +
-                      (27.820 * lnSBP * (onBPMeds ? 1.0 : (systolic >= 140 ? 1.5 : 1.0))) +
+                      (27.820 * lnSBP) +
                       (-6.087 * lnAge * lnSBP) +
                       (onBPMeds ? 0.691 : 0) +
                       (isSmoker ? 0.874 : 0) +
@@ -448,7 +448,7 @@ function calculateRisk(data) {
                 risk, finalRisk,
                 bp_effect: {
                     systolic_value: systolic,
-                    bp_coefficient: onBPMeds ? 1.0 : (systolic >= 140 ? 1.5 : 1.0),
+                    bp_coefficient: onBPMeds ? 'Using medication coefficient' : 'Using base SBP coefficient',
                     medication_status: onBPMeds ? 'On medication' : 'No medication'
                 }
             }
