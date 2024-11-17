@@ -235,7 +235,7 @@ function getRiskAdvice(risk, data) {
         // 1. 添加指南提示
         if (advice.guidelines_notice) {
             adviceArray.push({
-                title: i18n[currentLang].guidelines.title || "重要指南",
+                title: i18n[currentLang].guidelines_title || "重要指南",
                 content: advice.guidelines_notice
             });
         }
@@ -243,7 +243,7 @@ function getRiskAdvice(risk, data) {
         // 2. 添加生活方式建议
         if (advice.lifestyle) {
             adviceArray.push({
-                title: i18n[currentLang].advice.lifestyle_title || "生活方式建议",
+                title: i18n[currentLang].lifestyle_title || "生活方式建议",
                 content: advice.lifestyle
             });
         }
@@ -251,7 +251,7 @@ function getRiskAdvice(risk, data) {
         // 3. 添加血压管理建议
         if (advice.bp) {
             adviceArray.push({
-                title: i18n[currentLang].advice.bp_title || "血压管理",
+                title: i18n[currentLang].bp_title || "血压管理",
                 content: advice.bp
             });
         }
@@ -259,7 +259,7 @@ function getRiskAdvice(risk, data) {
         // 4. 添加血脂管理建议
         if (advice.lipids) {
             adviceArray.push({
-                title: i18n[currentLang].advice.lipids_title || "血脂管理",
+                title: i18n[currentLang].lipids_title || "血脂管理",
                 content: advice.lipids
             });
         }
@@ -267,7 +267,7 @@ function getRiskAdvice(risk, data) {
         // 5. 如果患者有糖尿病，添加血糖管理建议
         if (data.diabetes === 'yes' && advice.diabetes) {
             adviceArray.push({
-                title: i18n[currentLang].advice.diabetes_title || "血糖管理",
+                title: i18n[currentLang].diabetes_title || "血糖管理",
                 content: advice.diabetes
             });
         }
@@ -586,4 +586,76 @@ function getRiskLevel(risk) {
     } else {
         return "highRisk";
     }
-} 
+}
+
+// 添加显示结果的函数
+function displayResults(risk, data) {
+    const resultDiv = document.getElementById('result');
+    const riskScoreSpan = document.getElementById('riskScore');
+    const riskLevelDiv = document.getElementById('riskLevel');
+    
+    // 清除之前的建议内容
+    const oldAdvice = document.getElementById('adviceContainer');
+    if (oldAdvice) {
+        oldAdvice.remove();
+    }
+
+    // 显示风险分数
+    riskScoreSpan.textContent = risk.toFixed(1);
+    
+    // 获取建议
+    const advice = getRiskAdvice(risk, data);
+    
+    // 创建建议容器
+    const adviceContainer = document.createElement('div');
+    adviceContainer.id = 'adviceContainer';
+    
+    // 添加每条建议
+    advice.adviceArray.forEach(item => {
+        const section = document.createElement('div');
+        section.className = 'advice-section';
+        
+        const title = document.createElement('h4');
+        title.textContent = item.title;
+        
+        const content = document.createElement('div');
+        content.className = 'advice-content';
+        
+        const pre = document.createElement('pre');
+        pre.textContent = item.content;
+        
+        content.appendChild(pre);
+        section.appendChild(title);
+        section.appendChild(content);
+        adviceContainer.appendChild(section);
+    });
+    
+    // 添加建议到结果区域
+    resultDiv.appendChild(adviceContainer);
+    resultDiv.classList.remove('hidden');
+}
+
+// 添加表单提交处理函数
+document.getElementById('riskForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    try {
+        const formData = {
+            age: document.getElementById('age').value,
+            sex: document.getElementById('sex').value,
+            race: document.getElementById('race').value,
+            totalChol: document.getElementById('totalChol').value,
+            hdl: document.getElementById('hdl').value,
+            systolic: document.getElementById('systolic').value,
+            smoker: document.querySelector('input[name="smoker"]:checked').value,
+            diabetes: document.querySelector('input[name="diabetes"]:checked').value,
+            bpTreat: document.querySelector('input[name="bpTreat"]:checked').value
+        };
+        
+        const risk = calculateRisk(formData);
+        displayResults(risk, formData);
+    } catch (err) {
+        console.error('计算风险时出错:', err);
+        alert(i18n[currentLang].error.general);
+    }
+}); 
