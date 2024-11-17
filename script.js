@@ -373,6 +373,18 @@ function calculateRisk(data) {
         const lnHDL = Math.log(hdlValue);
         const lnSBP = Math.log(systolicValue);
 
+        // 年轻高血压风险调整
+        let riskMultiplier = 1.0;
+        if (ageValue < 45 && !onBPMeds) {
+            if (systolicValue >= 180) {
+                riskMultiplier = 2.5;  // 极重度高血压
+            } else if (systolicValue >= 160) {
+                riskMultiplier = 2.0;  // 重度高血压
+            } else if (systolicValue >= 140) {
+                riskMultiplier = 1.5;  // 中度高血压
+            }
+        }
+
         let sum = 0;
         let S0 = 0;
 
@@ -385,7 +397,7 @@ function calculateRisk(data) {
                       (-2.664 * lnAge * lnTotalChol) +
                       (-7.990 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
-                      (1.764 * lnSBP) +
+                      (1.764 * lnSBP * riskMultiplier) +  // 应用风险调整系数
                       (onBPMeds ? 1.797 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
@@ -452,6 +464,7 @@ function calculateRisk(data) {
                 isSmoker,
                 hasDiabetes,
                 onBPMeds,
+                riskMultiplier,
                 units: {
                     totalChol: totalCholUnit,
                     hdl: hdlUnit
@@ -465,7 +478,8 @@ function calculateRisk(data) {
                 sum,
                 S0,
                 risk,
-                finalRisk
+                finalRisk,
+                adjustedForYoungHypertension: riskMultiplier > 1
             }
         });
 
