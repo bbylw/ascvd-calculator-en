@@ -377,7 +377,8 @@ function calculateRisk(data) {
                       (1.764 * lnSBP) +
                       (onBPMeds ? 1.797 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
-                      (hasDiabetes ? 0.658 : 0);
+                      (hasDiabetes ? 0.658 : 0) +
+                      (-61.18);
                 S0 = 0.9144;
                 meanCoeffSum = 61.18;
             } else {
@@ -391,7 +392,8 @@ function calculateRisk(data) {
                       (2.019 * lnSBP) +
                       (onBPMeds ? 1.957 : 0) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
-                      (hasDiabetes ? 0.661 : 0);
+                      (hasDiabetes ? 0.661 : 0) +
+                      (-29.18);
                 S0 = 0.9665;
                 meanCoeffSum = 29.18;
             }
@@ -404,7 +406,8 @@ function calculateRisk(data) {
                       (1.916 * lnSBP) +
                       (onBPMeds ? 1.809 : 0) +
                       (isSmoker ? 0.549 : 0) +
-                      (hasDiabetes ? 0.645 : 0);
+                      (hasDiabetes ? 0.645 : 0) +
+                      (-19.54);
                 S0 = 0.8954;
                 meanCoeffSum = 19.54;
             } else {
@@ -417,7 +420,8 @@ function calculateRisk(data) {
                       (-6.087 * lnAge * lnSBP) +
                       (onBPMeds ? 0.691 : 0) +
                       (isSmoker ? 0.874 : 0) +
-                      (hasDiabetes ? 0.874 : 0);
+                      (hasDiabetes ? 0.874 : 0) +
+                      (-86.61);
                 S0 = 0.9533;
                 meanCoeffSum = 86.61;
             }
@@ -451,6 +455,11 @@ function calculateRisk(data) {
                 reference: '2023 ACC/AHA Guidelines'
             }
         });
+
+        // 验证计算结果的合理性
+        if (isNaN(finalRisk) || finalRisk < 0 || finalRisk > 100) {
+            throw new Error('Invalid risk calculation result');
+        }
 
         return finalRisk;
 
