@@ -357,28 +357,24 @@ function calculateRisk(data) {
             hdlValue = hdlValue * 38.67;
         }
 
+        // 验证数据
+        if (!validateData({
+            age: ageValue,
+            systolic: systolicValue,
+            totalChol: totalCholValue,
+            hdl: hdlValue
+        })) {
+            throw new Error(i18n[currentLang].validation.error);
+        }
+
         // 计算自然对数值
         const lnAge = Math.log(ageValue);
         const lnTotalChol = Math.log(totalCholValue);
         const lnHDL = Math.log(hdlValue);
         const lnSBP = Math.log(systolicValue);
 
-        // 年轻高血压风险调整系数
-        let youngHtnAdjustment = 1.0;
-        if (ageValue < 45 && !onBPMeds && systolicValue >= 160) {
-            // 根据血压水平调整风险系数
-            if (systolicValue >= 180) {
-                youngHtnAdjustment = 2.0;  // 极重度高血压
-            } else if (systolicValue >= 170) {
-                youngHtnAdjustment = 1.8;  // 重度高血压
-            } else {
-                youngHtnAdjustment = 1.5;  // 中度高血压
-            }
-        }
-
         let sum = 0;
         let S0 = 0;
-        let meanCoeffSum = 0;
 
         // 根据2023 ACC/AHA指南更新的系数计算
         if (race === 'white' || race === 'asian' || race === 'other') {
@@ -389,13 +385,12 @@ function calculateRisk(data) {
                       (-2.664 * lnAge * lnTotalChol) +
                       (-7.990 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
-                      (1.764 * lnSBP * youngHtnAdjustment) +  // 应用年轻高血压调整系数
+                      (1.764 * lnSBP) +
                       (onBPMeds ? 1.797 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
                       (-61.18);
                 S0 = 0.9144;
-                meanCoeffSum = 61.18;
             } else {
                 // 白人/亚裔女性
                 sum = (-29.799 * lnAge) +
@@ -404,13 +399,12 @@ function calculateRisk(data) {
                       (-3.114 * lnAge * lnTotalChol) +
                       (-13.578 * lnHDL) +
                       (3.149 * lnAge * lnHDL) +
-                      (2.019 * lnSBP * youngHtnAdjustment) +  // 应用年轻高血压调整系数
+                      (2.019 * lnSBP) +
                       (onBPMeds ? 1.957 : 0) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
                       (hasDiabetes ? 0.661 : 0) +
                       (-29.18);
                 S0 = 0.9665;
-                meanCoeffSum = 29.18;
             }
         } else { // African American
             if (sex === 'male') {
@@ -418,33 +412,30 @@ function calculateRisk(data) {
                 sum = (2.469 * lnAge) +
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
-                      (1.916 * lnSBP * youngHtnAdjustment) +  // 应用年轻高血压调整系数
+                      (1.916 * lnSBP) +
                       (onBPMeds ? 1.809 : 0) +
                       (isSmoker ? 0.549 : 0) +
                       (hasDiabetes ? 0.645 : 0) +
                       (-19.54);
                 S0 = 0.8954;
-                meanCoeffSum = 19.54;
             } else {
                 // 非裔美国人女性
                 sum = (17.114 * lnAge) +
                       (0.940 * lnTotalChol) +
                       (-18.920 * lnHDL) +
                       (4.475 * lnAge * lnHDL) +
-                      (27.820 * lnSBP * youngHtnAdjustment) +  // 应用年轻高血压调整系数
+                      (27.820 * lnSBP) +
                       (-6.087 * lnAge * lnSBP) +
                       (onBPMeds ? 0.691 : 0) +
                       (isSmoker ? 0.874 : 0) +
                       (hasDiabetes ? 0.874 : 0) +
                       (-86.61);
                 S0 = 0.9533;
-                meanCoeffSum = 86.61;
             }
         }
 
         // 计算10年风险
-        const indX = sum - meanCoeffSum;
-        const risk = (1 - Math.pow(S0, Math.exp(indX))) * 100;
+        const risk = (1 - Math.pow(S0, Math.exp(sum))) * 100;
         
         // 确保结果在有效范围内（0-100%）
         const finalRisk = Math.min(Math.max(risk, 0), 100);
@@ -452,18 +443,29 @@ function calculateRisk(data) {
         // 添加详细的调试日志
         console.log('PCE Risk calculation details:', {
             input: {
-                age: ageValue, sex, race,
+                age: ageValue,
+                sex,
+                race,
                 totalChol: totalCholValue,
                 hdl: hdlValue,
                 systolic: systolicValue,
-                isSmoker, hasDiabetes, onBPMeds,
-                youngHtnAdjustment
+                isSmoker,
+                hasDiabetes,
+                onBPMeds,
+                units: {
+                    totalChol: totalCholUnit,
+                    hdl: hdlUnit
+                }
             },
             calculation: {
-                lnAge, lnTotalChol, lnHDL, lnSBP,
-                sum, S0, meanCoeffSum, indX,
-                risk, finalRisk,
-                equation: `${race}_${sex}`
+                lnAge,
+                lnTotalChol,
+                lnHDL,
+                lnSBP,
+                sum,
+                S0,
+                risk,
+                finalRisk
             }
         });
 
