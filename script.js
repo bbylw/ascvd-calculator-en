@@ -375,14 +375,14 @@ function calculateRisk(data) {
         // 根据2023 ACC/AHA指南更新的系数
         if (race === 'white' || race === 'asian' || race === 'other') {
             if (sex === 'male') {
-                // 白人/��裔男性
+                // 白人/亚裔男性
                 sum = (12.344 * lnAge) +
                       (11.853 * lnTotalChol) +
                       (-2.664 * lnAge * lnTotalChol) +
                       (-7.990 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
-                      (1.797 * lnSBP) +
-                      (onBPMeds ? 1.764 : (systolic >= 140 ? 1.764 * 1.5 : 0)) +
+                      (1.797 * lnSBP) +  // 基础血压系数
+                      (onBPMeds ? 1.764 : 0) +  // 服药状态系数，不再额外增加未服药高血压的权重
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
                       (-61.18);
@@ -395,8 +395,8 @@ function calculateRisk(data) {
                       (-3.114 * lnAge * lnTotalChol) +
                       (-13.578 * lnHDL) +
                       (3.149 * lnAge * lnHDL) +
-                      (2.019 * lnSBP) +
-                      (onBPMeds ? 2.019 : (systolic >= 140 ? 2.019 * 1.5 : 0)) +
+                      (2.019 * lnSBP) +  // 基础血压系数
+                      (onBPMeds ? 2.019 : 0) +  // 服药状态系数，不再额外增加未服药高血压的权重
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
                       (hasDiabetes ? 0.661 : 0);
                 S0 = 0.9665;
@@ -407,8 +407,8 @@ function calculateRisk(data) {
                 sum = (2.469 * lnAge) +
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
-                      (1.916 * lnSBP) +
-                      (onBPMeds ? 1.809 : (systolic >= 140 ? 1.809 * 1.5 : 0)) +
+                      (1.916 * lnSBP) +  // 基础血压系数
+                      (onBPMeds ? 1.809 : 0) +  // 服药状态系数，不再额外增加未服药高血压的权重
                       (isSmoker ? 0.549 : 0) +
                       (hasDiabetes ? 0.645 : 0) +
                       (-19.54);
@@ -419,10 +419,9 @@ function calculateRisk(data) {
                       (0.940 * lnTotalChol) +
                       (-18.920 * lnHDL) +
                       (4.475 * lnAge * lnHDL) +
-                      (29.291 * lnSBP) +
+                      (29.291 * lnSBP) +  // 基础血压系数
                       (-6.432 * lnAge * lnSBP) +
-                      (onBPMeds ? (29.291 - 6.432 * lnAge) : 
-                       (systolic >= 140 ? (29.291 - 6.432 * lnAge) * 1.5 : 0)) +
+                      (onBPMeds ? (29.291 - 6.432 * lnAge) : 0) +  // 服药状态系数，不再额外增加未服药高血压的权重
                       (isSmoker ? 0.691 : 0) +
                       (hasDiabetes ? 0.874 : 0) +
                       (-86.61);
@@ -452,11 +451,11 @@ function calculateRisk(data) {
                 sum, S0,
                 risk, finalRisk,
                 bp_effect: {
-                    base_effect: lnSBP * (race === 'white' || race === 'asian' || race === 'other' ? 
+                    base_sbp_effect: lnSBP * (race === 'white' || race === 'asian' || race === 'other' ? 
                         (sex === 'male' ? 1.797 : 2.019) : 
                         (sex === 'male' ? 1.916 : 29.291)),
-                    high_bp_effect: systolic >= 140 ? 'Applied high BP risk multiplier' : 'Normal BP',
-                    medication_effect: onBPMeds ? 'Applied medication coefficient' : 'No medication'
+                    age_interaction: race === 'aa' && sex === 'female' ? -6.432 * lnAge * lnSBP : 0,
+                    medication_effect: onBPMeds ? 'Applied standard medication coefficient' : 'No medication coefficient'
                 }
             }
         });
@@ -597,7 +596,7 @@ function handleServiceWorkerUpdate() {
                 console.error('Service Worker 注册失败:', err);
             });
 
-        // 监听控制���变更
+        // 监听控制变更
         let refreshing = false;
         navigator.serviceWorker.addEventListener('controllerchange', () => {
             if (!refreshing) {
