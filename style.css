@@ -320,7 +320,7 @@ pre {
 }
 
 /* 风险等级样式 */
-.advice-content .low-risk {
+.lowRisk {
     background-color: #d1e7dd;
     border-left: 4px solid #0f5132;
     color: #0f5132;
@@ -329,7 +329,7 @@ pre {
     border-radius: 4px;
 }
 
-.advice-content .moderate-risk {
+.moderateRisk {
     background-color: #fff3cd;
     border-left: 4px solid #664d03;
     color: #664d03;
@@ -338,7 +338,7 @@ pre {
     border-radius: 4px;
 }
 
-.advice-content .high-risk {
+.highRisk {
     background-color: #f8d7da;
     border-left: 4px solid #842029;
     color: #842029;

@@ -85,11 +85,13 @@ function displayResults(risk, data) {
     
     // 添加风险等级说明
     const riskExplanation = document.createElement('div');
-    riskExplanation.className = `advice-section ${riskLevel.toLowerCase()}`;
+    riskExplanation.className = `advice-section ${riskLevel}`;
     riskExplanation.innerHTML = `
         <h4>${i18n[currentLang].result.levels[riskLevel.replace('Risk', '').toLowerCase()]}</h4>
         <div class="advice-content">
-            <pre>${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}</pre>
+            <div class="${riskLevel}">
+                ${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}
+            </div>
         </div>
     `;
     adviceContainer.appendChild(riskExplanation);
@@ -103,11 +105,13 @@ function displayResults(risk, data) {
     sections.forEach(section => {
         if (advice[section]) {
             const div = document.createElement('div');
-            div.className = `advice-section ${riskLevel.toLowerCase()}`;
+            div.className = `advice-section ${riskLevel}`;
             div.innerHTML = `
                 <h4>${i18n[currentLang][section + '_title'] || section}</h4>
                 <div class="advice-content">
-                    <pre>${advice[section]}</pre>
+                    <div class="${riskLevel}">
+                        ${advice[section]}
+                    </div>
                 </div>
             `;
             adviceContainer.appendChild(div);
