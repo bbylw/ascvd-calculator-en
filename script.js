@@ -89,7 +89,9 @@ function displayResults(risk, data) {
     riskExplanation.innerHTML = `
         <h4>${i18n[currentLang].result.levels[riskLevel.replace('Risk', '').toLowerCase()]}</h4>
         <div class="advice-content">
-            <pre class="${riskLevel}">${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}</pre>
+            <div class="${riskLevel}">
+                ${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}
+            </div>
         </div>
     `;
     adviceContainer.appendChild(riskExplanation);
@@ -108,29 +110,33 @@ function displayResults(risk, data) {
     }
 
     sections.forEach(section => {
-        if (section.key === 'guidelines_notice' && advice[section.key]) {
-            // 处理指南说明
-            const div = document.createElement('div');
-            div.className = 'advice-section';
+        const div = document.createElement('div');
+        div.className = 'advice-section';
+        
+        if (section.key === 'guidelines_notice') {
+            // 处理指南说明（字符串格式）
             div.innerHTML = `
                 <h4>${section.title}</h4>
                 <div class="advice-content">
-                    <pre class="${riskLevel}">${advice[section.key]}</pre>
+                    <div class="${riskLevel}">
+                        ${advice[section.key]}
+                    </div>
                 </div>
             `;
-            adviceContainer.appendChild(div);
-        } else if (advice[section.key]) {
-            // 处理其他建议内容
-            const div = document.createElement('div');
-            div.className = 'advice-section';
+        } else {
+            // 处理其他建议（对象格式）
+            const sectionAdvice = advice[section.key];
             div.innerHTML = `
-                <h4>${section.title}</h4>
+                <h4>${sectionAdvice.title}</h4>
                 <div class="advice-content">
-                    <pre class="${riskLevel}">${advice[section.key].content}</pre>
+                    <div class="${riskLevel}">
+                        ${sectionAdvice.content}
+                    </div>
                 </div>
             `;
-            adviceContainer.appendChild(div);
         }
+        
+        adviceContainer.appendChild(div);
     });
     
     // 添加建议到结果区域
