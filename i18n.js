@@ -131,26 +131,30 @@ const i18n = {
                     "- Quit smoking and alcohol",
 
                 bp: "Blood Pressure Management:\n" +
-                    "- Strict BP control <130/80 mmHg\n" +
-                    "- Start combination therapy immediately\n" +
-                    "- Weekly BP monitoring\n" +
-                    "- Regular organ damage assessment",
+                    "<level-1>• 血压严格控制至 <130/80 mmHg\n" +
+                    "• 立即启动联合降压治疗\n" +
+                    "• 优先选用ACEi/ARB+CCB或噻嗪类利尿剂</level-1>\n" +
+                    "<level-2>• 每周监测血压\n" +
+                    "• 定期评估靶器官损害</level-2>\n" +
+                    "<level-3>• 考虑家庭血压监测\n" +
+                    "• 调整生活方式</level-3>",
 
                 lipids: "Lipid Management:\n" +
-                    "- Target LDL-C <1.4 mmol/L (55 mg/dL)\n" +
-                    "- High intensity statin\n" +
-                    "- Add ezetimibe if not at goal after 6-8 weeks\n" +
-                    "- Monitor every 3 months",
+                    "<level-1>• LDL-C目标值 <55 mg/dL (1.4 mmol/L)\n" +
+                    "• 高强度他汀（如阿托伐他汀40-80mg）</level-1>\n" +
+                    "<level-2>• 如4-6周未达标，联合依折麦布\n" +
+                    "• 必要时考虑PCSK9抑制剂</level-2>\n" +
+                    "<level-3>• 每3个月监测血脂水平</level-3>",
 
                 diabetes: "Diabetes Management:\n" +
-                    "- Target HbA1c <6.5%\n" +
-                    "- Fasting glucose 4.4-6.1 mmol/L\n" +
-                    "- 2h postprandial glucose <7.8 mmol/L\n" +
-                    "- Early combination therapy:\n" +
-                    "  • SGLT2 inhibitor\n" +
-                    "  • GLP-1 receptor agonist\n" +
-                    "- Monitor HbA1c every 2-3 months\n" +
-                    "- Close complication monitoring"
+                    "<level-1>• HbA1c目标 <7.0%（个体化目标：6.5-8.0%）\n" +
+                    "• 建议早期联合用药：\n" +
+                    "  - GLP-1受体激动剂\n" +
+                    "  - SGLT2抑制剂</level-1>\n" +
+                    "<level-2>• 空腹血糖 4.4-7.2 mmol/L\n" +
+                    "• 餐后2小时血糖 <10.0 mmol/L</level-2>\n" +
+                    "<level-3>• 每2-3个月监测HbA1c\n" +
+                    "• 密切监测并发症</level-3>"
             }
         },
         error: {
@@ -322,28 +326,30 @@ const i18n = {
                     "- 戒烟限酒",
 
                 bp: "血压管理：\n" +
-                    "- 血压严格控制至 <130/80 mmHg\n" +
-                    "- 立即启动联合降压治疗\n" +
-                    "- 优先选用ACEi/ARB+CCB或噻嗪类利尿剂\n" +
-                    "- 每周监测血压\n" +
-                    "- 定期评估靶器官损害",
+                    "<level-1>• 血压严格控制至 <130/80 mmHg\n" +
+                    "• 立即启动联合降压治疗\n" +
+                    "• 优先选用ACEi/ARB+CCB或噻嗪类利尿剂</level-1>\n" +
+                    "<level-2>• 每周监测血压\n" +
+                    "• 定期评估靶器官损害</level-2>\n" +
+                    "<level-3>• 考虑家庭血压监测\n" +
+                    "• 调整生活方式</level-3>",
 
                 lipids: "血脂管理：\n" +
-                    "- LDL-C目标值 <55 mg/dL (1.4 mmol/L)\n" +
-                    "- 高强度他汀（如阿托伐他汀40-80mg）\n" +
-                    "- 如4-6周未达标，联合依折麦布\n" +
-                    "- 必要时考虑PCSK9抑制剂\n" +
-                    "- 每3个月监测血脂水平",
+                    "<level-1>• LDL-C目标值 <55 mg/dL (1.4 mmol/L)\n" +
+                    "• 高强度他汀（如阿托伐他汀40-80mg）</level-1>\n" +
+                    "<level-2>• 如4-6周未达标，联合依折麦布\n" +
+                    "• 必要时考虑PCSK9抑制剂</level-2>\n" +
+                    "<level-3>• 每3个月监测血脂水平</level-3>",
 
                 diabetes: "血糖管理：\n" +
-                    "- HbA1c目标 <7.0%（个体化目标：6.5-8.0%）\n" +
-                    "- 空腹血糖 4.4-7.2 mmol/L (80-130 mg/dL)\n" +
-                    "- 餐后2小时血糖 <10.0 mmol/L (<180 mg/dL)\n" +
-                    "- 建议早期联合用药：\n" +
-                    "  • GLP-1受体激动剂\n" +
-                    "  • SGLT2抑制剂\n" +
-                    "- 每2-3个月监测HbA1c\n" +
-                    "- 密切监测并发症"
+                    "<level-1>• HbA1c目标 <7.0%（个体化目标：6.5-8.0%）\n" +
+                    "• 建议早期联合用药：\n" +
+                    "  - GLP-1受体激动剂\n" +
+                    "  - SGLT2抑制剂</level-1>\n" +
+                    "<level-2>• 空腹血糖 4.4-7.2 mmol/L\n" +
+                    "• 餐后2小时血糖 <10.0 mmol/L</level-2>\n" +
+                    "<level-3>• 每2-3个月监测HbA1c\n" +
+                    "• 密切监测并发症</level-3>"
             }
         },
         error: {

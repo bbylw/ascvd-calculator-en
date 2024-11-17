@@ -62,47 +62,53 @@ function getNestedTranslation(obj, path) {
 }
 
 // 修改显示结果函数
-function displayResult(risk, data) {
+function displayResults(risk, data) {
     const resultDiv = document.getElementById('result');
-    const riskScore = document.getElementById('riskScore');
-    const riskLevel = document.getElementById('riskLevel');
+    const riskScoreSpan = document.getElementById('riskScore');
+    const riskLevelDiv = document.getElementById('riskLevel');
     
-    resultDiv.classList.remove('hidden');
-    riskScore.textContent = risk.toFixed(1);
-    
-    const riskAdvice = getRiskAdvice(risk, data);
-    const translations = i18n[currentLang].result.levels;
-    
-    let adviceHtml = `<div class="${riskAdvice.level}-risk">`;
-    adviceHtml += `<h3>${translations[riskAdvice.level]}</h3>`;
-    
-    // 添加所有建议部分
-    riskAdvice.adviceArray.forEach(advice => {
-        if (advice && advice.content) {  // 确保建议内容存在
-            adviceHtml += `
-                <div class="advice-section">
-                    <h4>${advice.title}</h4>
-                    <div class="advice-content">
-                        <pre>${advice.content}</pre>
-                    </div>
-                </div>
-            `;
-        }
-    });
-    
-    adviceHtml += '</div>';
-    
-    riskLevel.innerHTML = adviceHtml;
-    resultDiv.scrollIntoView({ behavior: 'smooth' });
+    // 清除之前的建议内容
+    const oldAdvice = document.getElementById('adviceContainer');
+    if (oldAdvice) {
+        oldAdvice.remove();
+    }
 
-    // 添加调试日志
-    console.log('显示结果:', {
-        风险值: risk,
-        风险等级: riskAdvice.level,
-        建议数量: riskAdvice.adviceArray.length,
-        当前语言: currentLang,
-        血压治疗状态: data.bpTreat
+    // 显示风险分数
+    riskScoreSpan.textContent = risk.toFixed(1);
+    
+    // 获取风险等级
+    const riskLevel = getRiskLevel(risk);
+    const advice = getRiskAdvice(risk, data);
+    
+    // 创建建议容器
+    const adviceContainer = document.createElement('div');
+    adviceContainer.id = 'adviceContainer';
+    adviceContainer.className = `${riskLevel.toLowerCase()}-risk`; // 添加风险等级类名
+    
+    // 添加每条建议
+    advice.adviceArray.forEach(item => {
+        const section = document.createElement('div');
+        section.className = 'advice-section';
+        
+        const title = document.createElement('h4');
+        title.textContent = item.title;
+        
+        const content = document.createElement('div');
+        content.className = 'advice-content';
+        
+        const pre = document.createElement('pre');
+        pre.textContent = item.content;
+        
+        content.appendChild(pre);
+        section.appendChild(title);
+        section.appendChild(content);
+        adviceContainer.appendChild(section);
     });
+    
+    // 添加建议到结果区域
+    resultDiv.appendChild(adviceContainer);
+    resultDiv.classList.remove('hidden');
+    resultDiv.scrollIntoView({ behavior: 'smooth' });
 }
 
 // 添加表单数据保持功能
@@ -675,7 +681,7 @@ function updateServiceWorker() {
     }
 }
 
-// 修改风险等级判断函数，按照最新指南标准
+// 修改风险等级判断函数
 function getRiskLevel(risk) {
     if (isNaN(risk) || risk === null) {
         console.error('Invalid risk value:', risk);
@@ -692,49 +698,32 @@ function getRiskLevel(risk) {
     }
 }
 
-// 添加显示结果的函数
-function displayResults(risk, data) {
-    const resultDiv = document.getElementById('result');
-    const riskScoreSpan = document.getElementById('riskScore');
-    const riskLevelDiv = document.getElementById('riskLevel');
-    
-    // 清除之前的建议内容
-    const oldAdvice = document.getElementById('adviceContainer');
-    if (oldAdvice) {
-        oldAdvice.remove();
-    }
+function displayAdvice(advice, container) {
+    // 添加循证医学证据级别说明
+    const legend = document.createElement('div');
+    legend.className = 'evidence-legend';
+    legend.innerHTML = `
+        <span class="evidence-level-1">■ 一级证据：来自多个随机对照试验或荟萃分析</span>
+        <span class="evidence-level-2">■ 二级证据：来自单个随机对照试验或大型观察性研究</span>
+        <span class="evidence-level-3">■ 三级证据：来自专家共识或小型研究</span>
+    `;
 
-    // 显示风险分数
-    riskScoreSpan.textContent = risk.toFixed(1);
-    
-    // 获取建议
-    const advice = getRiskAdvice(risk, data);
-    
-    // 创建建议容器
-    const adviceContainer = document.createElement('div');
-    adviceContainer.id = 'adviceContainer';
-    
-    // 添加每条建议
-    advice.adviceArray.forEach(item => {
-        const section = document.createElement('div');
-        section.className = 'advice-section';
-        
-        const title = document.createElement('h4');
-        title.textContent = item.title;
-        
-        const content = document.createElement('div');
-        content.className = 'advice-content';
-        
-        const pre = document.createElement('pre');
-        pre.textContent = item.content;
-        
-        content.appendChild(pre);
-        section.appendChild(title);
-        section.appendChild(content);
-        adviceContainer.appendChild(section);
-    });
-    
-    // 添加建议到结果区域
-    resultDiv.appendChild(adviceContainer);
-    resultDiv.classList.remove('hidden');
+    // 处理建议内容，替换循证级别标记为HTML类
+    const content = advice.content
+        .replace(/<level-1>/g, '<span class="evidence-level-1">')
+        .replace(/<level-2>/g, '<span class="evidence-level-2">')
+        .replace(/<level-3>/g, '<span class="evidence-level-3">')
+        .replace(/<\/level-\d>/g, '</span>');
+
+    const section = document.createElement('div');
+    section.className = 'advice-section';
+    section.innerHTML = `
+        <h4>${advice.title}</h4>
+        <div class="advice-content">
+            <pre>${content}</pre>
+        </div>
+    `;
+
+    container.appendChild(section);
+    container.appendChild(legend);
 } 
