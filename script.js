@@ -105,20 +105,18 @@ function displayResults(risk, data) {
             const div = document.createElement('div');
             div.className = 'advice-section';
             
-            if (typeof advice[section] === 'object') {
-                // 处理新的对象格式
+            if (section === 'guidelines_notice') {
+                div.innerHTML = `
+                    <h4>${i18n[currentLang].guidelines_title}</h4>
+                    <div class="advice-content">
+                        <pre class="${riskLevel}">${advice[section]}</pre>
+                    </div>
+                `;
+            } else {
                 div.innerHTML = `
                     <h4>${advice[section].title}</h4>
                     <div class="advice-content">
                         <pre class="${riskLevel}">${advice[section].content}</pre>
-                    </div>
-                `;
-            } else {
-                // 处理普通字符串格式（如 guidelines_notice）
-                div.innerHTML = `
-                    <h4>${i18n[currentLang][section + '_title'] || section}</h4>
-                    <div class="advice-content">
-                        <pre class="${riskLevel}">${advice[section]}</pre>
                     </div>
                 `;
             }
@@ -131,6 +129,14 @@ function displayResults(risk, data) {
     resultDiv.appendChild(adviceContainer);
     resultDiv.classList.remove('hidden');
     resultDiv.scrollIntoView({ behavior: 'smooth' });
+
+    // 添加调试日志
+    console.log('Display results:', {
+        risk,
+        riskLevel,
+        sections: sections.filter(section => advice[section]),
+        advice
+    });
 }
 
 // 添加表单数据保持功能
@@ -463,7 +469,7 @@ function calculateRisk(data) {
             }
         } else { // African American
             if (sex === 'male') {
-                // 非���美国人男性
+                // 非美国人男性
                 sum = (2.469 * lnAge) +
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
