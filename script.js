@@ -83,26 +83,15 @@ function displayResults(risk, data) {
     const adviceContainer = document.createElement('div');
     adviceContainer.id = 'adviceContainer';
     
-    // 创建单一的建议区块
+    // 创建建议内容
     const adviceSection = document.createElement('div');
     adviceSection.className = 'advice-section';
     
     // 构建完整的建议内容
-    let adviceContent = `
-        <div class="${riskLevel}">
-            ${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}
-            
-            ${advice.guidelines_notice}
-            
-            ${advice.lifestyle.content}
-            
-            ${advice.bp.content}
-            
-            ${advice.lipids.content}
-            
-            ${data.diabetes === 'yes' && advice.diabetes ? advice.diabetes.content : ''}
-        </div>
-    `;
+    let adviceContent = `<div class="${riskLevel}">
+        ${advice.content}
+        ${data.diabetes === 'yes' ? advice.diabetes_addon : ''}
+    </div>`;
     
     adviceSection.innerHTML = adviceContent;
     adviceContainer.appendChild(adviceSection);
@@ -111,13 +100,6 @@ function displayResults(risk, data) {
     resultDiv.appendChild(adviceContainer);
     resultDiv.classList.remove('hidden');
     resultDiv.scrollIntoView({ behavior: 'smooth' });
-
-    // 添加调试日志
-    console.log('Display results:', {
-        risk,
-        riskLevel,
-        advice
-    });
 }
 
 // 添加表单数据保持功能
