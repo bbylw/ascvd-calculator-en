@@ -375,14 +375,14 @@ function calculateRisk(data) {
         // 根据2023 ACC/AHA指南更新的系数
         if (race === 'white' || race === 'asian' || race === 'other') {
             if (sex === 'male') {
-                // 白人/亚裔男性
+                // 白人/��裔男性
                 sum = (12.344 * lnAge) +
                       (11.853 * lnTotalChol) +
                       (-2.664 * lnAge * lnTotalChol) +
                       (-7.990 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
                       (1.797 * lnSBP) +
-                      (onBPMeds ? 1.797 : 0) +
+                      (onBPMeds ? 1.764 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
                       (-61.18);
@@ -408,7 +408,7 @@ function calculateRisk(data) {
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
                       (1.916 * lnSBP) +
-                      (onBPMeds ? 1.916 : 0) +
+                      (onBPMeds ? 1.809 : 0) +
                       (isSmoker ? 0.549 : 0) +
                       (hasDiabetes ? 0.645 : 0) +
                       (-19.54);
@@ -435,7 +435,7 @@ function calculateRisk(data) {
         // 确保结果在有效范围内（0-100%）
         const finalRisk = Math.min(Math.max(risk, 0), 100);
 
-        // 添加调试日志
+        // 添加详细的调试日志
         console.log('Risk calculation details:', {
             input: {
                 age, totalChol, hdl, systolic,
@@ -450,7 +450,13 @@ function calculateRisk(data) {
                 lnAge, lnTotalChol, lnHDL, lnSBP,
                 sum, S0,
                 risk, finalRisk,
-                bp_effect: onBPMeds ? 'Using BP medication coefficient' : 'Using base SBP coefficient'
+                bp_effect: {
+                    base_effect: lnSBP * (race === 'white' || race === 'asian' || race === 'other' ? 
+                        (sex === 'male' ? 1.797 : 2.019) : 
+                        (sex === 'male' ? 1.916 : 29.291)),
+                    age_interaction: race === 'aa' && sex === 'female' ? -6.432 * lnAge * lnSBP : 0,
+                    medication_effect: onBPMeds ? 'Applied' : 'Not applied'
+                }
             }
         });
 
