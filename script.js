@@ -382,7 +382,7 @@ function calculateRisk(data) {
                       (-7.990 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
                       (1.797 * lnSBP) +
-                      (onBPMeds ? 1.764 : 0) +
+                      (onBPMeds ? 1.797 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
                       (-61.18);
@@ -408,7 +408,7 @@ function calculateRisk(data) {
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
                       (1.916 * lnSBP) +
-                      (onBPMeds ? 1.809 : 0) +
+                      (onBPMeds ? 1.916 : 0) +
                       (isSmoker ? 0.549 : 0) +
                       (hasDiabetes ? 0.645 : 0) +
                       (-19.54);
@@ -449,7 +449,8 @@ function calculateRisk(data) {
             calculation: {
                 lnAge, lnTotalChol, lnHDL, lnSBP,
                 sum, S0,
-                risk, finalRisk
+                risk, finalRisk,
+                onBPMeds_effect: onBPMeds ? 'Applied BP medication coefficient' : 'No BP medication'
             }
         });
 
