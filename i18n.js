@@ -58,12 +58,12 @@ const i18n = {
         advice: {
             lowRisk: {
                 guidelines_notice: "Based on latest guidelines:\n" +
-                    "• 2023 ACC/AHA Prevention Guidelines\n" +
                     "• 2024 ADA Standards of Care\n" +
-                    "• 2021 ESC Prevention Guidelines",
+                    "• 2023 ACC/AHA Prevention Guidelines\n" +
+                    "• 2023 ACC/AHA Hypertension Guidelines",
                 lifestyle: {
                     title: "Lifestyle Management",
-                    content: "• Physical activity: 150+ min/week moderate or 75+ min/week vigorous\n" +
+                    content: "• Physical activity: 150-300 min/week moderate or 75-150 min/week vigorous\n" +
                         "• Mediterranean or DASH diet\n" +
                         "• Sodium <2300mg/day\n" +
                         "• BMI target: 18.5-24.9 kg/m²\n" +
@@ -72,62 +72,59 @@ const i18n = {
                 bp: {
                     title: "Blood Pressure Management",
                     content: "• Target: <130/80 mmHg\n" +
-                        "• First-line: ACEi/ARB, CCB, or thiazide\n" +
-                        "• Monitor every 3-6 months\n" +
-                        "• Home BP monitoring recommended"
+                        "• Lifestyle intervention focused\n" +
+                        "• Regular BP monitoring\n" +
+                        "• Follow-up every 3-6 months"
                 },
                 lipids: {
-                    title: "Lipid Management",
+                    title: "Lipids Management",
                     content: "• LDL-C target: <100 mg/dL (<2.6 mmol/L)\n" +
+                        "• Lifestyle intervention focused\n" +
                         "• Consider moderate-intensity statin\n" +
-                        "• Monitor lipids annually\n" +
-                        "• Non-HDL-C target: <130 mg/dL"
+                        "• Annual CV risk assessment"
                 },
                 diabetes: {
                     title: "Diabetes Management",
                     content: "• HbA1c target: <7.0%\n" +
+                        "• FPG: 4.4-7.2 mmol/L (80-130 mg/dL)\n" +
+                        "• PPG: <10.0 mmol/L (<180 mg/dL)\n" +
                         "• First-line: Metformin\n" +
-                        "• Consider early GLP-1 RA or SGLT2i\n" +
-                        "• Monitor HbA1c every 3-6 months\n" +
-                        "• Screen for complications annually"
+                        "• Monitor HbA1c every 3-6 months"
                 }
             },
             moderateRisk: {
                 guidelines_notice: "Based on latest guidelines:\n" +
-                    "• 2023 ACC/AHA Prevention Guidelines\n" +
                     "• 2024 ADA Standards of Care\n" +
-                    "• 2021 ESC Prevention Guidelines",
+                    "• 2023 ACC/AHA Prevention Guidelines\n" +
+                    "• 2023 ACC/AHA Hypertension Guidelines",
                 lifestyle: {
                     title: "Lifestyle Management",
-                    content: "• Physical activity: 150+ min/week moderate or 75+ min/week vigorous\n" +
-                        "• Mediterranean or DASH diet\n" +
+                    content: "• Physical activity: >300 min/week moderate or >150 min/week vigorous\n" +
+                        "• Strict Mediterranean or DASH diet\n" +
                         "• Sodium <2000mg/day\n" +
                         "• BMI target: 18.5-24.9 kg/m²\n" +
-                        "• Smoking cessation essential"
+                        "• Smoking cessation required"
                 },
                 bp: {
                     title: "Blood Pressure Management",
                     content: "• Target: <130/80 mmHg\n" +
                         "• Consider combination therapy\n" +
-                        "• First-line: ACEi/ARB + CCB or thiazide\n" +
-                        "• Monitor monthly until controlled\n" +
-                        "• Home BP monitoring essential"
+                        "• Regular BP monitoring\n" +
+                        "• Monthly follow-up"
                 },
                 lipids: {
-                    title: "Lipid Management",
+                    title: "Lipids Management",
                     content: "• LDL-C target: <70 mg/dL (<1.8 mmol/L)\n" +
                         "• Moderate to high-intensity statin\n" +
-                        "• Monitor every 4-6 months\n" +
-                        "• Consider non-statin if needed\n" +
-                        "• Non-HDL-C target: <100 mg/dL"
+                        "• Consider ezetimibe if needed\n" +
+                        "• Monitor every 3-6 months"
                 },
                 diabetes: {
                     title: "Diabetes Management",
                     content: "• HbA1c target: <7.0%\n" +
-                        "• First-line: Metformin + GLP-1 RA or SGLT2i\n" +
-                        "• Monitor HbA1c every 3 months\n" +
-                        "• Screen for complications biannually\n" +
-                        "• Consider ASCVD risk in medication choice"
+                        "• Consider early combination therapy\n" +
+                        "• GLP-1 RA or SGLT2i preferred\n" +
+                        "• Monitor HbA1c every 3 months"
                 }
             },
             highRisk: {

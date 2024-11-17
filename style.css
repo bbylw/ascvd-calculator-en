@@ -70,6 +70,8 @@ button:hover {
     margin-top: 2rem;
     padding: 1rem;
     border-top: 2px solid #eee;
+    max-width: 100%;
+    overflow-wrap: break-word;
 }
 
 #riskScore {
