@@ -88,8 +88,8 @@ function displayResults(risk, data) {
     riskExplanation.className = 'advice-section';
     riskExplanation.innerHTML = `
         <h4>${i18n[currentLang].result.levels[riskLevel.replace('Risk', '').toLowerCase()]}</h4>
-        <div class="advice-content ${riskLevel}">
-            ${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}
+        <div class="advice-content">
+            <pre class="${riskLevel}">${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}</pre>
         </div>
     `;
     adviceContainer.appendChild(riskExplanation);
@@ -107,19 +107,17 @@ function displayResults(risk, data) {
             
             // 处理不同类型的建议内容
             if (typeof advice[section] === 'object') {
-                // 新格式：包含 title 和 content 的对象
                 div.innerHTML = `
                     <h4>${advice[section].title}</h4>
-                    <div class="advice-content ${riskLevel}">
-                        ${advice[section].content}
+                    <div class="advice-content">
+                        <pre class="${riskLevel}">${advice[section].content}</pre>
                     </div>
                 `;
             } else {
-                // 旧格式：直接的字符串内容
                 div.innerHTML = `
                     <h4>${i18n[currentLang][section + '_title'] || section}</h4>
-                    <div class="advice-content ${riskLevel}">
-                        ${advice[section]}
+                    <div class="advice-content">
+                        <pre class="${riskLevel}">${advice[section]}</pre>
                     </div>
                 `;
             }
