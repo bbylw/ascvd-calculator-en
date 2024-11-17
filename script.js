@@ -61,11 +61,10 @@ function getNestedTranslation(obj, path) {
     }, obj);
 }
 
-// 修改显示结果函数
+// 修改建议显示函数
 function displayResults(risk, data) {
     const resultDiv = document.getElementById('result');
     const riskScoreSpan = document.getElementById('riskScore');
-    const riskLevelDiv = document.getElementById('riskLevel');
     
     // 清除之前的建议内容
     const oldAdvice = document.getElementById('adviceContainer');
@@ -76,14 +75,13 @@ function displayResults(risk, data) {
     // 显示风险分数
     riskScoreSpan.textContent = risk.toFixed(1);
     
-    // 获取风险等级
+    // 获取风险等级和建议
     const riskLevel = getRiskLevel(risk);
     const advice = getRiskAdvice(risk, data);
     
     // 创建建议容器
     const adviceContainer = document.createElement('div');
     adviceContainer.id = 'adviceContainer';
-    adviceContainer.className = `${riskLevel.toLowerCase()}-risk`; // 添加风险等级类名
     
     // 添加每条建议
     advice.adviceArray.forEach(item => {
@@ -96,7 +94,9 @@ function displayResults(risk, data) {
         const content = document.createElement('div');
         content.className = 'advice-content';
         
+        // 根据风险等级添加相应的类名
         const pre = document.createElement('pre');
+        pre.className = riskLevel.toLowerCase().replace('risk', '-risk');
         pre.textContent = item.content;
         
         content.appendChild(pre);
@@ -277,67 +277,62 @@ function handleUnitChange(field, unit) {
     }
 }
 
-// 修改风险建议函数
+// 修改获取建议函数
 function getRiskAdvice(risk, data) {
-    try {
-        const level = getRiskLevel(risk);
-        const advice = i18n[currentLang].advice[level];
-        const adviceArray = [];
+    const level = getRiskLevel(risk);
+    const advice = i18n[currentLang].advice[level];
+    const adviceArray = [];
 
-        // 添加风险等级说明
+    // 添加风险等级说明
+    adviceArray.push({
+        title: i18n[currentLang].result.levels[level.replace('Risk', '').toLowerCase()],
+        content: i18n[currentLang].risk_explanation[level.replace('Risk', '').toLowerCase()]
+    });
+
+    // 添加指南建议
+    if (advice.guidelines_notice) {
         adviceArray.push({
-            title: i18n[currentLang].result.levels[level.replace('Risk', '')],
-            content: i18n[currentLang].risk_explanation[level.replace('Risk', '')]
+            title: i18n[currentLang].guidelines_title,
+            content: advice.guidelines_notice
         });
-
-        // 添加指南建议
-        if (advice.guidelines_notice) {
-            adviceArray.push({
-                title: i18n[currentLang].guidelines_title,
-                content: advice.guidelines_notice
-            });
-        }
-
-        // 添加生活方式建议
-        if (advice.lifestyle) {
-            adviceArray.push({
-                title: i18n[currentLang].lifestyle_title,
-                content: advice.lifestyle
-            });
-        }
-
-        // 添加血压建议
-        if (advice.bp) {
-            adviceArray.push({
-                title: i18n[currentLang].bp_title,
-                content: advice.bp
-            });
-        }
-
-        // 添加血脂建议
-        if (advice.lipids) {
-            adviceArray.push({
-                title: i18n[currentLang].lipids_title,
-                content: advice.lipids
-            });
-        }
-
-        // 如果有糖尿病，添加糖尿病建议
-        if (data.diabetes === 'yes' && advice.diabetes) {
-            adviceArray.push({
-                title: i18n[currentLang].diabetes_title,
-                content: advice.diabetes
-            });
-        }
-
-        return {
-            level: level,
-            adviceArray: adviceArray
-        };
-    } catch (err) {
-        console.error('Error getting risk advice:', err);
-        throw new Error(i18n[currentLang].error.general);
     }
+
+    // 添加生活方式建议
+    if (advice.lifestyle) {
+        adviceArray.push({
+            title: i18n[currentLang].lifestyle_title,
+            content: advice.lifestyle
+        });
+    }
+
+    // 添加血压建议
+    if (advice.bp) {
+        adviceArray.push({
+            title: i18n[currentLang].bp_title,
+            content: advice.bp
+        });
+    }
+
+    // 添加血脂建议
+    if (advice.lipids) {
+        adviceArray.push({
+            title: i18n[currentLang].lipids_title,
+            content: advice.lipids
+        });
+    }
+
+    // 如果有糖尿病，添加糖尿病建议
+    if (data.diabetes === 'yes' && advice.diabetes) {
+        adviceArray.push({
+            title: i18n[currentLang].diabetes_title,
+            content: advice.diabetes
+        });
+    }
+
+    return {
+        level: level,
+        adviceArray: adviceArray
+    };
 }
 
 // 修改风险计算函数
