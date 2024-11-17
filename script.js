@@ -65,7 +65,6 @@ function getNestedTranslation(obj, path) {
 function displayResults(risk, data) {
     const resultDiv = document.getElementById('result');
     const riskScoreSpan = document.getElementById('riskScore');
-    const riskLevelDiv = document.getElementById('riskLevel');
     
     // 清除之前的建议内容
     const oldAdvice = document.getElementById('adviceContainer');
@@ -78,7 +77,7 @@ function displayResults(risk, data) {
     
     // 获取风险等级和建议
     const riskLevel = getRiskLevel(risk);
-    const advice = getRiskAdvice(risk, data);
+    const advice = i18n[currentLang].advice[riskLevel];
     
     // 创建建议容器
     const adviceContainer = document.createElement('div');
@@ -95,24 +94,24 @@ function displayResults(risk, data) {
     `;
     adviceContainer.appendChild(riskExplanation);
     
-    // 添加其他建议
-    advice.adviceArray.forEach(item => {
-        const section = document.createElement('div');
-        section.className = `advice-section ${riskLevel.toLowerCase()}`;
-        
-        const title = document.createElement('h4');
-        title.textContent = item.title;
-        
-        const content = document.createElement('div');
-        content.className = 'advice-content';
-        
-        const pre = document.createElement('pre');
-        pre.textContent = item.content;
-        
-        content.appendChild(pre);
-        section.appendChild(title);
-        section.appendChild(content);
-        adviceContainer.appendChild(section);
+    // 添加医学建议
+    const sections = ['guidelines_notice', 'lifestyle', 'bp', 'lipids'];
+    if (data.diabetes === 'yes') {
+        sections.push('diabetes');
+    }
+
+    sections.forEach(section => {
+        if (advice[section]) {
+            const div = document.createElement('div');
+            div.className = `advice-section ${riskLevel.toLowerCase()}`;
+            div.innerHTML = `
+                <h4>${i18n[currentLang][section + '_title'] || section}</h4>
+                <div class="advice-content">
+                    <pre>${advice[section]}</pre>
+                </div>
+            `;
+            adviceContainer.appendChild(div);
+        }
     });
     
     // 添加建议到结果区域
