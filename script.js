@@ -83,98 +83,41 @@ function displayResults(risk, data) {
     const adviceContainer = document.createElement('div');
     adviceContainer.id = 'adviceContainer';
     
-    // 添加风险等级说明
-    const riskExplanation = document.createElement('div');
-    riskExplanation.className = 'advice-section';
-    riskExplanation.innerHTML = `
-        <h4>${i18n[currentLang].result.levels[riskLevel.replace('Risk', '').toLowerCase()]}</h4>
-        <div class="advice-content">
-            <div class="${riskLevel}">
-                ${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}
-            </div>
+    // 创建单一的建议区块
+    const adviceSection = document.createElement('div');
+    adviceSection.className = 'advice-section';
+    
+    // 构建完整的建议内容
+    let adviceContent = `
+        <div class="${riskLevel}">
+            ${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}
+            
+            ${advice.guidelines_notice}
+            
+            ${advice.lifestyle.content}
+            
+            ${advice.bp.content}
+            
+            ${advice.lipids.content}
+            
+            ${data.diabetes === 'yes' && advice.diabetes ? advice.diabetes.content : ''}
         </div>
     `;
-    adviceContainer.appendChild(riskExplanation);
-
-    // 添加指南说明
-    if (advice.guidelines_notice) {
-        const guidelinesDiv = document.createElement('div');
-        guidelinesDiv.className = 'advice-section';
-        guidelinesDiv.innerHTML = `
-            <h4>${i18n[currentLang].guidelines_title}</h4>
-            <div class="advice-content">
-                <div class="${riskLevel}">
-                    ${advice.guidelines_notice.replace(/\n/g, '<br>')}
-                </div>
-            </div>
-        `;
-        adviceContainer.appendChild(guidelinesDiv);
-    }
-
-    // 添加生活方式建议
-    if (advice.lifestyle) {
-        const lifestyleDiv = document.createElement('div');
-        lifestyleDiv.className = 'advice-section';
-        lifestyleDiv.innerHTML = `
-            <h4>${advice.lifestyle.title}</h4>
-            <div class="advice-content">
-                <div class="${riskLevel}">
-                    ${advice.lifestyle.content.replace(/\n/g, '<br>')}
-                </div>
-            </div>
-        `;
-        adviceContainer.appendChild(lifestyleDiv);
-    }
-
-    // 添加血压建议
-    if (advice.bp) {
-        const bpDiv = document.createElement('div');
-        bpDiv.className = 'advice-section';
-        bpDiv.innerHTML = `
-            <h4>${advice.bp.title}</h4>
-            <div class="advice-content">
-                <div class="${riskLevel}">
-                    ${advice.bp.content.replace(/\n/g, '<br>')}
-                </div>
-            </div>
-        `;
-        adviceContainer.appendChild(bpDiv);
-    }
-
-    // 添加血脂建议
-    if (advice.lipids) {
-        const lipidsDiv = document.createElement('div');
-        lipidsDiv.className = 'advice-section';
-        lipidsDiv.innerHTML = `
-            <h4>${advice.lipids.title}</h4>
-            <div class="advice-content">
-                <div class="${riskLevel}">
-                    ${advice.lipids.content.replace(/\n/g, '<br>')}
-                </div>
-            </div>
-        `;
-        adviceContainer.appendChild(lipidsDiv);
-    }
-
-    // 如果有糖尿病，添加糖尿病建议
-    if (data.diabetes === 'yes' && advice.diabetes) {
-        const diabetesDiv = document.createElement('div');
-        diabetesDiv.className = 'advice-section';
-        diabetesDiv.innerHTML = `
-            <h4>${advice.diabetes.title}</h4>
-            <div class="advice-content">
-                <div class="${riskLevel}">
-                    ${advice.diabetes.content.replace(/\n/g, '<br>')}
-                </div>
-            </div>
-        `;
-        adviceContainer.appendChild(diabetesDiv);
-    }
+    
+    adviceSection.innerHTML = adviceContent;
+    adviceContainer.appendChild(adviceSection);
     
     // 添加建议到结果区域
     resultDiv.appendChild(adviceContainer);
     resultDiv.classList.remove('hidden');
     resultDiv.scrollIntoView({ behavior: 'smooth' });
+
+    // 添加调试日志
+    console.log('Display results:', {
+        risk,
+        riskLevel,
+        advice
+    });
 }
 
 // 添加表单数据保持功能
