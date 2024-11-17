@@ -85,13 +85,11 @@ function displayResults(risk, data) {
     
     // 添加风险等级说明
     const riskExplanation = document.createElement('div');
-    riskExplanation.className = `advice-section`;
+    riskExplanation.className = 'advice-section';
     riskExplanation.innerHTML = `
         <h4>${i18n[currentLang].result.levels[riskLevel.replace('Risk', '').toLowerCase()]}</h4>
-        <div class="advice-content">
-            <div class="${riskLevel}">
-                ${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}
-            </div>
+        <div class="advice-content ${riskLevel}">
+            ${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}
         </div>
     `;
     adviceContainer.appendChild(riskExplanation);
@@ -106,35 +104,34 @@ function displayResults(risk, data) {
         if (advice[section]) {
             const div = document.createElement('div');
             div.className = 'advice-section';
-            div.innerHTML = `
-                <h4>${i18n[currentLang][section + '_title'] || section}</h4>
-                <div class="advice-content">
-                    <div class="${riskLevel}">
+            
+            // 处理不同类型的建议内容
+            if (typeof advice[section] === 'object') {
+                // 新格式：包含 title 和 content 的对象
+                div.innerHTML = `
+                    <h4>${advice[section].title}</h4>
+                    <div class="advice-content ${riskLevel}">
+                        ${advice[section].content}
+                    </div>
+                `;
+            } else {
+                // 旧格式：直接的字符串内容
+                div.innerHTML = `
+                    <h4>${i18n[currentLang][section + '_title'] || section}</h4>
+                    <div class="advice-content ${riskLevel}">
                         ${advice[section]}
                     </div>
-                </div>
-            `;
+                `;
+            }
+            
             adviceContainer.appendChild(div);
         }
     });
     
-    // 添加建议到结果区域并滚动到结果
+    // 添加建议到结果区域
     resultDiv.appendChild(adviceContainer);
     resultDiv.classList.remove('hidden');
-    
-    // 平滑滚动到结果区域
-    resultDiv.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start'
-    });
-
-    // 添加调试日志
-    console.log('Risk assessment details:', {
-        calculatedRisk: risk,
-        riskLevel: riskLevel,
-        patientData: data,
-        adviceSections: sections.filter(section => advice[section])
-    });
+    resultDiv.scrollIntoView({ behavior: 'smooth' });
 }
 
 // 添加表单数据保持功能
