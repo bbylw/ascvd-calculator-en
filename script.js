@@ -162,35 +162,140 @@ document.addEventListener('DOMContentLoaded', () => {
     initLanguageSelector();
 });
 
-// 修改表单提交处理
+// 修改表单提交处理函数
 document.getElementById('riskForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     try {
-        // 收集表单数据
-        const data = {
-            age: document.getElementById('age').value,
+        // 获取并验证所有表单数据
+        const formData = {
+            age: parseFloat(document.getElementById('age').value),
             sex: document.getElementById('sex').value,
             race: document.getElementById('race').value,
-            totalChol: document.getElementById('totalChol').value,
-            hdl: document.getElementById('hdl').value,
-            systolic: document.getElementById('systolic').value,
-            bpTreat: document.querySelector('input[name="bpTreat"]:checked').value,
-            diabetes: document.querySelector('input[name="diabetes"]:checked').value,
-            smoker: document.querySelector('input[name="smoker"]:checked').value
+            totalChol: parseFloat(document.getElementById('totalChol').value),
+            hdl: parseFloat(document.getElementById('hdl').value),
+            systolic: parseFloat(document.getElementById('systolic').value),
+            smoker: document.querySelector('input[name="smoker"]:checked')?.value || 'no',
+            diabetes: document.querySelector('input[name="diabetes"]:checked')?.value || 'no',
+            bpTreat: document.querySelector('input[name="bpTreat"]:checked')?.value || 'no'
         };
-        
+
         // 验证数据
-        if (!validateData(data)) {
+        if (!validateData(formData)) {
             alert(i18n[currentLang].validation.error);
             return;
         }
-        
+
         // 计算风险
-        const risk = calculateRisk(data);
-        displayResult(risk, data);
+        const risk = calculateRisk(formData);
+        
+        // 显示结果
+        const resultDiv = document.getElementById('result');
+        const riskScoreSpan = document.getElementById('riskScore');
+        const riskLevelDiv = document.getElementById('riskLevel');
+        
+        // 清除之前的建议内容
+        const oldAdvice = document.getElementById('adviceContainer');
+        if (oldAdvice) {
+            oldAdvice.remove();
+        }
+
+        // 显示风险分数
+        riskScoreSpan.textContent = risk.toFixed(1);
+        
+        // 获取建议
+        const riskLevel = getRiskLevel(risk);
+        const advice = i18n[currentLang].advice[riskLevel];
+        
+        // 创建建议容器
+        const adviceContainer = document.createElement('div');
+        adviceContainer.id = 'adviceContainer';
+        
+        // 添加风险等级说明
+        if (i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '')]) {
+            const riskExplanation = document.createElement('div');
+            riskExplanation.className = 'advice-section';
+            riskExplanation.innerHTML = `
+                <h4>${i18n[currentLang].result.levels[riskLevel.replace('Risk', '')]}</h4>
+                <div class="advice-content">
+                    <pre>${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '')]}</pre>
+                </div>
+            `;
+            adviceContainer.appendChild(riskExplanation);
+        }
+
+        // 添加指南建议
+        if (advice.guidelines_notice) {
+            const guidelines = document.createElement('div');
+            guidelines.className = 'advice-section';
+            guidelines.innerHTML = `
+                <h4>${i18n[currentLang].guidelines_title}</h4>
+                <div class="advice-content">
+                    <pre>${advice.guidelines_notice}</pre>
+                </div>
+            `;
+            adviceContainer.appendChild(guidelines);
+        }
+
+        // 添加生活方式建议
+        if (advice.lifestyle) {
+            const lifestyle = document.createElement('div');
+            lifestyle.className = 'advice-section';
+            lifestyle.innerHTML = `
+                <h4>${i18n[currentLang].lifestyle_title}</h4>
+                <div class="advice-content">
+                    <pre>${advice.lifestyle}</pre>
+                </div>
+            `;
+            adviceContainer.appendChild(lifestyle);
+        }
+
+        // 添加血压管理建议
+        if (advice.bp) {
+            const bp = document.createElement('div');
+            bp.className = 'advice-section';
+            bp.innerHTML = `
+                <h4>${i18n[currentLang].bp_title}</h4>
+                <div class="advice-content">
+                    <pre>${advice.bp}</pre>
+                </div>
+            `;
+            adviceContainer.appendChild(bp);
+        }
+
+        // 添加血脂管理建议
+        if (advice.lipids) {
+            const lipids = document.createElement('div');
+            lipids.className = 'advice-section';
+            lipids.innerHTML = `
+                <h4>${i18n[currentLang].lipids_title}</h4>
+                <div class="advice-content">
+                    <pre>${advice.lipids}</pre>
+                </div>
+            `;
+            adviceContainer.appendChild(lipids);
+        }
+
+        // 如果有糖尿病，添加血糖管理建议
+        if (formData.diabetes === 'yes' && advice.diabetes) {
+            const diabetes = document.createElement('div');
+            diabetes.className = 'advice-section';
+            diabetes.innerHTML = `
+                <h4>${i18n[currentLang].diabetes_title}</h4>
+                <div class="advice-content">
+                    <pre>${advice.diabetes}</pre>
+                </div>
+            `;
+            adviceContainer.appendChild(diabetes);
+        }
+
+        // 添加建议到结果区域
+        resultDiv.appendChild(adviceContainer);
+        resultDiv.classList.remove('hidden');
+        resultDiv.scrollIntoView({ behavior: 'smooth' });
+
     } catch (err) {
-        console.error('Form submission error:', err);
+        console.error('计算风险时出错:', err);
         alert(i18n[currentLang].error.general);
     }
 });
