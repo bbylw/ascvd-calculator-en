@@ -1,4 +1,5 @@
 let currentLang = 'en';
+let refreshing = false;
 
 // 语言切换功能
 function initLanguageSelector() {
@@ -145,6 +146,12 @@ function restoreFormData() {
 document.addEventListener('DOMContentLoaded', () => {
     initLanguageSelector();
     restoreFormData();
+    
+    // 添加更新检查
+    handleServiceWorkerUpdate();
+    
+    // 定期检查更新（每小时）
+    setInterval(checkForUpdates, 3600000);
 });
 
 // 在表单输入时保存数据
@@ -536,4 +543,69 @@ const coefficients = {
             meanSum: 86.61
         }
     }
-}; 
+};
+
+// 检查更新函数
+function checkForUpdates() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then(registration => {
+            registration.update();
+        });
+    }
+}
+
+// 处理 Service Worker 更新
+function handleServiceWorkerUpdate() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then(registration => {
+            registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        // 显示更新提示
+                        showUpdateNotification();
+                    }
+                });
+            });
+        });
+
+        // 处理控制权变更
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+                refreshing = true;
+                window.location.reload();
+            }
+        });
+    }
+}
+
+// 显示更新提示
+function showUpdateNotification() {
+    const notification = document.createElement('div');
+    notification.className = 'update-notification';
+    notification.innerHTML = `
+        <p>新版本可用！</p>
+        <button onclick="updateServiceWorker()">立即更新</button>
+    `;
+    document.body.appendChild(notification);
+}
+
+// 更新 Service Worker
+function updateServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then(registration => {
+            registration.waiting.postMessage('skipWaiting');
+        });
+    }
+}
+
+// 在页面加载时初始化
+document.addEventListener('DOMContentLoaded', () => {
+    // ... 现有的初始化代码 ...
+    
+    // 添加更新检查
+    handleServiceWorkerUpdate();
+    
+    // 定期检查更新（每小时）
+    setInterval(checkForUpdates, 3600000);
+}); 
