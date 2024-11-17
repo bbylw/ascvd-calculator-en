@@ -388,7 +388,7 @@ function calculateRisk(data) {
                       (hasDiabetes ? 0.658 : 0) +
                       (-29.799);
                 S0 = 0.9144;
-                meanCoeffSum = 61.18;
+                meanCoeffSum = -29.18;  // 修正系数
             } else {
                 // 白人女性
                 sum = (-29.799 * lnAge) +
@@ -402,7 +402,7 @@ function calculateRisk(data) {
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
                       (hasDiabetes ? 0.661 : 0);
                 S0 = 0.9665;
-                meanCoeffSum = 86.61;
+                meanCoeffSum = -29.18;  // 修正系数
             }
         } else { // African American
             if (sex === 'male') {
@@ -413,10 +413,9 @@ function calculateRisk(data) {
                       (1.916 * lnSBP) +
                       (onBPMeds ? 1.809 : 0) +
                       (isSmoker ? 0.549 : 0) +
-                      (hasDiabetes ? 0.645 : 0) +
-                      (-19.54);
+                      (hasDiabetes ? 0.645 : 0);
                 S0 = 0.8954;
-                meanCoeffSum = 19.54;
+                meanCoeffSum = 86.61;  // 修正系数
             } else {
                 // 非裔美国人女性
                 sum = (17.114 * lnAge) +
@@ -427,16 +426,14 @@ function calculateRisk(data) {
                       (-6.432 * lnAge * lnSBP) +
                       (onBPMeds ? 29.291 - 6.432 * lnAge : 0) +
                       (isSmoker ? 0.691 : 0) +
-                      (hasDiabetes ? 0.874 : 0) +
-                      (-86.61);
+                      (hasDiabetes ? 0.874 : 0);
                 S0 = 0.9533;
-                meanCoeffSum = 86.61;
+                meanCoeffSum = 86.61;  // 修正系数
             }
         }
 
         // 计算10年风险
-        const indX = sum - meanCoeffSum;
-        const risk = (1 - Math.pow(S0, Math.exp(indX))) * 100;
+        const risk = (1 - Math.pow(S0, Math.exp(sum - meanCoeffSum))) * 100;
         
         // 确保结果在有效范围内（0-100%）
         const finalRisk = Math.min(Math.max(risk, 0), 100);
@@ -454,7 +451,7 @@ function calculateRisk(data) {
             },
             calculation: {
                 lnAge, lnTotalChol, lnHDL, lnSBP,
-                sum, S0, meanCoeffSum, indX,
+                sum, S0, meanCoeffSum,
                 risk, finalRisk
             }
         });
