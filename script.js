@@ -699,21 +699,12 @@ function getRiskLevel(risk) {
 }
 
 function displayAdvice(advice, container) {
-    // 添加循证医学证据级别说明
-    const legend = document.createElement('div');
-    legend.className = 'evidence-legend';
-    legend.innerHTML = `
-        <span class="evidence-level-1">■ 一级证据：来自多个随机对照试验或荟萃分析</span>
-        <span class="evidence-level-2">■ 二级证据：来自单个随机对照试验或大型观察性研究</span>
-        <span class="evidence-level-3">■ 三级证据：来自专家共识或小型研究</span>
-    `;
-
-    // 处理建议内容，替换循证级别标记为HTML类
+    // 处理建议内容，替换风险等级标记为HTML类
     const content = advice.content
-        .replace(/<level-1>/g, '<span class="evidence-level-1">')
-        .replace(/<level-2>/g, '<span class="evidence-level-2">')
-        .replace(/<level-3>/g, '<span class="evidence-level-3">')
-        .replace(/<\/level-\d>/g, '</span>');
+        .replace(/<low-risk>/g, '<span class="low-risk">')
+        .replace(/<moderate-risk>/g, '<span class="moderate-risk">')
+        .replace(/<high-risk>/g, '<span class="high-risk">')
+        .replace(/<\/(low|moderate|high)-risk>/g, '</span>');
 
     const section = document.createElement('div');
     section.className = 'advice-section';
@@ -725,5 +716,4 @@ function displayAdvice(advice, container) {
     `;
 
     container.appendChild(section);
-    container.appendChild(legend);
 } 

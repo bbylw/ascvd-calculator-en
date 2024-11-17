@@ -317,4 +317,32 @@ pre {
 .evidence-legend span {
     display: block;
     margin: 2px 0;
+}
+
+/* 风险等级样式 */
+.advice-content .low-risk {
+    color: #0f5132;  /* 深绿色 */
+    background-color: #d1e7dd;  /* 浅绿色背景 */
+    padding: 8px;
+    border-radius: 4px;
+    display: block;
+    margin: 4px 0;
+}
+
+.advice-content .moderate-risk {
+    color: #664d03;  /* 深黄色 */
+    background-color: #fff3cd;  /* 浅黄色背景 */
+    padding: 8px;
+    border-radius: 4px;
+    display: block;
+    margin: 4px 0;
+}
+
+.advice-content .high-risk {
+    color: #842029;  /* 深红色 */
+    background-color: #f8d7da;  /* 浅红色背景 */
+    padding: 8px;
+    border-radius: 4px;
+    display: block;
+    margin: 4px 0;
 } 
