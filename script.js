@@ -150,8 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 添加更新检查
     handleServiceWorkerUpdate();
     
-    // 定期检查更新（每小时）
-    setInterval(checkForUpdates, 3600000);
+    // 更频繁地检查更新（每15分钟）
+    setInterval(checkForUpdates, 900000);
 });
 
 // 在表单输入时保存数据
@@ -549,7 +549,13 @@ const coefficients = {
 function checkForUpdates() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.ready.then(registration => {
-            registration.update();
+            registration.update()
+                .then(() => {
+                    console.log('Service Worker 更新检查完成');
+                })
+                .catch(err => {
+                    console.error('Service Worker 更新检查失败:', err);
+                });
         });
     }
 }
@@ -557,19 +563,28 @@ function checkForUpdates() {
 // 处理 Service Worker 更新
 function handleServiceWorkerUpdate() {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.ready.then(registration => {
-            registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-                newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                        // 显示更新提示
-                        showUpdateNotification();
-                    }
+        // 注册 Service Worker
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                // 监听更新
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            showUpdateNotification();
+                        }
+                    });
                 });
-            });
-        });
 
-        // 处理控制权变更
+                // 立即检查更新
+                registration.update();
+            })
+            .catch(err => {
+                console.error('Service Worker 注册失败:', err);
+            });
+
+        // 监听控制权变更
+        let refreshing = false;
         navigator.serviceWorker.addEventListener('controllerchange', () => {
             if (!refreshing) {
                 refreshing = true;
@@ -594,18 +609,9 @@ function showUpdateNotification() {
 function updateServiceWorker() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.ready.then(registration => {
-            registration.waiting.postMessage('skipWaiting');
+            if (registration.waiting) {
+                registration.waiting.postMessage('skipWaiting');
+            }
         });
     }
-}
-
-// 在页面加载时初始化
-document.addEventListener('DOMContentLoaded', () => {
-    // ... 现有的初始化代码 ...
-    
-    // 添加更新检查
-    handleServiceWorkerUpdate();
-    
-    // 定期检查更新（每小时）
-    setInterval(checkForUpdates, 3600000);
-}); 
+} 
