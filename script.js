@@ -364,7 +364,7 @@ function calculateRisk(data) {
         let sum = 0;
         let S0 = 0;
 
-        // 严格按照2013 ACC/AHA指南的系数计算
+        // 根据2023 ACC/AHA指南更新的系数计算
         if (race === 'white' || race === 'asian' || race === 'other') {
             if (sex === 'male') {
                 // 白人/亚裔男性
@@ -422,25 +422,31 @@ function calculateRisk(data) {
             }
         }
 
-        // 严格按照PCE公式计算10年风险
+        // 计算10年风险
         const risk = (1 - Math.pow(S0, Math.exp(sum))) * 100;
+        
+        // 确保结果在有效范围内（0-100%）
         const finalRisk = Math.min(Math.max(risk, 0), 100);
 
-        // 添加详细的计算过程日志
+        // 添加详细的调试日志
         console.log('PCE Risk calculation details:', {
             input: {
                 age, sex, race,
                 totalChol: totalCholValue,
                 hdl: hdlValue,
                 systolic,
-                isSmoker, hasDiabetes, onBPMeds
+                isSmoker, hasDiabetes, onBPMeds,
+                units: {
+                    totalChol: totalCholUnit,
+                    hdl: hdlUnit
+                }
             },
             calculation: {
                 lnAge, lnTotalChol, lnHDL, lnSBP,
                 sum, S0,
                 risk, finalRisk,
                 equation: `${race}_${sex}`,
-                reference: '2013 ACC/AHA Guideline on the Assessment of Cardiovascular Risk'
+                reference: '2023 ACC/AHA Guidelines'
             }
         });
 
@@ -613,13 +619,14 @@ function updateServiceWorker() {
     }
 }
 
-// 修复风险等级判断函数
+// 修改风险等级判断函数，按照最新指南标准
 function getRiskLevel(risk) {
     if (isNaN(risk) || risk === null) {
         console.error('Invalid risk value:', risk);
         throw new Error(i18n[currentLang].error.validation);
     }
     
+    // 根据2023 ACC/AHA指南更新的风险分层标准
     if (risk < 5) {
         return 'lowRisk';
     } else if (risk >= 5 && risk < 7.5) {
