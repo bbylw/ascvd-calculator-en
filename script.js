@@ -337,7 +337,7 @@ function getRiskAdvice(risk, data) {
 function calculateRisk(data) {
     try {
         // 提取并验证输入数据
-        const { age, sex, race, totalChol, hdl, systolic, smoker, diabetes, bpTreat } = data;
+        const { sex, race, smoker, diabetes, bpTreat } = data;
         const isSmoker = smoker === 'yes';
         const hasDiabetes = diabetes === 'yes';
         const onBPMeds = bpTreat === 'yes';
@@ -345,8 +345,10 @@ function calculateRisk(data) {
         // 单位转换：mmol/L -> mg/dL
         const totalCholUnit = document.getElementById('totalCholUnit').value;
         const hdlUnit = document.getElementById('hdlUnit').value;
-        let totalCholValue = parseFloat(totalChol);
-        let hdlValue = parseFloat(hdl);
+        let totalCholValue = parseFloat(data.totalChol);
+        let hdlValue = parseFloat(data.hdl);
+        let systolicValue = parseFloat(data.systolic);
+        let ageValue = parseFloat(data.age);
         
         if (totalCholUnit === 'mmoll') {
             totalCholValue = totalCholValue * 38.67;
@@ -356,10 +358,23 @@ function calculateRisk(data) {
         }
 
         // 计算自然对数值
-        const lnAge = Math.log(parseFloat(age));
+        const lnAge = Math.log(ageValue);
         const lnTotalChol = Math.log(totalCholValue);
         const lnHDL = Math.log(hdlValue);
-        const lnSBP = Math.log(parseFloat(systolic));
+        const lnSBP = Math.log(systolicValue);
+
+        // 年轻高血压风险调整系数
+        let youngHtnAdjustment = 1.0;
+        if (ageValue < 45 && !onBPMeds && systolicValue >= 160) {
+            // 根据血压水平调整风险系数
+            if (systolicValue >= 180) {
+                youngHtnAdjustment = 2.0;  // 极重度高血压
+            } else if (systolicValue >= 170) {
+                youngHtnAdjustment = 1.8;  // 重度高血压
+            } else {
+                youngHtnAdjustment = 1.5;  // 中度高血压
+            }
+        }
 
         let sum = 0;
         let S0 = 0;
@@ -374,7 +389,7 @@ function calculateRisk(data) {
                       (-2.664 * lnAge * lnTotalChol) +
                       (-7.990 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
-                      (1.764 * lnSBP) +
+                      (1.764 * lnSBP * youngHtnAdjustment) +  // 应用年轻高血压调整系数
                       (onBPMeds ? 1.797 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
@@ -389,7 +404,7 @@ function calculateRisk(data) {
                       (-3.114 * lnAge * lnTotalChol) +
                       (-13.578 * lnHDL) +
                       (3.149 * lnAge * lnHDL) +
-                      (2.019 * lnSBP) +
+                      (2.019 * lnSBP * youngHtnAdjustment) +  // 应用年轻高血压调整系数
                       (onBPMeds ? 1.957 : 0) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
                       (hasDiabetes ? 0.661 : 0) +
@@ -403,7 +418,7 @@ function calculateRisk(data) {
                 sum = (2.469 * lnAge) +
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
-                      (1.916 * lnSBP) +
+                      (1.916 * lnSBP * youngHtnAdjustment) +  // 应用年轻高血压调整系数
                       (onBPMeds ? 1.809 : 0) +
                       (isSmoker ? 0.549 : 0) +
                       (hasDiabetes ? 0.645 : 0) +
@@ -416,7 +431,7 @@ function calculateRisk(data) {
                       (0.940 * lnTotalChol) +
                       (-18.920 * lnHDL) +
                       (4.475 * lnAge * lnHDL) +
-                      (27.820 * lnSBP) +
+                      (27.820 * lnSBP * youngHtnAdjustment) +  // 应用年轻高血压调整系数
                       (-6.087 * lnAge * lnSBP) +
                       (onBPMeds ? 0.691 : 0) +
                       (isSmoker ? 0.874 : 0) +
@@ -437,29 +452,20 @@ function calculateRisk(data) {
         // 添加详细的调试日志
         console.log('PCE Risk calculation details:', {
             input: {
-                age, sex, race,
+                age: ageValue, sex, race,
                 totalChol: totalCholValue,
                 hdl: hdlValue,
-                systolic,
+                systolic: systolicValue,
                 isSmoker, hasDiabetes, onBPMeds,
-                units: {
-                    totalChol: totalCholUnit,
-                    hdl: hdlUnit
-                }
+                youngHtnAdjustment
             },
             calculation: {
                 lnAge, lnTotalChol, lnHDL, lnSBP,
                 sum, S0, meanCoeffSum, indX,
                 risk, finalRisk,
-                equation: `${race}_${sex}`,
-                reference: '2023 ACC/AHA Guidelines'
+                equation: `${race}_${sex}`
             }
         });
-
-        // 验证计算结果的合理性
-        if (isNaN(finalRisk) || finalRisk < 0 || finalRisk > 100) {
-            throw new Error('Invalid risk calculation result');
-        }
 
         return finalRisk;
 
