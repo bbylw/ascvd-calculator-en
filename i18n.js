@@ -61,38 +61,34 @@ const i18n = {
                     "• ADA (American Diabetes Association) Annual Standards\n" +
                     "• ACC/AHA Cardiovascular Disease Prevention Guidelines\n" +
                     "• ESC Cardiovascular Disease Prevention Guidelines",
-
                 lifestyle: {
                     title: "Lifestyle Recommendations",
-                    content: "- 每周150-300分钟中等强度运动\n" +
-                        "- 遵循地中海饮食或DASH饮食\n" +
-                        "- 限制钠摄入（<2300mg/日）\n" +
-                        "- 戒烟限酒"
+                    content: "- Weekly exercise: 150-300 minutes moderate intensity\n" +
+                        "- Follow Mediterranean or DASH diet\n" +
+                        "- Limit sodium intake (<2300mg/day)\n" +
+                        "- Quit smoking and limit alcohol"
                 },
-
                 bp: {
                     title: "Blood Pressure Management",
-                    content: "- 目标血压 <130/80 mmHg\n" +
-                        "- 定期监测血压\n" +
-                        "- 必要时考虑药物治疗\n" +
-                        "- 每3-6个月随访"
+                    content: "- Target BP <130/80 mmHg\n" +
+                        "- Regular BP monitoring\n" +
+                        "- Consider medication if needed\n" +
+                        "- Follow-up every 3-6 months"
                 },
-
                 lipids: {
                     title: "Lipid Management",
-                    content: "- LDL-C目标值 <2.6 mmol/L (100 mg/dL)\n" +
-                        "- 考虑他汀类药物\n" +
-                        "- 定期监测血脂\n" +
-                        "- 每年评估心血管风险"
+                    content: "- Target LDL-C <100 mg/dL (2.6 mmol/L)\n" +
+                        "- Consider statin therapy\n" +
+                        "- Regular lipid monitoring\n" +
+                        "- Annual cardiovascular risk assessment"
                 },
-
                 diabetes: {
                     title: "Diabetes Management",
-                    content: "- HbA1c目标 <7.0%\n" +
-                        "- 空腹血糖 4.4-7.0 mmol/L\n" +
-                        "- 餐后2小时血糖 <10.0 mmol/L\n" +
-                        "- 考虑二甲双胍\n" +
-                        "- 每3-6个月监测HbA1c"
+                    content: "- Target HbA1c <7.0%\n" +
+                        "- Fasting glucose 4.4-7.0 mmol/L\n" +
+                        "- 2h postprandial glucose <10.0 mmol/L\n" +
+                        "- Consider metformin\n" +
+                        "- Monitor HbA1c every 3-6 months"
                 }
             },
             moderateRisk: {
@@ -276,7 +272,6 @@ const i18n = {
                     "• 美国糖尿病协会(ADA)年度标准更新\n" +
                     "• 美国心脏病学会(ACC/AHA)心血管疾病预防指南\n" +
                     "• 欧洲心脏病学会(ESC)心血管疾病预防指南",
-
                 lifestyle: {
                     title: "生活方式建议",
                     content: "- 每周150-300分钟中等强度运动\n" +
@@ -284,7 +279,6 @@ const i18n = {
                         "- 限制钠摄入（<2300mg/日）\n" +
                         "- 戒烟限酒"
                 },
-
                 bp: {
                     title: "血压管理",
                     content: "- 目标血压 <130/80 mmHg\n" +
@@ -292,15 +286,13 @@ const i18n = {
                         "- 必要时考虑药物治疗\n" +
                         "- 每3-6个月随访"
                 },
-
                 lipids: {
                     title: "血脂管理",
-                    content: "- LDL-C目标值 <2.6 mmol/L (100 mg/dL)\n" +
+                    content: "- LDL-C目标值 <100 mg/dL (2.6 mmol/L)\n" +
                         "- 考虑他汀类药物\n" +
                         "- 定期监测血脂\n" +
                         "- 每年评估心血管风险"
                 },
-
                 diabetes: {
                     title: "血糖管理",
                     content: "- HbA1c目标 <7.0%\n" +

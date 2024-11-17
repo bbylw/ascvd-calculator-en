@@ -89,7 +89,9 @@ function displayResults(risk, data) {
     riskExplanation.innerHTML = `
         <h4>${i18n[currentLang].result.levels[riskLevel.replace('Risk', '').toLowerCase()]}</h4>
         <div class="advice-content">
-            <pre class="${riskLevel}">${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}</pre>
+            <div class="${riskLevel}">
+                ${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}
+            </div>
         </div>
     `;
     adviceContainer.appendChild(riskExplanation);
@@ -109,14 +111,18 @@ function displayResults(risk, data) {
                 div.innerHTML = `
                     <h4>${i18n[currentLang].guidelines_title}</h4>
                     <div class="advice-content">
-                        <pre class="${riskLevel}">${advice[section]}</pre>
+                        <div class="${riskLevel}">
+                            ${advice[section]}
+                        </div>
                     </div>
                 `;
             } else {
                 div.innerHTML = `
                     <h4>${advice[section].title}</h4>
                     <div class="advice-content">
-                        <pre class="${riskLevel}">${advice[section].content}</pre>
+                        <div class="${riskLevel}">
+                            ${advice[section].content}
+                        </div>
                     </div>
                 `;
             }
