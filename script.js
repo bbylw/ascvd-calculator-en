@@ -288,7 +288,7 @@ function getRiskAdvice(risk, data) {
     }
 }
 
-// 修改风险计算函数
+// 添加风险计算函数
 function calculateRisk(data) {
     try {
         // 数据验证
@@ -337,10 +337,11 @@ function calculateRisk(data) {
                       (-2.664 * lnAge * lnTotalChol) +
                       (-7.99 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
-                      (2.019 * lnSBP) +
-                      (onBPMeds && systolic > 120 ? 0.241 : 0) +
+                      (1.797 * lnSBP) +
+                      (onBPMeds ? 1.764 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
-                      (hasDiabetes ? 0.658 : 0);
+                      (hasDiabetes ? 0.658 : 0) +
+                      (-29.799);
                 S0 = 0.9144;
                 meanCoeffSum = 61.18;
             } else {
@@ -352,11 +353,11 @@ function calculateRisk(data) {
                       (-13.578 * lnHDL) +
                       (3.149 * lnAge * lnHDL) +
                       (2.019 * lnSBP) +
-                      (onBPMeds && systolic > 120 ? 0.198 : 0) +
+                      (onBPMeds ? 2.019 : 0) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
                       (hasDiabetes ? 0.661 : 0);
                 S0 = 0.9665;
-                meanCoeffSum = 29.18;
+                meanCoeffSum = 86.61;
             }
         } else { // African American
             if (sex === 'male') {
@@ -365,9 +366,10 @@ function calculateRisk(data) {
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
                       (1.916 * lnSBP) +
-                      (onBPMeds && systolic > 120 ? 0.162 : 0) +
+                      (onBPMeds ? 1.809 : 0) +
                       (isSmoker ? 0.549 : 0) +
-                      (hasDiabetes ? 0.645 : 0);
+                      (hasDiabetes ? 0.645 : 0) +
+                      (-19.54);
                 S0 = 0.8954;
                 meanCoeffSum = 19.54;
             } else {
@@ -378,9 +380,10 @@ function calculateRisk(data) {
                       (4.475 * lnAge * lnHDL) +
                       (29.291 * lnSBP) +
                       (-6.432 * lnAge * lnSBP) +
-                      (onBPMeds && systolic > 120 ? 0.224 : 0) +
+                      (onBPMeds ? 29.291 - 6.432 * lnAge : 0) +
                       (isSmoker ? 0.691 : 0) +
-                      (hasDiabetes ? 0.874 : 0);
+                      (hasDiabetes ? 0.874 : 0) +
+                      (-86.61);
                 S0 = 0.9533;
                 meanCoeffSum = 86.61;
             }
@@ -410,7 +413,7 @@ function calculateRisk(data) {
             result: finalRisk
         });
 
-        return parseFloat(finalRisk.toFixed(1));
+        return finalRisk;
     } catch (err) {
         console.error('Risk calculation error:', err);
         throw new Error(i18n[currentLang].error.general);
