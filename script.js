@@ -61,10 +61,11 @@ function getNestedTranslation(obj, path) {
     }, obj);
 }
 
-// 修改建议显示函数
+// 修改显示结果函数
 function displayResults(risk, data) {
     const resultDiv = document.getElementById('result');
     const riskScoreSpan = document.getElementById('riskScore');
+    const riskLevelDiv = document.getElementById('riskLevel');
     
     // 清除之前的建议内容
     const oldAdvice = document.getElementById('adviceContainer');
@@ -83,10 +84,21 @@ function displayResults(risk, data) {
     const adviceContainer = document.createElement('div');
     adviceContainer.id = 'adviceContainer';
     
-    // 添加每条建议
+    // 添加风险等级说明
+    const riskExplanation = document.createElement('div');
+    riskExplanation.className = `advice-section ${riskLevel.toLowerCase()}`;
+    riskExplanation.innerHTML = `
+        <h4>${i18n[currentLang].result.levels[riskLevel.replace('Risk', '').toLowerCase()]}</h4>
+        <div class="advice-content">
+            <pre>${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}</pre>
+        </div>
+    `;
+    adviceContainer.appendChild(riskExplanation);
+    
+    // 添加其他建议
     advice.adviceArray.forEach(item => {
         const section = document.createElement('div');
-        section.className = 'advice-section';
+        section.className = `advice-section ${riskLevel.toLowerCase()}`;
         
         const title = document.createElement('h4');
         title.textContent = item.title;
@@ -94,9 +106,7 @@ function displayResults(risk, data) {
         const content = document.createElement('div');
         content.className = 'advice-content';
         
-        // 根据风险等级添加相应的类名
         const pre = document.createElement('pre');
-        pre.className = riskLevel.toLowerCase().replace('risk', '-risk');
         pre.textContent = item.content;
         
         content.appendChild(pre);
@@ -694,21 +704,21 @@ function getRiskLevel(risk) {
 }
 
 function displayAdvice(advice, container) {
-    // 处理建议内容，替换风险等级标记为HTML类
-    const content = advice.content
-        .replace(/<low-risk>/g, '<span class="low-risk">')
-        .replace(/<moderate-risk>/g, '<span class="moderate-risk">')
-        .replace(/<high-risk>/g, '<span class="high-risk">')
-        .replace(/<\/(low|moderate|high)-risk>/g, '</span>');
-
     const section = document.createElement('div');
     section.className = 'advice-section';
-    section.innerHTML = `
-        <h4>${advice.title}</h4>
-        <div class="advice-content">
-            <pre>${content}</pre>
-        </div>
-    `;
-
+    
+    const title = document.createElement('h4');
+    title.textContent = advice.title;
+    
+    const content = document.createElement('div');
+    content.className = 'advice-content';
+    content.innerHTML = advice.content
+        .replace(/<low-risk>/g, '<div class="low-risk">')
+        .replace(/<moderate-risk>/g, '<div class="moderate-risk">')
+        .replace(/<high-risk>/g, '<div class="high-risk">')
+        .replace(/<\/(low|moderate|high)-risk>/g, '</div>');
+    
+    section.appendChild(title);
+    section.appendChild(content);
     container.appendChild(section);
 } 
