@@ -89,44 +89,46 @@ function displayResults(risk, data) {
     riskExplanation.innerHTML = `
         <h4>${i18n[currentLang].result.levels[riskLevel.replace('Risk', '').toLowerCase()]}</h4>
         <div class="advice-content">
-            <div class="${riskLevel}">
-                ${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}
-            </div>
+            <pre class="${riskLevel}">${i18n[currentLang].risk_explanation[riskLevel.replace('Risk', '').toLowerCase()]}</pre>
         </div>
     `;
     adviceContainer.appendChild(riskExplanation);
     
     // 添加医学建议
-    const sections = ['guidelines_notice', 'lifestyle', 'bp', 'lipids'];
+    const sections = [
+        {key: 'guidelines_notice', title: i18n[currentLang].guidelines_title},
+        {key: 'lifestyle', title: advice.lifestyle.title},
+        {key: 'bp', title: advice.bp.title},
+        {key: 'lipids', title: advice.lipids.title}
+    ];
+
+    // 如果有糖尿病，添加糖尿病建议
     if (data.diabetes === 'yes') {
-        sections.push('diabetes');
+        sections.push({key: 'diabetes', title: advice.diabetes.title});
     }
 
     sections.forEach(section => {
-        if (advice[section]) {
+        if (section.key === 'guidelines_notice' && advice[section.key]) {
+            // 处理指南说明
             const div = document.createElement('div');
             div.className = 'advice-section';
-            
-            if (section === 'guidelines_notice') {
-                div.innerHTML = `
-                    <h4>${i18n[currentLang].guidelines_title}</h4>
-                    <div class="advice-content">
-                        <div class="${riskLevel}">
-                            ${advice[section]}
-                        </div>
-                    </div>
-                `;
-            } else {
-                div.innerHTML = `
-                    <h4>${advice[section].title}</h4>
-                    <div class="advice-content">
-                        <div class="${riskLevel}">
-                            ${advice[section].content}
-                        </div>
-                    </div>
-                `;
-            }
-            
+            div.innerHTML = `
+                <h4>${section.title}</h4>
+                <div class="advice-content">
+                    <pre class="${riskLevel}">${advice[section.key]}</pre>
+                </div>
+            `;
+            adviceContainer.appendChild(div);
+        } else if (advice[section.key]) {
+            // 处理其他建议内容
+            const div = document.createElement('div');
+            div.className = 'advice-section';
+            div.innerHTML = `
+                <h4>${section.title}</h4>
+                <div class="advice-content">
+                    <pre class="${riskLevel}">${advice[section.key].content}</pre>
+                </div>
+            `;
             adviceContainer.appendChild(div);
         }
     });
@@ -140,7 +142,7 @@ function displayResults(risk, data) {
     console.log('Display results:', {
         risk,
         riskLevel,
-        sections: sections.filter(section => advice[section]),
+        sections: sections.map(s => s.key),
         advice
     });
 }
