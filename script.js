@@ -382,7 +382,7 @@ function calculateRisk(data) {
                       (-7.990 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
                       (1.797 * lnSBP) +
-                      (onBPMeds ? 1.764 : 0) +
+                      (onBPMeds ? 1.764 : (systolic >= 140 ? 1.764 * 1.5 : 0)) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
                       (-61.18);
@@ -396,7 +396,7 @@ function calculateRisk(data) {
                       (-13.578 * lnHDL) +
                       (3.149 * lnAge * lnHDL) +
                       (2.019 * lnSBP) +
-                      (onBPMeds ? 2.019 : 0) +
+                      (onBPMeds ? 2.019 : (systolic >= 140 ? 2.019 * 1.5 : 0)) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
                       (hasDiabetes ? 0.661 : 0);
                 S0 = 0.9665;
@@ -408,7 +408,7 @@ function calculateRisk(data) {
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
                       (1.916 * lnSBP) +
-                      (onBPMeds ? 1.809 : 0) +
+                      (onBPMeds ? 1.809 : (systolic >= 140 ? 1.809 * 1.5 : 0)) +
                       (isSmoker ? 0.549 : 0) +
                       (hasDiabetes ? 0.645 : 0) +
                       (-19.54);
@@ -421,7 +421,8 @@ function calculateRisk(data) {
                       (4.475 * lnAge * lnHDL) +
                       (29.291 * lnSBP) +
                       (-6.432 * lnAge * lnSBP) +
-                      (onBPMeds ? (29.291 - 6.432 * lnAge) : 0) +
+                      (onBPMeds ? (29.291 - 6.432 * lnAge) : 
+                       (systolic >= 140 ? (29.291 - 6.432 * lnAge) * 1.5 : 0)) +
                       (isSmoker ? 0.691 : 0) +
                       (hasDiabetes ? 0.874 : 0) +
                       (-86.61);
@@ -435,7 +436,7 @@ function calculateRisk(data) {
         // 确保结果在有效范围内（0-100%）
         const finalRisk = Math.min(Math.max(risk, 0), 100);
 
-        // 添加详细的调试日志
+        // 添加更详细的调试日志
         console.log('Risk calculation details:', {
             input: {
                 age, totalChol, hdl, systolic,
@@ -454,8 +455,8 @@ function calculateRisk(data) {
                     base_effect: lnSBP * (race === 'white' || race === 'asian' || race === 'other' ? 
                         (sex === 'male' ? 1.797 : 2.019) : 
                         (sex === 'male' ? 1.916 : 29.291)),
-                    age_interaction: race === 'aa' && sex === 'female' ? -6.432 * lnAge * lnSBP : 0,
-                    medication_effect: onBPMeds ? 'Applied' : 'Not applied'
+                    high_bp_effect: systolic >= 140 ? 'Applied high BP risk multiplier' : 'Normal BP',
+                    medication_effect: onBPMeds ? 'Applied medication coefficient' : 'No medication'
                 }
             }
         });
@@ -596,7 +597,7 @@ function handleServiceWorkerUpdate() {
                 console.error('Service Worker 注册失败:', err);
             });
 
-        // 监听控制权变更
+        // 监听控制���变更
         let refreshing = false;
         navigator.serviceWorker.addEventListener('controllerchange', () => {
             if (!refreshing) {
