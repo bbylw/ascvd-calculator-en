@@ -363,6 +363,7 @@ function calculateRisk(data) {
 
         let sum = 0;
         let S0 = 0;
+        let meanCoeffSum = 0;
 
         // 根据2023 ACC/AHA指南更新的系数计算
         if (race === 'white' || race === 'asian' || race === 'other') {
@@ -376,9 +377,9 @@ function calculateRisk(data) {
                       (1.764 * lnSBP) +
                       (onBPMeds ? 1.797 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
-                      (hasDiabetes ? 0.658 : 0) +
-                      (-61.18);
+                      (hasDiabetes ? 0.658 : 0);
                 S0 = 0.9144;
+                meanCoeffSum = 61.18;
             } else {
                 // 白人/亚裔女性
                 sum = (-29.799 * lnAge) +
@@ -390,9 +391,9 @@ function calculateRisk(data) {
                       (2.019 * lnSBP) +
                       (onBPMeds ? 1.957 : 0) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
-                      (hasDiabetes ? 0.661 : 0) +
-                      (-29.18);
+                      (hasDiabetes ? 0.661 : 0);
                 S0 = 0.9665;
+                meanCoeffSum = 29.18;
             }
         } else { // African American
             if (sex === 'male') {
@@ -403,9 +404,9 @@ function calculateRisk(data) {
                       (1.916 * lnSBP) +
                       (onBPMeds ? 1.809 : 0) +
                       (isSmoker ? 0.549 : 0) +
-                      (hasDiabetes ? 0.645 : 0) +
-                      (-19.54);
+                      (hasDiabetes ? 0.645 : 0);
                 S0 = 0.8954;
+                meanCoeffSum = 19.54;
             } else {
                 // 非裔美国人女性
                 sum = (17.114 * lnAge) +
@@ -416,14 +417,15 @@ function calculateRisk(data) {
                       (-6.087 * lnAge * lnSBP) +
                       (onBPMeds ? 0.691 : 0) +
                       (isSmoker ? 0.874 : 0) +
-                      (hasDiabetes ? 0.874 : 0) +
-                      (-86.61);
+                      (hasDiabetes ? 0.874 : 0);
                 S0 = 0.9533;
+                meanCoeffSum = 86.61;
             }
         }
 
         // 计算10年风险
-        const risk = (1 - Math.pow(S0, Math.exp(sum))) * 100;
+        const indX = sum - meanCoeffSum;
+        const risk = (1 - Math.pow(S0, Math.exp(indX))) * 100;
         
         // 确保结果在有效范围内（0-100%）
         const finalRisk = Math.min(Math.max(risk, 0), 100);
@@ -443,7 +445,7 @@ function calculateRisk(data) {
             },
             calculation: {
                 lnAge, lnTotalChol, lnHDL, lnSBP,
-                sum, S0,
+                sum, S0, meanCoeffSum, indX,
                 risk, finalRisk,
                 equation: `${race}_${sex}`,
                 reference: '2023 ACC/AHA Guidelines'
