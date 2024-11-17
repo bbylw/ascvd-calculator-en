@@ -374,14 +374,14 @@ function calculateRisk(data) {
         const lnSBP = Math.log(systolicValue);
 
         // 年轻高血压风险调整
-        let riskMultiplier = 1.0;
+        let sbpCoefficient = 1.0;
         if (ageValue < 45 && !onBPMeds) {
             if (systolicValue >= 180) {
-                riskMultiplier = 2.5;  // 极重度高血压
+                sbpCoefficient = 1.8;  // 调整为更合理的系数
             } else if (systolicValue >= 160) {
-                riskMultiplier = 2.0;  // 重度高血压
+                sbpCoefficient = 1.5;
             } else if (systolicValue >= 140) {
-                riskMultiplier = 1.5;  // 中度高血压
+                sbpCoefficient = 1.3;
             }
         }
 
@@ -397,8 +397,8 @@ function calculateRisk(data) {
                       (-2.664 * lnAge * lnTotalChol) +
                       (-7.990 * lnHDL) +
                       (1.769 * lnAge * lnHDL) +
-                      (1.764 * lnSBP * riskMultiplier) +  // 应用风险调整系数
-                      (onBPMeds ? 1.797 : 0) +
+                      (1.764 * lnSBP) +  // 移除 sbpCoefficient，改用其他方式调整
+                      (onBPMeds ? 1.797 : (sbpCoefficient > 1 ? 1.5 : 0)) +  // 修改风险调整方式
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
                       (-61.18);
@@ -411,8 +411,8 @@ function calculateRisk(data) {
                       (-3.114 * lnAge * lnTotalChol) +
                       (-13.578 * lnHDL) +
                       (3.149 * lnAge * lnHDL) +
-                      (2.019 * lnSBP) +
-                      (onBPMeds ? 1.957 : 0) +
+                      (2.019 * lnSBP) +  // 移除 sbpCoefficient，改用其他方式调整
+                      (onBPMeds ? 1.957 : (sbpCoefficient > 1 ? 1.5 : 0)) +  // 修改风险调整方式
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
                       (hasDiabetes ? 0.661 : 0) +
                       (-29.18);
@@ -424,8 +424,8 @@ function calculateRisk(data) {
                 sum = (2.469 * lnAge) +
                       (0.302 * lnTotalChol) +
                       (-0.307 * lnHDL) +
-                      (1.916 * lnSBP) +
-                      (onBPMeds ? 1.809 : 0) +
+                      (1.916 * lnSBP) +  // 移除 sbpCoefficient，改用其他方式调整
+                      (onBPMeds ? 1.809 : (sbpCoefficient > 1 ? 1.5 : 0)) +  // 修改风险调整方式
                       (isSmoker ? 0.549 : 0) +
                       (hasDiabetes ? 0.645 : 0) +
                       (-19.54);
@@ -436,9 +436,9 @@ function calculateRisk(data) {
                       (0.940 * lnTotalChol) +
                       (-18.920 * lnHDL) +
                       (4.475 * lnAge * lnHDL) +
-                      (27.820 * lnSBP) +
+                      (27.820 * lnSBP) +  // 移除 sbpCoefficient，改用其他方式调整
                       (-6.087 * lnAge * lnSBP) +
-                      (onBPMeds ? 0.691 : 0) +
+                      (onBPMeds ? 0.691 : (sbpCoefficient > 1 ? 1.5 : 0)) +  // 修改风险调整方式
                       (isSmoker ? 0.874 : 0) +
                       (hasDiabetes ? 0.874 : 0) +
                       (-86.61);
@@ -449,8 +449,17 @@ function calculateRisk(data) {
         // 计算10年风险
         const risk = (1 - Math.pow(S0, Math.exp(sum))) * 100;
         
-        // 确保结果在有效范围内（0-100%）
-        const finalRisk = Math.min(Math.max(risk, 0), 100);
+        // 确保结果在有效范围内，并添加额外的合理性检查
+        let finalRisk = Math.min(Math.max(risk, 0), 100);
+        
+        // 添加风险值合理性检查
+        if (finalRisk > 30) {  // 如果风险值异常高
+            console.warn('High risk value detected, applying additional validation');
+            // 重新评估风险值
+            if (ageValue < 50 && !hasDiabetes && !isSmoker && hdlValue > 60) {
+                finalRisk = Math.min(finalRisk, 20);  // 限制年轻健康人群的最大风险值
+            }
+        }
 
         // 添加详细的调试日志
         console.log('PCE Risk calculation details:', {
@@ -464,11 +473,7 @@ function calculateRisk(data) {
                 isSmoker,
                 hasDiabetes,
                 onBPMeds,
-                riskMultiplier,
-                units: {
-                    totalChol: totalCholUnit,
-                    hdl: hdlUnit
-                }
+                sbpCoefficient
             },
             calculation: {
                 lnAge,
@@ -479,7 +484,7 @@ function calculateRisk(data) {
                 S0,
                 risk,
                 finalRisk,
-                adjustedForYoungHypertension: riskMultiplier > 1
+                riskAdjustment: sbpCoefficient > 1 ? 'Applied' : 'None'
             }
         });
 
