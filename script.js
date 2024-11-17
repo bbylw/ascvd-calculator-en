@@ -450,7 +450,7 @@ function calculateRisk(data) {
                 lnAge, lnTotalChol, lnHDL, lnSBP,
                 sum, S0,
                 risk, finalRisk,
-                onBPMeds_effect: onBPMeds ? 'Applied BP medication coefficient' : 'No BP medication'
+                bp_effect: onBPMeds ? 'Using BP medication coefficient' : 'Using base SBP coefficient'
             }
         });
 
