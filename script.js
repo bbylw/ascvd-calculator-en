@@ -386,9 +386,9 @@ function calculateRisk(data) {
                       (onBPMeds ? 1.764 : 0) +
                       (isSmoker ? (7.837 - 1.795 * lnAge) : 0) +
                       (hasDiabetes ? 0.658 : 0) +
-                      (-29.799);
+                      (-61.18);  // 修正基线系数
                 S0 = 0.9144;
-                meanCoeffSum = -29.18;  // 修正系数
+                meanCoeffSum = 0;  // 修正平均系数
             } else {
                 // 白人女性
                 sum = (-29.799 * lnAge) +
@@ -400,9 +400,10 @@ function calculateRisk(data) {
                       (2.019 * lnSBP) +
                       (onBPMeds ? 2.019 : 0) +
                       (isSmoker ? (7.574 - 1.665 * lnAge) : 0) +
-                      (hasDiabetes ? 0.661 : 0);
+                      (hasDiabetes ? 0.661 : 0) +
+                      (-86.61);  // 修正基线系数
                 S0 = 0.9665;
-                meanCoeffSum = -29.18;  // 修正系数
+                meanCoeffSum = 0;  // 修正平均系数
             }
         } else { // African American
             if (sex === 'male') {
@@ -413,9 +414,10 @@ function calculateRisk(data) {
                       (1.916 * lnSBP) +
                       (onBPMeds ? 1.809 : 0) +
                       (isSmoker ? 0.549 : 0) +
-                      (hasDiabetes ? 0.645 : 0);
+                      (hasDiabetes ? 0.645 : 0) +
+                      (19.54);  // 修正基线系数
                 S0 = 0.8954;
-                meanCoeffSum = 86.61;  // 修正系数
+                meanCoeffSum = 0;  // 修正平均系数
             } else {
                 // 非裔美国人女性
                 sum = (17.114 * lnAge) +
@@ -426,14 +428,15 @@ function calculateRisk(data) {
                       (-6.432 * lnAge * lnSBP) +
                       (onBPMeds ? 29.291 - 6.432 * lnAge : 0) +
                       (isSmoker ? 0.691 : 0) +
-                      (hasDiabetes ? 0.874 : 0);
+                      (hasDiabetes ? 0.874 : 0) +
+                      (-86.61);  // 修正基线系数
                 S0 = 0.9533;
-                meanCoeffSum = 86.61;  // 修正系数
+                meanCoeffSum = 0;  // 修正平均系数
             }
         }
 
         // 计算10年风险
-        const risk = (1 - Math.pow(S0, Math.exp(sum - meanCoeffSum))) * 100;
+        const risk = (1 - Math.pow(S0, Math.exp(sum))) * 100;
         
         // 确保结果在有效范围内（0-100%）
         const finalRisk = Math.min(Math.max(risk, 0), 100);
